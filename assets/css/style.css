@@ -1,0 +1,37 @@
+.banner{
+	background-color:#75c9d2;
+	height:700px;
+}
+#header{
+	background-color:#75c9d2;
+}
+#menu{
+	margin: 0 auto;
+}
+
+#portifolioRow{
+	height:35vh;
+}
+
+
+/* mobile */
+@media (max-width:768px){
+	#portifolioRow{
+	height:170vh;
+}
+
+
+}/* end mobile */
+
+.h-center{
+	text-align: center;
+}
+
+.v-center{
+	vertical-align: middle;
+}
+
+#portfolioRow div{
+	border-style:dashed;
+	border-color:#000;
+}
