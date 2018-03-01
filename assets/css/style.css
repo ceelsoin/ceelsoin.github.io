@@ -28,10 +28,6 @@
 }
 
 .v-center{
+	position: absolute;
 	vertical-align: middle;
-}
-
-#portfolioRow div{
-	border-style:dashed;
-	border-color:#000;
 }
