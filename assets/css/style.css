@@ -2,6 +2,9 @@
 	background-color:#75c9d2;
 	height:700px;
 }
+.profile{
+	height:400px;
+}
 #header{
 	background-color:#75c9d2;
 }
@@ -17,7 +20,7 @@
 /* mobile */
 @media (max-width:768px){
 	#portifolioRow{
-	height:170vh;
+	height:60vh;
 }
 
 
@@ -28,6 +31,15 @@
 }
 
 .v-center{
-	position: absolute;
-	vertical-align: middle;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: row;
+}
+.padding-xl{
+	padding: 5%;
+}
+.icon-mdi{
+	width: 150px !important;
+	height: 150px !important;
 }
