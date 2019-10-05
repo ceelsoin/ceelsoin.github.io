@@ -1,9 +1,9 @@
 {
-  "main.css": "/static/css/main.22177f09.chunk.css",
-  "main.js": "/static/js/main.dda4a659.chunk.js",
-  "main.js.map": "/static/js/main.dda4a659.chunk.js.map",
-  "static/js/1.b340dc9a.chunk.js": "/static/js/1.b340dc9a.chunk.js",
-  "static/js/1.b340dc9a.chunk.js.map": "/static/js/1.b340dc9a.chunk.js.map",
+  "main.css": "/static/css/main.ef0d3316.chunk.css",
+  "main.js": "/static/js/main.6b36f0a6.chunk.js",
+  "main.js.map": "/static/js/main.6b36f0a6.chunk.js.map",
+  "static/js/1.6567945c.chunk.js": "/static/js/1.6567945c.chunk.js",
+  "static/js/1.6567945c.chunk.js.map": "/static/js/1.6567945c.chunk.js.map",
   "runtime~main.js": "/static/js/runtime~main.229c360f.js",
   "runtime~main.js.map": "/static/js/runtime~main.229c360f.js.map",
   "static/media/salao.jpg": "/static/media/salao.f42d83b2.jpg",
@@ -14,8 +14,8 @@
   "static/media/slide5.jpg": "/static/media/slide5.9efadac1.jpg",
   "static/media/video.mp4": "/static/media/video.5f0c0f5d.mp4",
   "static/media/logo.png": "/static/media/logo.b26cbcfe.png",
-  "static/css/main.22177f09.chunk.css.map": "/static/css/main.22177f09.chunk.css.map",
+  "static/css/main.ef0d3316.chunk.css.map": "/static/css/main.ef0d3316.chunk.css.map",
   "index.html": "/index.html",
-  "precache-manifest.01c2b5330a7ba0c6f9d29e7b53c4d0aa.js": "/precache-manifest.01c2b5330a7ba0c6f9d29e7b53c4d0aa.js",
+  "precache-manifest.72cc9d359b28667ff6255bc9d4030860.js": "/precache-manifest.72cc9d359b28667ff6255bc9d4030860.js",
   "service-worker.js": "/service-worker.js"
 }
