@@ -12,8 +12,12 @@ layout: default
       {% for post in paginator.posts %}
         <div class="post-link-wrapper">
           <a href="{{ post.url | relative_url }}" class="post-link">{{ post.title }}</a>
+          {% if site.dash.date_format %}
+            <small>{{ post.date | date: site.dash.date_format }}</small>
+          {% else %}
+          <small>{{ post.date | date: "%b %-d, %Y" }}</small>
+          {% endif %}
           <div class="post-meta">
-
             {% if site.plugins contains "jekyll/tagging" %}
             <div class="post-tags">
                 {% for tag in post.tags %}
@@ -21,13 +25,12 @@ layout: default
                 {% endfor %}
             </div>
             {% endif %}
-            {% if site.dash.date_format %}
-              {{ post.date | date: site.dash.date_format }}
-            {% else %}
-              {{ post.date | date: "%b %-d, %Y" }}
-            {% endif %}
+          
             {% if site.show_excerpts == true %}
               <div class="post-excerpt">
+                {% if post.audio %}
+                  <iframe style="border-radius:12px" src="https://open.spotify.com/embed/episode/{{ post.audio }}?utm_source=generator&theme=0" width="100%" height="120" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                {% endif %}
                 {{ post.content | strip_html | truncatewords: 50 }}
               </div>
             {% endif %}

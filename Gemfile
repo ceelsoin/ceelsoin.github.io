@@ -25,3 +25,9 @@ gem 'jekyll-dash', '~> 1'
 gem "liquid-md5"
 gem "jekyll-tagging"
 gem "kramdown-parser-gfm"
+
+#new plugins
+gem 'jekyll-seo-tag'
+gem 'jekyll-sitemap'
+gem 'liquid_pluralize'
+gem 'liquid_reading_time'

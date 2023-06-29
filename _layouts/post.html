@@ -15,6 +15,9 @@ layout: default
   {% endif %}
   <div class="post-date">
     Published on {{ page.date | date_to_string }}
+    {% capture time %}{{ content | reading_time }}{% endcapture %}
+    - {{ time }} {% if time == '1' %}minute{% else %}minutes{% endif %} of reading.</p>
+
     {% if page.author != null %}
     by {{ page.author }}
     {% endif %}

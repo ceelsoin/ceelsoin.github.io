@@ -5,6 +5,9 @@ description: > # this means to ignore newlines until "show_exerpts:"
   My name is Celso. And i am software engineer since 9 years ago. I've been working on some companies like Oi, Globo and my company Enssure in Brazil and at these time i've worked with a lot of technologies like Golang, Javascript, Python, React and developing a lot of tools for another developers in this companies.
 show_excerpts: true # set to true to show excerpts on the homepage
 
+
+url: https://celsoinacio.com.br
+
 paginate: 5
 paginate_path: "/blog/page:num/"
 
@@ -50,6 +53,21 @@ dash:
   #avatar_source: local
   #avatar_path: /assets/avatar.png
 
+podcast:
+  title: [title]
+  description: [description]
+  url: /podcast.xml # podcast xml url
+  author: [podcast author]
+  email: [podcast email]
+  logo: [podcast logo url] # logo in 1400 – 3000 pixel
+  language: [language] # http://www.loc.gov/standards/iso639-2/php/code_list.php
+  category: [category] # https://help.apple.com/itc/podcasts_connect/#/itc9267a2f12
+  subcategory: [subcategory]
+  type: [podcast type] # episodic | serial
+  explicit: [explicit state] # true | false
+  complete: [complete state] # 'yes' | 'no'
+  block: [block state] # 'yes' | 'no'
+
 # Build settings
 theme: jekyll-dash
 
@@ -59,3 +77,6 @@ plugins:
  - jekyll-paginate
  - liquid-md5
  - jekyll/tagging
+ - jekyll-sitemap
+ - liquid_pluralize
+ - liquid_reading_time
