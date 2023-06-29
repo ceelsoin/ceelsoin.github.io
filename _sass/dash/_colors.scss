@@ -3,10 +3,12 @@ $color-background-lighter: lighten($color-background-light, 7%);
 $color-foreground-dark: #1E2227;
 $color-foreground-darker: #15171A;
 
-$color-background-light: #fafafa;
-$color-background-lighter: lighten($color-background-light, 7%);
-$color-foreground-dark: #1E2227;
-$color-foreground-darker: #15171A;
+$color-background-dark: #fafafa;
+$color-background-darker: lighten($color-background-light, 7%);
+$color-foreground: #1E2227;
+$color-foreground-dark: #15171A;
+
+
 
 $color-pink: #15171A;
 $color-red: #FC4957;
