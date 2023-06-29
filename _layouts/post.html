@@ -16,8 +16,9 @@ layout: default
   <div class="post-date">
     Published on {{ page.date | date_to_string }}
     {% capture time %}{{ content | reading_time }}{% endcapture %}
-    - {{ time }} {% if time == '1' %}minute{% else %}minutes{% endif %} of reading.</p>
-
+      {% if post.audio == false %}
+      - {{ time }} {% if time == '1' %}minute{% else %}minutes{% endif %} of reading.</p>
+      {% endif %}
     {% if page.author != null %}
     by {{ page.author }}
     {% endif %}
