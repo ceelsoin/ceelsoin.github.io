@@ -193,15 +193,17 @@ function activateLightTheme() {
 	window.localStorage.setItem('theme', 'light');
 }
 
-if (theme === "dark") {
-    activateDarkTheme();
-} else if (theme === "light") {
-    activateLightTheme();
-} else if  (userPrefers === "light") {
-    activateDarkTheme();
-} else {
-    activateLightTheme();
-}
+// if (theme === "dark") {
+//     activateDarkTheme();
+// } else if (theme === "light") {
+//     activateLightTheme();
+// } else if  (userPrefers === "light") {
+//     activateDarkTheme();
+// } else {
+//     activateLightTheme();
+// }
+
+activateLightTheme()
 
 function modeSwitcher() {
 	let currentMode = document.documentElement.getAttribute('data-theme');
