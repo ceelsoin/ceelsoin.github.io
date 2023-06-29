@@ -1,23 +1,25 @@
 $color-background-dark: #1E2227;
 $color-background-darker: #15171A;
-$color-foreground: #DAE4ED;
+$color-foreground: #fafafa;
 $color-foreground-dark: lighten($color-background-dark, 30%);
 
-$color-background-light: #DAE4ED;
+$color-background-light: #fafafa;
 $color-background-lighter: lighten($color-background-light, 7%);
 $color-foreground-dark: #1E2227;
 $color-foreground-darker: #15171A;
 
-$color-pink: #F24784;
+$color-pink: #15171A;
 $color-red: #FC4957;
 $color-orange: #EA9D53;
 $color-yellow: #FCBC28;
-$color-teal: #4BC997;
-$color-green: #50BD6A;
+$color-teal: #15171A;
+$color-green: #2271c0;
 $color-cyan: #4FC1E4;
-$color-blue: #637AFE;
+$color-blue: #15171A;
 $color-indigo: #6775C4;
 $color-purple: #8E59D7;
+
+.prompt { color: $color-pink !important; }
 
 .color-pink { color: $color-pink !important; }
 .color-red { color: $color-red !important; }
