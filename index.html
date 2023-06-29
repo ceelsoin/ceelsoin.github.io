@@ -241,11 +241,11 @@
 <script type="text/javascript">
 const theme = localStorage.getItem('theme');
 
-if (theme === "light") {
-    document.documentElement.setAttribute('data-theme', 'light');
-} else {
+// if (theme === "light") {
+    // document.documentElement.setAttribute('data-theme', 'light');
+// } else {
     document.documentElement.setAttribute('data-theme', 'dark');
-}
+// }
 const userPrefers = getComputedStyle(document.documentElement).getPropertyValue('content');
 
 function activateDarkTheme() {
