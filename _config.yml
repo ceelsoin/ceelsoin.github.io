@@ -1,0 +1,61 @@
+title: codewithcelso
+author: Celso Inácio
+email: falecom@celsoinacio.com.br
+description: > # this means to ignore newlines until "show_exerpts:"
+  My name is Celso. And i am software engineer since 9 years ago. I've been working on some companies like Oi, Globo and my company Enssure in Brazil and at these time i've worked with a lot of technologies like Golang, Javascript, Python, React and developing a lot of tools for another developers in this companies.
+show_excerpts: true # set to true to show excerpts on the homepage
+
+paginate: 5
+paginate_path: "/blog/page:num/"
+
+tag_permalink_style: pretty
+tag_page_layout: tag_page
+tag_page_dir: tag
+
+# jekyll-dash date format
+# refer to http://shopify.github.io/liquid/filters/date/ if you want to customize this
+dash:
+  # the way how dates should be displayed
+  date_format: "%b %-d, %Y"
+
+  # (optional) discqus comment configuration
+  disqus:
+    shortname: blog-from-celso-inacio
+
+  # generate social links in footer
+  # supported colors: green, red, orange, blue, cyan, pink, teal, yellow, indigo, purple
+  social_links:
+    - url: https://twitter.com/ceelsoinacio
+      icon: twitter-square
+      color: cyan
+    - url: https://github.com/ceelsoin
+      icon: github-square
+      color: purple
+    - url: https://www.linkedin.com/in/ceelsoinacio/
+      icon: linkedin
+      color: blue
+
+  # wether the author box should be displayed
+  show_author: true
+
+  # the animation speed of the scroll-in effect
+  animation_speed: 50
+
+  # wether to enable Right-to-Left support or not
+  rtl: false
+
+  # Replaces the default avatar provider (gravatar)
+  # avatar_source: github
+  # github_username: ceelsoin
+  #avatar_source: local
+  #avatar_path: /assets/avatar.png
+
+# Build settings
+theme: jekyll-dash
+
+plugins:
+ - jekyll-feed
+ - jekyll-seo-tag
+ - jekyll-paginate
+ - liquid-md5
+ - jekyll/tagging
