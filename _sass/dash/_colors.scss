@@ -1,7 +1,7 @@
-$color-background-dark: #1E2227;
-$color-background-darker: #15171A;
-$color-foreground: #fafafa;
-$color-foreground-dark: lighten($color-background-dark, 30%);
+$color-background-light: #fafafa;
+$color-background-lighter: lighten($color-background-light, 7%);
+$color-foreground-dark: #1E2227;
+$color-foreground-darker: #15171A;
 
 $color-background-light: #fafafa;
 $color-background-lighter: lighten($color-background-light, 7%);
