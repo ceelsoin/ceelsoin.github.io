@@ -1,0 +1,16 @@
+---
+layout: podcast
+categories: podcast # podcast
+title: Episódio 1 - Como incluir um podcast no Jekyll
+tags: podcast jeykll
+author: Celso Inácio
+season: 2
+episode: 9
+episodeType: full # full | trailer | bonus
+explicit: false # true | false
+audio: 2bDP3JTRE8wg8tk5vF9nU8 #spotify podcast id, gotten at embed source
+length: 3927 # in seconds
+image: https://picsum.photos/200
+---
+
+CONTENT HERE LIKE A POST
