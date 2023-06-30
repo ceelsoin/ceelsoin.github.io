@@ -83,3 +83,4 @@ plugins:
  - jekyll-sitemap
  - liquid_pluralize
  - liquid_reading_time
+ - jekyll-gist
