@@ -21,19 +21,5 @@
         <itunes:complete>complete state</itunes:complete>
         <itunes:block>block state</itunes:block>
         
-        <item>
-            <title>Episódio 1 - Como incluir um podcast no Jekyll</title>
-            <itunes:author>Celso Inácio</itunes:author>
-            <itunes:season>2</itunes:season>
-            <itunes:episode>9</itunes:episode>
-            <itunes:episodeType>full</itunes:episodeType>
-            <itunes:explicit>false</itunes:explicit>
-            <link>https://celsoinacio.com.br/podcast/2023/06/29/episode1.html</link>
-            <pubDate>Thu, 29 Jun 2023 00:00:00 +0000</pubDate>
-            <itunes:duration>3927</itunes:duration>
-            <enclosure url='https://celsoinacio.com.br/2bDP3JTRE8wg8tk5vF9nU8' length='3927'/>
-            <description>&lt;p&gt;Neste eposódio vamos ensinar como incluir seu podcast a partir do spotify no jeykll sem utilizar plugins extras&lt;/p&gt;</description>
-        </item>
-        
     </channel>
 </rss>
