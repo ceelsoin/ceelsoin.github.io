@@ -56,10 +56,10 @@ dash:
 podcast:
   title: [title]
   description: [description]
-  url: /podcast.xml # podcast xml url
+  # url: /podcast.xml # podcast xml url
   author: [podcast author]
   email: [podcast email]
-  logo: [podcast logo url] # logo in 1400 – 3000 pixel
+  image: [podcast logo url] # logo in 1400 – 3000 pixel
   language: [language] # http://www.loc.gov/standards/iso639-2/php/code_list.php
   category: [category] # https://help.apple.com/itc/podcasts_connect/#/itc9267a2f12
   subcategory: [subcategory]
@@ -70,6 +70,9 @@ podcast:
 
 # Build settings
 theme: jekyll-dash
+
+feed:
+  path: /rss.xml
 
 plugins:
  - jekyll-feed
