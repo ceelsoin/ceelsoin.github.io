@@ -40,6 +40,11 @@ print_hi('Tom')
 #=> prints 'Hi, Tom' to STDOUT.
 ```
 
+or can use gist 
+
+{% gist c08ee0f2726fd0e3909d test.md %}
+
+
 # An interesting fact on the economy of modern America
 
 Pictures look like this:
