@@ -43,6 +43,12 @@
   }
 }
 
+// .menu-links {
+//   width: 100%;
+//   display: flex;
+//   justify-content: end;
+// }
+
 .site-footer {
   margin-bottom: 2em
 }
@@ -373,6 +379,10 @@
     display: inline-block;
     padding-left: 0.3em;
     font-size: $post-link-font-size * 1.35;
+  }
+
+  & > .menu-link {
+    font-size: $post-link-font-size * 1 !important;
   }
 }
 

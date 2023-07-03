@@ -1,12 +1,16 @@
 <div class="site-header">
   <div class="wrapper">
-    <a class="site-title" rel="author" href="{{ "/" | relative_url }}">{{ site.title | escape }}<b class="command_prompt"></b><b class="blinking_cursor">_</b></a>
+    <a class="site-title" rel="author" href="{{ "/" | relative_url }}">{{ site.title | escape }}<b class="command_prompt" style="color: #2271c0;"></b><b class="blinking_cursor">_</b></a>
+      
     <span class="social_links">
+        <a rel="menu" class="menu-link" href="{{ "/about" | relative_url }}">about me</a>
+        <a rel="menu" class="menu-link" href="{{ "/books" | relative_url }}">books</a>
+        <a rel="menu" class="menu-link" href="{{ "/podcasts" | relative_url }}">podcasts</a>
         {% for link in site.dash.social_links %}
         {% if link.fa == true %}
-        <a class="color-{{ link.color }}-hover" href="{{ link.url }}"><i class="fa fa-{{ link.icon }}"></i></a>
+        <a class="color-{{ link.color }}-hover" class="social-icon" href="{{ link.url }}"><i class="fa fa-{{ link.icon }}"></i></a>
         {% else %}
-        <a class="color-{{ link.color }}-hover" href="{{ link.url }}"><i class="fab fa-{{ link.icon }}"></i></a>
+        <a class="color-{{ link.color }}-hover" class="social-icon" href="{{ link.url }}"><i class="fab fa-{{ link.icon }}"></i></a>
         {% endif %}
         {% endfor %}
     </span>
