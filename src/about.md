@@ -1,58 +1,70 @@
 ---
 layout: page
-title:  "Welcome to Jekyll page!"
-image: https://picsum.photos/200
+title:  "Who are Celso? | codewithcelso celsoinacio.com.br"
+image: https://avatars.githubusercontent.com/u/4915296?v=4
 ---
-You’ll find this post in your `_posts` directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run `jekyll serve`, which launches a web server and auto-regenerates your site when a file is updated.
 
-To add new posts, simply add a file in the `_posts` directory that follows the convention `YYYY-MM-DD-name-of-post.ext` and includes the necessary front matter. Take a look at the source for this post to get an idea about how it works.
+## About me
 
-> "This is a quote which should be followed"
-> Also I think this sentence is quite long.
-> more quote text to come
->   - Chris Wayne
+My name is Celso, i'm brazilian software engineer. Previously i worked in some technology companies like Globo, Oi and my company Enssure. In these time i've developed technologies that was used by million of people and hundred millioton of access requests. That were developed with many technologies and programming languages like Golang, Javascript, Python, React, Next, Gatsby, MongoDB, Redis and Google Cloud Platform.
 
-> Single line quote
+## Books
+  <div class="section-row">
+    <div class="first section-column date">
+    Soon
+    </div>
+    <div class="section-column">
+    Developing Application with Domain Driven Design: Cookbook
+    </div>
+  </div>
+## Talks
+  <div class="section-row">
+    <div class="first section-column date">
+    -
+    </div>
+    <div class="section-column">
+    No talks are available yet.
+    </div>
+  </div>
 
-However, these are bulletpoints:
+## Employment
+<div class="section-row job">
+    <div class="first section-column">
+    Jul 2020 - Present
+    </div>
+    <div class="section-column">
+    <span> <i class="company">Globo.com</i> <span class="job-title"> - Senior Software Developer</span> </span>
+    <p>Rio de Janeiro, Brazil</p>
+    <p>At here i was part of technology expansion team, we made systems for company routines, telecommunication operations that affected million of people in Brazil</p>
+    </div>
+</div>
+<div class="section-row job">
+    <div class="first section-column">
+    Aug 2018 - Jun 2020
+    </div>
+    <div class="section-column">
+    <span> <i class="company">Serede S/A</i> <span class="job-title">- Software Engineer I, Software Developer II</span> </span>
+    <p>Rio de Janeiro, Brazil</p>
+    <p>At here i was part of technology expansion team, we made systems for company routines, telecommunication operations that affected million of people in Brazil</p>
+    </div>
+</div>
 
-* To add new posts, simply add a file in the `_posts` directory that follows the convention `YYYY-MM-DD-name-of-post.ext` and includes the necessary front matter. Take a look at the source for this post to get an idea about how it works.
-* another point
-* that's it
+## Projects
+  <div class="section-row">
+    <div class="first section-column">
+      Subzero CLI
+    </div>
+    <div class="section-column">
+      <p>A study purposes tool for scan your disk for movie files and find for subtitles in online databases like opensubtitles.org. Developed in cli format with Golang, and distributed for some platforms like linux, mac and windows (arm and x86).</p>
 
-However, these entries should not be styled:
+      <p><a href="https://github.com/subzero-cli/subzero" target="_blank">https://github.com/subzero-cli/subzero</a></p>
 
-1. an entry
-2. another entry
-3. that's another entry
+      <div class="badges">
+        <a href="https://github.com/subzero-cli/subzero/actions/workflows/ci.yml"  target="_blank"><img src="https://github.com/subzero-cli/subzero/actions/workflows/ci.yml/badge.svg"/></a>
+        <a href="https://goreportcard.com/report/github.com/subzero-cli/subzero"  target="_blank"><img src="https://goreportcard.com/badge/github.com/subzero-cli/subzero"/></a>
+        <a href="https://github.com/subzero-cli/subzero"  target="_blank"><img src="https://img.shields.io/github/v/release/ceelsoin/subzero"/></a>
+        <a href="https://opensource.org/licenses/MIT"  target="_blank"><img src="https://img.shields.io/badge/License-Mit-blue.svg"/></a>
+      </div>
 
-<video preload="auto" poster="https://pbs.twimg.com/tweet_video_thumb/D5aj3tfW0AIiSxo.jpg" src="https://video.twimg.com/tweet_video/D5aj3tfW0AIiSxo.mp4" type="video/mp4" autoplay controls></video>
-
-Jekyll also offers powerful support for code snippets:
-
-```ruby
-def print_hi(name)
-  puts "Hi, #{name}"
-end
-print_hi('Tom')
-#=> prints 'Hi, Tom' to STDOUT.
-```
-
-or can use gist 
-
-{% gist c08ee0f2726fd0e3909d test.md %}
-
-
-# An interesting fact on the economy of modern America
-
-Pictures look like this:
-
-![image](https://picsum.photos/200){: .modal}
-
-Check out the [Jekyll docs][jekyll-docs] for more info on how to get the most out of Jekyll. File all bugs/feature requests at [Jekyll’s GitHub repo][jekyll-gh]. If you have questions, you can ask them on [Jekyll Talk][jekyll-talk].
-
-[jekyll-docs]: https://jekyllrb.com/docs/home
-[jekyll-gh]:   https://github.com/jekyll/jekyll
-[jekyll-talk]: https://talk.jekyllrb.com/
-
-<blockquote class="twitter-tweet"><p lang="en" dir="ltr"><a href="https://twitter.com/hashtag/jekyll?src=hash&amp;ref_src=twsrc%5Etfw">#jekyll</a> <a href="https://twitter.com/hashtag/dash?src=hash&amp;ref_src=twsrc%5Etfw">#dash</a> now officially supports both, dark and light theming. Enjoy!<a href="https://t.co/4evp9pX2Ws">https://t.co/4evp9pX2Ws</a> <a href="https://t.co/vOQCZjGKic">pic.twitter.com/vOQCZjGKic</a></p>&mdash; 〽️ɪɢᴜᴇʟ (@bitbrain_) <a href="https://twitter.com/bitbrain_/status/1166440978124877827?ref_src=twsrc%5Etfw">August 27, 2019</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
+    </div>
+  </div>
