@@ -1,9 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
+<loc>https://celsoinacio.com.br/podcast/2023/10/02/hacktober-fest-globo.html</loc>
+<lastmod>2023-10-02T00:00:00+00:00</lastmod>
+</url>
+<url>
 <loc>https://celsoinacio.com.br/about.html</loc>
 </url>
 <url>
 <loc>https://celsoinacio.com.br/</loc>
+</url>
+<url>
+<loc>https://celsoinacio.com.br/podcasts.html</loc>
+</url>
+<url>
+<loc>https://celsoinacio.com.br/tag/podcast/</loc>
+</url>
+<url>
+<loc>https://celsoinacio.com.br/tag/tech/</loc>
+</url>
+<url>
+<loc>https://celsoinacio.com.br/tag/globo/</loc>
+</url>
+<url>
+<loc>https://celsoinacio.com.br/tag/hacktoberfest/</loc>
+</url>
+<url>
+<loc>https://celsoinacio.com.br/tag/opensource/</loc>
 </url>
 </urlset>

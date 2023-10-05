@@ -21,5 +21,19 @@
         <itunes:complete>complete state</itunes:complete>
         <itunes:block>block state</itunes:block>
         
+        <item>
+            <title>GloboTechCast EP 54 - Hacktoberfest na Globo. Como funciona?</title>
+            <itunes:author>Celso Inácio</itunes:author>
+            <itunes:season>1</itunes:season>
+            <itunes:episode>1</itunes:episode>
+            <itunes:episodeType>full</itunes:episodeType>
+            <itunes:explicit>false</itunes:explicit>
+            <link>https://celsoinacio.com.br/podcast/2023/10/02/hacktober-fest-globo.html</link>
+            <pubDate>Mon, 02 Oct 2023 00:00:00 +0000</pubDate>
+            <itunes:duration>2962.8</itunes:duration>
+            <enclosure url='https://celsoinacio.com.br/7oKSGeoXbkoRvjQSQif7bP' length='2962.8'/>
+            <description>&lt;p&gt;&lt;b&gt;english:&lt;/b&gt; In this episode i've participated together with people from tech area from Globo and we have spoken about Globo Hacktoberfest, one variation of global Hacktoberfest event.&lt;p&gt;&lt;p&gt;&lt;b&gt;portuguese:&lt;/b&gt; Neste episódio eu participei junto de outras pessoas da área de tecnologia na globo e falamos sobre o Hacktoberfest Globo, uma vertente do evento Hacktoberfest global.&lt;/p&gt;&lt;/p&gt;&lt;/p&gt;</description>
+        </item>
+        
     </channel>
 </rss>
