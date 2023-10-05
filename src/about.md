@@ -62,7 +62,7 @@ My name is Celso, i'm brazilian software engineer. Previously i worked in some t
       <div class="badges">
         <a href="https://github.com/subzero-cli/subzero/actions/workflows/ci.yml"  target="_blank"><img src="https://github.com/subzero-cli/subzero/actions/workflows/ci.yml/badge.svg"/></a>
         <a href="https://goreportcard.com/report/github.com/subzero-cli/subzero"  target="_blank"><img src="https://goreportcard.com/badge/github.com/subzero-cli/subzero"/></a>
-        <a href="https://github.com/subzero-cli/subzero"  target="_blank"><img src="https://img.shields.io/github/v/release/ceelsoin/subzero"/></a>
+        <a href="https://github.com/subzero-cli/subzero"  target="_blank"><img src="https://img.shields.io/github/v/release/subzero-cli/subzero"/></a>
         <a href="https://opensource.org/licenses/MIT"  target="_blank"><img src="https://img.shields.io/badge/License-Mit-blue.svg"/></a>
       </div>
 
