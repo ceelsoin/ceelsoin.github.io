@@ -6,6 +6,12 @@
   <link rel="stylesheet" href="{{ "/assets/css/style.css" | relative_url }}">
   <link rel="icon" type="image/png" href="{{ "/assets/favicon.png" | relative_url }}" />
   <link rel="stylesheet" href="{{ "/assets/css/magnific-popup.css" | relative_url }}">
+
+  {% for lang in site.languages %}
+    {% capture lang_href %}{{site.baseurl}}/{% if lang != site.default_lang %}{{ lang }}/{% endif %}{% if page.permalink_lang[lang] != '/' %}{{page.permalink_lang[lang]}}{% endif %}{% endcapture %}
+    <link rel="alternate" hreflang="{{ lang }}" {% static_href %}href="{{ lang_href }}"{% endstatic_href %} />
+  {% endfor %}
+
   {%- feed_meta -%}
   {%- if jekyll.environment == 'production' and site.google_analytics -%}
     {%- include google-analytics.html -%}
@@ -24,3 +30,4 @@
   </script>
 
 </head>
+
