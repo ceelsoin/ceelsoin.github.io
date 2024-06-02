@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html class="direction--ltr"lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Golang series: Chapter one - Installation | codewithcelso</title>
+<meta name="generator" content="Jekyll v3.9.3" />
+<meta property="og:title" content="Golang series: Chapter one - Installation" />
+<meta name="author" content="Celso Inácio" />
+<meta property="og:locale" content="en" />
+<meta name="description" content="Let’s start our first series at this blog. We will learn golang." />
+<meta property="og:description" content="Let’s start our first series at this blog. We will learn golang." />
+<link rel="canonical" href="https://celsoinacio.com.br/pt-BR/2024/06/02/golang-series-chapter-one-installation.html" />
+<meta property="og:url" content="https://celsoinacio.com.br/2024/06/02/golang-series-chapter-one-installation.html" />
+<meta property="og:site_name" content="codewithcelso" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2024-06-02T00:00:00+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Golang series: Chapter one - Installation" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Celso Inácio"},"dateModified":"2024-06-02T00:00:00+00:00","datePublished":"2024-06-02T00:00:00+00:00","description":"Let’s start our first series at this blog. We will learn golang.","headline":"Golang series: Chapter one - Installation","mainEntityOfPage":{"@type":"WebPage","@id":"https://celsoinacio.com.br/2024/06/02/golang-series-chapter-one-installation.html"},"url":"https://celsoinacio.com.br/2024/06/02/golang-series-chapter-one-installation.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/pt-BR/assets/css/style.css">
+  <link rel="icon" type="image/png" href="/pt-BR/assets/favicon.png" />
+  <link rel="stylesheet" href="/pt-BR/assets/css/magnific-popup.css">
+
+  
+    
+    <link rel="alternate" hreflang="en" href="/" />
+  
+    
+    <link rel="alternate" hreflang="pt-BR" href="/pt-BR/" />
+  <link type="application/atom+xml" rel="alternate" href="https://celsoinacio.com.br/pt-BR/rss.xml" title="codewithcelso" /><script src="https://code.jquery.com/jquery-3.2.0.min.js"></script> 
+  <script src="/assets/js/jquery.magnific-popup.js"></script>
+  <script src="//cdn.podlove.org/web-player/5.x/embed.js"></script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q3ZXG8RKS9"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-Q3ZXG8RKS9');
+  </script>
+
+</head>
+
+<body><div class="site-header">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/pt-BR/">codewithcelso<b class="command_prompt" style="color: #2271c0;"></b><b class="blinking_cursor">_</b></a>
+      
+    <span class="social_links">
+        <a rel="menu" class="menu-link" href="/pt-BR/">home</a>
+        <a rel="menu" class="menu-link" href="/pt-BR/about">about me</a>
+        <a rel="menu" class="menu-link" href="/pt-BR/books">books</a>
+        <a rel="menu" class="menu-link" href="/pt-BR/podcasts">podcasts</a>
+        
+        
+        <a class="color-cyan-hover" class="social-icon" href="https://twitter.com/ceelsoinacio"><i class="fab fa-twitter-square"></i></a>
+        
+        
+        
+        <a class="color-purple-hover" class="social-icon" href="https://github.com/ceelsoin"><i class="fab fa-github-square"></i></a>
+        
+        
+        
+        <a class="color-blue-hover" class="social-icon" href="https://www.linkedin.com/in/ceelsoinacio/"><i class="fab fa-linkedin"></i></a>
+        
+        
+    </span>
+  </div>
+</div>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        
+  <div class="author-box">
+
+
+<img src="
+    https://github.com/ceelsoin.png
+" class="author-avatar" alt="Avatar" />
+<div class="description">Hi, my name is Celso. I am a brazilian software engineer. I love to create and explore how to things are did. I work as a web software engineer at Globo (a brazilian television company) developging a serverless platform for their own cms. 
+</div>
+
+</div>
+
+
+<div class="post">
+  <h1 class="post-title">Golang series: Chapter one - Installation</h1>
+  
+  <div class="post-tags">
+      
+      <a class="tag" href="/pt-BR/tag/golang/">golang</a>
+      
+      <a class="tag" href="/pt-BR/tag/introduction/">introduction</a>
+      
+      <a class="tag" href="/pt-BR/tag/tutorial/">tutorial</a>
+      
+  </div>
+  
+  <div class="post-date">
+    Published on 02 Jun 2024
+    
+      
+    
+  </div>
+  
+  <noscript>
+    <div class="post-description">Let's start our first series at this blog. We will learn golang.</div>
+  </noscript>
+  <div id="animated-post-description" class="post-description" style="display: none;"></div>
+  
+  <p>Hey everyone, this is the first tutorial series in my blog. We will learn golang, or simply called Go.</p>
+
+<p>For follow this tutorial series you just will need a computer running Windows, mac or linux (any linux).  Because Go is a general purpose and multi platform language. Also Go is open source that means you can contribute for the language improvements and fixes.</p>
+
+<h2 id="why-i-chosen-go">Why i chosen Go?</h2>
+
+<p>I’ve hear about Go 5 years ago by one college friend that was working in a finance startup with Go. He just talked that was a very fast language and simply to start. I confess that i didn’t care much at the time…</p>
+
+<p>4 years ago, I started to work at Globo, a brazilian television company that use Go in most part of theis systems, for high traffic softwares, and i started my journey with Go.</p>
+
+<h2 id="is-hard-to-work-with-go">Is hard to work with Go?</h2>
+
+<p>My experience starting with Go, was very easy to learn. Specially if you already use another language. Go implements very simply techniques for computer programming and straight to the point concepts like threads, pointers and vars.</p>
+
+<p>Go dont use classes, but use packages, is like classes but without hierarchy, that simplify the code design.</p>
+
+<h2 id="reasons-to-learn-go">Reasons to learn Go?</h2>
+
+<ul>
+  <li>Easy to learn</li>
+  <li>Fast compilation (yes its a compilated language)</li>
+  <li>Static linging</li>
+  <li>Designed for easy work with concurrent programs</li>
+  <li>Adoption by market (Lot of companies using and hot opportunities)</li>
+  <li>A cute mascot called Gopher</li>
+  <li>Native garbage collection</li>
+  <li>Open source</li>
+</ul>
+
+<h2 id="popular-softwares-made-with-go">Popular softwares made with go</h2>
+<p>If are you a software developer or student you may use go everyday. Some products of our day was made with Go like docker, kubernetes, dropbox and a lot of companies use Go like netflix, google, uber, twitch paypal and more.</p>
+
+<h2 id="lets-start">Let’s Start!</h2>
+
+<p>For install go in your machine you need to do some steps, i will split by operating system, follow the steps of your operating system below:</p>
+
+<h3 id="macos">MacOS</h3>
+<p>For the first step, install homebrew as your package manager in mac (this will be very nice for install many developer tools at mac) running:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>/bin/bash <span class="nt">-c</span> <span class="s2">"</span><span class="si">$(</span>curl <span class="nt">-fsSL</span> https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh<span class="si">)</span><span class="s2">"</span>
+</code></pre></div></div>
+
+<p>Now you can install go using Homebrew</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>brew <span class="nb">install </span>go
+</code></pre></div></div>
+<h3 id="linux">Linux</h3>
+<p>For linux, depending of your distro follow the commands below for installation and the rest of the steps will be the same.</p>
+
+<h4 id="ubuntu--debian">Ubuntu / Debian</h4>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>apt update
+<span class="nb">sudo </span>apt <span class="nb">install</span> <span class="nt">-y</span> Golang
+</code></pre></div></div>
+
+<h4 id="fedora">Fedora</h4>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>dnf <span class="nb">install</span> <span class="nt">-y</span> golang
+</code></pre></div></div>
+<h4 id="archlinux">ArchLinux</h4>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>pacman <span class="nt">-S</span> go
+
+</code></pre></div></div>
+
+<h3 id="windows">Windows</h3>
+
+<p><small>If are you using WSL (Windows subsystem for linux) you can do the same steps for linux. If its not your case, follow the steps below:</small></p>
+
+<ol>
+  <li>
+    <p>Download the MSI installer from https://go.dev/dl/.</p>
+  </li>
+  <li>
+    <p>Double tap to start the installation and follow the prompts. This will install Go in location c:\Go and will also add the directory c:\Go\bin to your path environment variable.</p>
+  </li>
+  <li>
+    <p>Now you can do the command to see go installed on your windows machine:</p>
+  </li>
+</ol>
+
+<h2 id="checking-your-installation">Checking your installation</h2>
+
+<p>If everything was installed ok you can run go version for check if go was installed on your machine</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>go version
+</code></pre></div></div>
+
+<p>The output might be like this:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>➜  ~ go version
+go version go1.21.5 darwin/arm64
+</code></pre></div></div>
+
+<p>(The version or architecture can be different depending of your system or installed version, but its ok)</p>
+
+<p>If you can’t se version output, check your environment variables to ensure your installation can be found by your terminal.</p>
+
+
+</div>
+
+
+<div class="comments">
+<div id="disqus_thread"></div>
+<script>
+ var disqus_config = function () {
+     this.page.url = 'https://celsoinacio.com.br/2024/06/02/golang-series-chapter-one-installation.html';
+     this.page.identifier = '/2024/06/02/golang-series-chapter-one-installation';
+     this.page.title = 'Golang series: Chapter one - Installation';
+ };
+
+ (function() {  // REQUIRED CONFIGURATION VARIABLE: EDIT THE SHORTNAME BELOW
+     var d = document, s = d.createElement('script');
+
+     s.src = '//blog-from-celso-inacio.disqus.com/embed.js';
+
+     s.setAttribute('data-timestamp', +new Date());
+     (d.head || d.body).appendChild(s);
+ })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+</div>
+
+
+
+
+<div class="related">
+  <h2>related posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/pt-BR/podcast/2023/10/02/hacktober-fest-globo.html">
+            GloboTechCast EP 54 - Hacktoberfest na Globo. Como funciona?
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+  
+  <h2>all tags</h2>
+  <div class="tag-cloud"><a href="/pt-BR/tag/globo/" class="set-5">globo</a> <a href="/pt-BR/tag/golang/" class="set-5">golang</a> <a href="/pt-BR/tag/hacktoberfest/" class="set-5">hacktoberfest</a> <a href="/pt-BR/tag/introduction/" class="set-5">introduction</a> <a href="/pt-BR/tag/opensource/" class="set-5">opensource</a> <a href="/pt-BR/tag/podcast/" class="set-5">podcast</a> <a href="/pt-BR/tag/tech/" class="set-5">tech</a> <a href="/pt-BR/tag/tutorial/" class="set-5">tutorial</a></div>
+  
+
+
+
+
+<script>
+  let i = 0;
+  const text = 'Let's start our first series at this blog. We will learn golang.';
+  const speed = parseInt('50');
+  
+  function typeWriter() {
+    if (i < text.length) {
+      document.getElementById('animated-post-description').innerHTML += text.charAt(i);
+      i++;
+      setTimeout(typeWriter, speed);
+    }
+  }
+
+  document.getElementById('animated-post-description').style.display = 'initial';
+  typeWriter();
+
+  // Image modal
+  var $imgs = [];
+  $('img').each(function(idx) {
+    var obj = {
+      src: $(this).attr('src')
+    }
+    $imgs.push(obj);
+    var elem = $(this);
+    $(this).click(function() {
+      $('.modal').magnificPopup('open', idx);
+    });
+  });
+
+  $('.modal').magnificPopup({
+    items: $imgs,
+    type: 'image',
+    closeOnContentClick: true,
+    mainClass: 'mfp-img-mobile',
+    image: {
+      verticalFit: true
+    }
+    
+  });
+</script>
+
+      </div>
+    </main><footer class="site-footer">
+  <div class="wrapper">
+    <div class="credits"><a href="https://github.com/bitbrain/jekyll-dash">dash</a> theme for Jekyll by <a href="https://github.com/bitbrain">bitbrain</a> made with <i class="fas fa-heart"></i><!-- <div class="toggleWrapper">
+    <input type="checkbox" class="dn" id="theme-toggle" onclick="modeSwitcher()" checked />
+    <label for="theme-toggle" class="toggle">
+    <span class="toggle__handler">
+      <span class="crater crater--1"></span>
+      <span class="crater crater--2"></span>
+      <span class="crater crater--3"></span>
+    </span>
+        <span class="star star--1"></span>
+        <span class="star star--2"></span>
+        <span class="star star--3"></span>
+        <span class="star star--4"></span>
+        <span class="star star--5"></span>
+        <span class="star star--6"></span>
+    </label>
+</div> -->
+<script type="text/javascript">
+const theme = localStorage.getItem('theme');
+
+// if (theme === "light") {
+    // document.documentElement.setAttribute('data-theme', 'light');
+// } else {
+    document.documentElement.setAttribute('data-theme', 'dark');
+// }
+const userPrefers = getComputedStyle(document.documentElement).getPropertyValue('content');
+
+function activateDarkTheme() {
+    document.getElementById('theme-toggle').checked = true;
+    document.documentElement.setAttribute('data-theme', 'dark');
+    document.documentElement.classList.add('theme--dark');
+    document.documentElement.classList.remove('theme--light');
+	document.getElementById("theme-toggle").className = 'light';
+	window.localStorage.setItem('theme', 'dark');
+}
+
+function activateLightTheme() {
+    document.getElementById('theme-toggle').checked = false;
+    document.documentElement.setAttribute('data-theme', 'light');
+    document.documentElement.classList.add('theme--light');
+    document.documentElement.classList.remove('theme--dark');
+	document.getElementById("theme-toggle").className = 'dark';
+	window.localStorage.setItem('theme', 'light');
+}
+
+// if (theme === "dark") {
+//     activateDarkTheme();
+// } else if (theme === "light") {
+//     activateLightTheme();
+// } else if  (userPrefers === "light") {
+//     activateDarkTheme();
+// } else {
+//     activateLightTheme();
+// }
+
+activateLightTheme()
+
+function modeSwitcher() {
+	let currentMode = document.documentElement.getAttribute('data-theme');
+	if (currentMode === "dark") {
+	    activateLightTheme();
+	} else {
+	    activateDarkTheme();
+	}
+}
+</script></div>
+  </div>
+</footer>
+
+
+<script>
+      window.FontAwesomeConfig = {
+        searchPseudoElements: true
+      }
+    </script>
+  </body>
+
+</html>
+

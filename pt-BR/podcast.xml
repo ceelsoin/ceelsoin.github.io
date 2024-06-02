@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='utf-8'?>
+<rss version='2.0' xmlns:content='http://purl.org/rss/1.0/modules/content/' xmlns:itunes='http://www.itunes.com/dtds/podcast-1.0.dtd'>
+    <channel>
+        <title>title</title>
+        <description>description</description>
+        <link>https://celsoinacio.com.br/</link>
+        <itunes:author>podcast author</itunes:author>
+        <itunes:email>podcast email</itunes:email>
+        <itunes:image href='https://celsoinacio.com.br/%5B%22podcast%20logo%20url%22%5D'/>
+        <language>language</language>
+        <copyright>copyright © podcast author</copyright>
+        <itunes:owner>
+            <itunes:name>podcast author</itunes:name>
+            <itunes:email>podcast email</itunes:email>
+        </itunes:owner>
+        <itunes:category text='category'>
+            <itunes:category text='subcategory'/>
+        </itunes:category>
+        <itunes:type>podcast type</itunes:type>
+        <itunes:explicit>explicit state</itunes:explicit>
+        <itunes:complete>complete state</itunes:complete>
+        <itunes:block>block state</itunes:block>
+        
+        <item>
+            <title>GloboTechCast EP 54 - Hacktoberfest na Globo. Como funciona?</title>
+            <itunes:author>Celso Inácio</itunes:author>
+            <itunes:season>1</itunes:season>
+            <itunes:episode>1</itunes:episode>
+            <itunes:episodeType>full</itunes:episodeType>
+            <itunes:explicit>false</itunes:explicit>
+            <link>https://celsoinacio.com.br/podcast/2023/10/02/hacktober-fest-globo.html</link>
+            <pubDate>Mon, 02 Oct 2023 00:00:00 +0000</pubDate>
+            <itunes:duration>2962.8</itunes:duration>
+            <enclosure url='https://celsoinacio.com.br/7oKSGeoXbkoRvjQSQif7bP' length='2962.8'/>
+            <description>&lt;p&gt;&lt;b&gt;english:&lt;/b&gt; In this episode i've participated together with people from tech area from Globo and we have spoken about Globo Hacktoberfest, one variation of global Hacktoberfest event.&lt;p&gt;&lt;p&gt;&lt;b&gt;portuguese:&lt;/b&gt; Neste episódio eu participei junto de outras pessoas da área de tecnologia na globo e falamos sobre o Hacktoberfest Globo, uma vertente do evento Hacktoberfest global.&lt;/p&gt;&lt;/p&gt;&lt;/p&gt;</description>
+        </item>
+        
+    </channel>
+</rss>
