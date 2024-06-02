@@ -9,6 +9,7 @@ gem "jekyll"
 # If you have any plugins, put them here!
 group :jekyll_plugins do
   gem "jekyll-feed", "~> 0.6"
+  gem "jekyll-polyglot"
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
@@ -32,3 +33,4 @@ gem 'jekyll-sitemap'
 gem 'liquid_pluralize'
 gem 'liquid_reading_time'
 gem 'jekyll-gist'
+

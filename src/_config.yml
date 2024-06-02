@@ -2,7 +2,7 @@ title: codewithcelso
 author: Celso Inácio
 email: falecom@celsoinacio.com.br
 description: > # this means to ignore newlines until "show_exerpts:"
-  Hi, my name is Celso. I am a brazilian software architect. I usually immerse my mind in computing, books and music. I've started to develop things since 9 years ago when i was a teenager and now i love to do this.
+  Hi, my name is Celso. I am a brazilian software engineer. I love to create and explore how to things are did. I work as a web software engineer at Globo (a brazilian television company) developging a serverless platform for their own cms. 
 show_excerpts: true # set to true to show excerpts on the homepage
 
 
@@ -15,6 +15,12 @@ tag_permalink_style: pretty
 tag_page_layout: tag_page
 tag_page_dir: tag
 
+# polyglot
+languages: ["en", "pt-BR"]
+default_lang: "en"
+exclude_from_localization: ["javascript", "images", "css", "public"]
+parallel_localization: true
+
 # jekyll-dash date format
 # refer to http://shopify.github.io/liquid/filters/date/ if you want to customize this
 dash:
@@ -25,7 +31,7 @@ dash:
   disqus:
     shortname: blog-from-celso-inacio
 
-  # generate social links in footer
+  # generate ooter
   # supported colors: green, red, orange, blue, cyan, pink, teal, yellow, indigo, purple
   social_links:
     - url: https://twitter.com/ceelsoinacio
@@ -48,10 +54,8 @@ dash:
   rtl: false
 
   # Replaces the default avatar provider (gravatar)
-  # avatar_source: github
-  # github_username: ceelsoin
-  #avatar_source: local
-  #avatar_path: /assets/avatar.png
+  avatar_source: github
+  github_username: ceelsoin
 
 podcast:
   title: [title]
@@ -84,3 +88,5 @@ plugins:
  - liquid_pluralize
  - liquid_reading_time
  - jekyll-gist
+ - jekyll-polyglot
+
