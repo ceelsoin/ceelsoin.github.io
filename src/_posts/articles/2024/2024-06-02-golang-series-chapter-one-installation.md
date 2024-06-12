@@ -1,107 +1,157 @@
 ---
 layout: post
-title:  "Golang series: Chapter one - Installation"
+title:  "Golang series: Chapter one - Installation & Introduction"
 description: Let's start our first series at this blog. We will learn golang.
 tags: golang introduction tutorial
 lang: en
-# image: 
+image: /assets/img/articles/2024/06/golang.webp
 ---
 
-Hey everyone, this is the first tutorial series in my blog. We will learn golang, or simply called Go. 
+# Getting Started with Golang (Go)
 
-For follow this tutorial series you just will need a computer running Windows, mac or linux (any linux).  Because Go is a general purpose and multi platform language. Also Go is open source that means you can contribute for the language improvements and fixes. 
+![Golang (Go) programming language logo](/assets/img/articles/2024/06/golang.webp)
 
-## Why i chosen Go?
+Hey everyone! Welcome to the first tutorial in my Go series. In this series, we’ll dive into **Golang**, or simply **Go**—a powerful, open-source programming language developed by Google.
 
-I've hear about Go 5 years ago by one college friend that was working in a finance startup with Go. He just talked that was a very fast language and simply to start. I confess that i didn't care much at the time...
+Whether you're on **Windows**, **macOS**, or **Linux**, you can follow along. Go is a cross-platform, general-purpose language with fast compilation, great concurrency support, and a vibrant community. It's also open source—so you can even contribute to its evolution!
 
-4 years ago, I started to work at Globo, a brazilian television company that use Go in most part of theis systems, for high traffic softwares, and i started my journey with Go.
+---
 
-## Is hard to work with Go?
+## Why I Chose Go
 
-My experience starting with Go, was very easy to learn. Specially if you already use another language. Go implements very simply techniques for computer programming and straight to the point concepts like threads, pointers and vars.
+I first heard about Go five years ago from a college friend working at a fintech startup. He said Go was super fast and easy to get into. I didn’t pay much attention back then.
 
-Go dont use classes, but use packages, is like classes but without hierarchy, that simplify the code design. 
+Fast forward a year later, I started working at **Globo**, one of Brazil’s biggest media companies. Most of their backend systems are written in Go—handling high-traffic services with ease. That’s when I seriously began learning and working with Go, and I haven’t looked back since.
 
+---
 
-## Reasons to learn Go?
+## Is Go Hard to Learn?
 
-- Easy to learn
-- Fast compilation (yes its a compilated language)
-- Static linging
-- Designed for easy work with concurrent programs
-- Adoption by market (Lot of companies using and hot opportunities)
-- A cute mascot called Gopher
-- Native garbage collection
-- Open source
+Not at all. If you’ve worked with any other programming language, Go is straightforward to pick up.
 
-## Popular softwares made with go
-If are you a software developer or student you may use go everyday. Some products of our day was made with Go like docker, kubernetes, dropbox and a lot of companies use Go like netflix, google, uber, twitch paypal and more.
+Go avoids unnecessary complexity—it doesn’t have classes or inheritance. Instead, it uses **packages** and **interfaces**, promoting clean and simple design patterns.
 
-## Let's Start!
+It also introduces modern concepts like goroutines (for concurrency), pointers (without the pain), and efficient memory management through garbage collection.
 
-For install go in your machine you need to do some steps, i will split by operating system, follow the steps of your operating system below:
+---
 
-### MacOS
- For the first step, install homebrew as your package manager in mac (this will be very nice for install many developer tools at mac) running:
+## Why Learn Go?
+
+Here are a few reasons why Go might be the right language for you:
+
+- ✅ Easy to learn and read
+- ⚡ Fast compilation (Go is compiled to native binaries)
+- 🔗 Static linking (easy deployment without worrying about dependencies)
+- 🔄 Built-in concurrency with goroutines and channels
+- 🚀 Widely adopted by the industry (used by companies like Google, Netflix, Uber)
+- 🐹 A cute mascot called Gopher 😄
+- 🧹 Garbage collection built-in
+- 🌍 Fully open source and backed by a strong community
+- 🛠️ Excellent tooling (`gofmt`, `vet`, `staticcheck`, and more)
+
+---
+
+## Popular Products Built with Go
+
+You might already be using products powered by Go without even realizing it! Some notable examples include:
+
+- **Docker** – Containerization platform
+- **Kubernetes** – Container orchestration system by Google
+- **Dropbox** – Migrated performance-critical components from Python to Go
+- **Twitch, Netflix, Uber, PayPal** – All use Go in production
+
+---
+
+## Installing Go
+
+Go can be installed on **macOS**, **Linux**, and **Windows**. Just follow the instructions for your OS below.
+
+### macOS
+
+1. Install [Homebrew](https://brew.sh/) if you haven’t already:
 
 ```bash
-$ /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 
-Now you can install go using Homebrew
+2. Install Go:
 
 ```bash
-$ brew install go
+brew install go
 ```
+
 ### Linux
-For linux, depending of your distro follow the commands below for installation and the rest of the steps will be the same.
+
+Depending on your Linux distribution, use one of the following:
 
 #### Ubuntu / Debian
-```sh
+
+```bash
 sudo apt update
-sudo apt install -y Golang
+sudo apt install -y golang
 ```
 
 #### Fedora
 
-```sh
+```bash
 sudo dnf install -y golang
 ```
-#### ArchLinux
 
-```sh
+#### Arch Linux
+
+```bash
 sudo pacman -S go
+```
 
+Alternatively, you can install Go manually:
+
+1. Download the binary from [https://go.dev/dl/](https://go.dev/dl/)
+2. Extract it to `/usr/local`:
+
+```bash
+sudo tar -C /usr/local -xzf go1.x.x.linux-amd64.tar.gz
+```
+
+3. Add Go to your path by editing `~/.profile`, `~/.bashrc`, or `~/.zshrc`:
+
+```bash
+export PATH=$PATH:/usr/local/go/bin
 ```
 
 ### Windows
 
-<small>If are you using WSL (Windows subsystem for linux) you can do the same steps for linux. If its not your case, follow the steps below:</small>
+<small>If you're using **WSL (Windows Subsystem for Linux)**, follow the Linux steps above.</small>
 
-1. Download the MSI installer from https://go.dev/dl/. 
+Otherwise:
 
-2. Double tap to start the installation and follow the prompts. This will install Go in location c:\Go and will also add the directory c:\Go\bin to your path environment variable.
+1. Download the **MSI Installer** from [https://go.dev/dl/](https://go.dev/dl/)
+2. Double-click to run the installer and follow the instructions
+3. It will install Go at `C:\Go` and update your `PATH` environment variable automatically
 
-3. Now you can do the command to see go installed on your windows machine:
+---
 
+## Verifying Your Installation
 
-## Checking your installation
-
-If everything was installed ok you can run go version for check if go was installed on your machine
+To check if Go is installed correctly, run the following in your terminal or command prompt:
 
 ```bash
-$ go version
+go version
 ```
 
-The output might be like this: 
+Expected output:
 
 ```bash
-➜  ~ go version
 go version go1.21.5 darwin/arm64
 ```
 
-(The version or architecture can be different depending of your system or installed version, but its ok)
+> The version and architecture may vary depending on your OS or Go version.
 
-If you can't se version output, check your environment variables to ensure your installation can be found by your terminal.
+If you don’t see a version, double-check that the Go binary is available in your `PATH`.
 
+---
+
+## What’s Next?
+
+In the next tutorial, we’ll write our first **"Hello, World!"** program using Go and explore how Go handles compilation, error messages, and project structure.
+
+Thanks for reading! If you found this helpful, feel free to share and leave your feedback. Let’s build something cool with Go! 🧑‍💻🚀
