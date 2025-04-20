@@ -3,9 +3,9 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>Golang series: Chapter one - Installation | codewithcelso</title>
+<title>Golang series: Chapter one - Installation &amp; Introduction | codewithcelso</title>
 <meta name="generator" content="Jekyll v3.9.3" />
-<meta property="og:title" content="Golang series: Chapter one - Installation" />
+<meta property="og:title" content="Golang series: Chapter one - Installation &amp; Introduction" />
 <meta name="author" content="Celso Inácio" />
 <meta property="og:locale" content="en" />
 <meta name="description" content="Let’s start our first series at this blog. We will learn golang." />
@@ -13,12 +13,14 @@
 <link rel="canonical" href="https://celsoinacio.com.br/pt-BR/2024/06/02/golang-series-chapter-one-installation.html" />
 <meta property="og:url" content="https://celsoinacio.com.br/2024/06/02/golang-series-chapter-one-installation.html" />
 <meta property="og:site_name" content="codewithcelso" />
+<meta property="og:image" content="https://celsoinacio.com.br/assets/img/articles/2024/06/golang.webp" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2024-06-02T00:00:00+00:00" />
-<meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Golang series: Chapter one - Installation" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="twitter:image" content="https://celsoinacio.com.br/assets/img/articles/2024/06/golang.webp" />
+<meta property="twitter:title" content="Golang series: Chapter one - Installation &amp; Introduction" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Celso Inácio"},"dateModified":"2024-06-02T00:00:00+00:00","datePublished":"2024-06-02T00:00:00+00:00","description":"Let’s start our first series at this blog. We will learn golang.","headline":"Golang series: Chapter one - Installation","mainEntityOfPage":{"@type":"WebPage","@id":"https://celsoinacio.com.br/2024/06/02/golang-series-chapter-one-installation.html"},"url":"https://celsoinacio.com.br/2024/06/02/golang-series-chapter-one-installation.html"}</script>
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Celso Inácio"},"dateModified":"2024-06-02T00:00:00+00:00","datePublished":"2024-06-02T00:00:00+00:00","description":"Let’s start our first series at this blog. We will learn golang.","headline":"Golang series: Chapter one - Installation &amp; Introduction","image":"https://celsoinacio.com.br/assets/img/articles/2024/06/golang.webp","mainEntityOfPage":{"@type":"WebPage","@id":"https://celsoinacio.com.br/2024/06/02/golang-series-chapter-one-installation.html"},"url":"https://celsoinacio.com.br/2024/06/02/golang-series-chapter-one-installation.html"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/pt-BR/assets/css/style.css">
   <link rel="icon" type="image/png" href="/pt-BR/assets/favicon.png" />
@@ -79,14 +81,14 @@
 <img src="
     https://github.com/ceelsoin.png
 " class="author-avatar" alt="Avatar" />
-<div class="description">Hi, my name is Celso. I am a Brazilian software engineer. I love to create and explore how things are made. I work as a web software engineer at Globo, a Brazilian television company, developing a serverless platform for their CMS.
+<div class="description">Hi, I'm Celso, a passionate Brazilian software engineer who thrives on creating and exploring innovative solutions. I specialize in web engineering and work at Globo, Brazil's leading television company, where I'm shaping the future of their CMS with a cutting-edge serverless platform. Every challenge is an opportunity to learn and push boundaries, and I’m constantly inspired to build systems that make a real impact.
 </div>
 
 </div>
 
 
 <div class="post">
-  <h1 class="post-title">Golang series: Chapter one - Installation</h1>
+  <h1 class="post-title">Golang series: Chapter one - Installation & Introduction</h1>
   
   <div class="post-tags">
       
@@ -110,103 +112,161 @@
   </noscript>
   <div id="animated-post-description" class="post-description" style="display: none;"></div>
   
-  <p>Hey everyone, this is the first tutorial series in my blog. We will learn golang, or simply called Go.</p>
+  <h1 id="getting-started-with-golang-go">Getting Started with Golang (Go)</h1>
 
-<p>For follow this tutorial series you just will need a computer running Windows, mac or linux (any linux).  Because Go is a general purpose and multi platform language. Also Go is open source that means you can contribute for the language improvements and fixes.</p>
+<p><img src="/assets/img/articles/2024/06/golang.webp" alt="Golang (Go) programming language logo" /></p>
 
-<h2 id="why-i-chosen-go">Why i chosen Go?</h2>
+<p>Hey everyone! Welcome to the first tutorial in my Go series. In this series, we’ll dive into <strong>Golang</strong>, or simply <strong>Go</strong>—a powerful, open-source programming language developed by Google.</p>
 
-<p>I’ve hear about Go 5 years ago by one college friend that was working in a finance startup with Go. He just talked that was a very fast language and simply to start. I confess that i didn’t care much at the time…</p>
+<p>Whether you’re on <strong>Windows</strong>, <strong>macOS</strong>, or <strong>Linux</strong>, you can follow along. Go is a cross-platform, general-purpose language with fast compilation, great concurrency support, and a vibrant community. It’s also open source—so you can even contribute to its evolution!</p>
 
-<p>4 years ago, I started to work at Globo, a brazilian television company that use Go in most part of theis systems, for high traffic softwares, and i started my journey with Go.</p>
+<hr />
 
-<h2 id="is-hard-to-work-with-go">Is hard to work with Go?</h2>
+<h2 id="why-i-chose-go">Why I Chose Go</h2>
 
-<p>My experience starting with Go, was very easy to learn. Specially if you already use another language. Go implements very simply techniques for computer programming and straight to the point concepts like threads, pointers and vars.</p>
+<p>I first heard about Go five years ago from a college friend working at a fintech startup. He said Go was super fast and easy to get into. I didn’t pay much attention back then.</p>
 
-<p>Go dont use classes, but use packages, is like classes but without hierarchy, that simplify the code design.</p>
+<p>Fast forward a year later, I started working at <strong>Globo</strong>, one of Brazil’s biggest media companies. Most of their backend systems are written in Go—handling high-traffic services with ease. That’s when I seriously began learning and working with Go, and I haven’t looked back since.</p>
 
-<h2 id="reasons-to-learn-go">Reasons to learn Go?</h2>
+<hr />
+
+<h2 id="is-go-hard-to-learn">Is Go Hard to Learn?</h2>
+
+<p>Not at all. If you’ve worked with any other programming language, Go is straightforward to pick up.</p>
+
+<p>Go avoids unnecessary complexity—it doesn’t have classes or inheritance. Instead, it uses <strong>packages</strong> and <strong>interfaces</strong>, promoting clean and simple design patterns.</p>
+
+<p>It also introduces modern concepts like goroutines (for concurrency), pointers (without the pain), and efficient memory management through garbage collection.</p>
+
+<hr />
+
+<h2 id="why-learn-go">Why Learn Go?</h2>
+
+<p>Here are a few reasons why Go might be the right language for you:</p>
 
 <ul>
-  <li>Easy to learn</li>
-  <li>Fast compilation (yes its a compilated language)</li>
-  <li>Static linging</li>
-  <li>Designed for easy work with concurrent programs</li>
-  <li>Adoption by market (Lot of companies using and hot opportunities)</li>
-  <li>A cute mascot called Gopher</li>
-  <li>Native garbage collection</li>
-  <li>Open source</li>
+  <li>✅ Easy to learn and read</li>
+  <li>⚡ Fast compilation (Go is compiled to native binaries)</li>
+  <li>🔗 Static linking (easy deployment without worrying about dependencies)</li>
+  <li>🔄 Built-in concurrency with goroutines and channels</li>
+  <li>🚀 Widely adopted by the industry (used by companies like Google, Netflix, Uber)</li>
+  <li>🐹 A cute mascot called Gopher 😄</li>
+  <li>🧹 Garbage collection built-in</li>
+  <li>🌍 Fully open source and backed by a strong community</li>
+  <li>🛠️ Excellent tooling (<code class="language-plaintext highlighter-rouge">gofmt</code>, <code class="language-plaintext highlighter-rouge">vet</code>, <code class="language-plaintext highlighter-rouge">staticcheck</code>, and more)</li>
 </ul>
 
-<h2 id="popular-softwares-made-with-go">Popular softwares made with go</h2>
-<p>If are you a software developer or student you may use go everyday. Some products of our day was made with Go like docker, kubernetes, dropbox and a lot of companies use Go like netflix, google, uber, twitch paypal and more.</p>
+<hr />
 
-<h2 id="lets-start">Let’s Start!</h2>
+<h2 id="popular-products-built-with-go">Popular Products Built with Go</h2>
 
-<p>For install go in your machine you need to do some steps, i will split by operating system, follow the steps of your operating system below:</p>
+<p>You might already be using products powered by Go without even realizing it! Some notable examples include:</p>
 
-<h3 id="macos">MacOS</h3>
-<p>For the first step, install homebrew as your package manager in mac (this will be very nice for install many developer tools at mac) running:</p>
+<ul>
+  <li><strong>Docker</strong> – Containerization platform</li>
+  <li><strong>Kubernetes</strong> – Container orchestration system by Google</li>
+  <li><strong>Dropbox</strong> – Migrated performance-critical components from Python to Go</li>
+  <li><strong>Twitch, Netflix, Uber, PayPal</strong> – All use Go in production</li>
+</ul>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>/bin/bash <span class="nt">-c</span> <span class="s2">"</span><span class="si">$(</span>curl <span class="nt">-fsSL</span> https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh<span class="si">)</span><span class="s2">"</span>
+<hr />
+
+<h2 id="installing-go">Installing Go</h2>
+
+<p>Go can be installed on <strong>macOS</strong>, <strong>Linux</strong>, and <strong>Windows</strong>. Just follow the instructions for your OS below.</p>
+
+<h3 id="macos">macOS</h3>
+
+<ol>
+  <li>Install <a href="https://brew.sh/">Homebrew</a> if you haven’t already:</li>
+</ol>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/bin/bash <span class="nt">-c</span> <span class="s2">"</span><span class="si">$(</span>curl <span class="nt">-fsSL</span> https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh<span class="si">)</span><span class="s2">"</span>
 </code></pre></div></div>
 
-<p>Now you can install go using Homebrew</p>
+<ol>
+  <li>Install Go:</li>
+</ol>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>brew <span class="nb">install </span>go
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew <span class="nb">install </span>go
 </code></pre></div></div>
+
 <h3 id="linux">Linux</h3>
-<p>For linux, depending of your distro follow the commands below for installation and the rest of the steps will be the same.</p>
+
+<p>Depending on your Linux distribution, use one of the following:</p>
 
 <h4 id="ubuntu--debian">Ubuntu / Debian</h4>
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>apt update
-<span class="nb">sudo </span>apt <span class="nb">install</span> <span class="nt">-y</span> Golang
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>apt update
+<span class="nb">sudo </span>apt <span class="nb">install</span> <span class="nt">-y</span> golang
 </code></pre></div></div>
 
 <h4 id="fedora">Fedora</h4>
 
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>dnf <span class="nb">install</span> <span class="nt">-y</span> golang
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>dnf <span class="nb">install</span> <span class="nt">-y</span> golang
 </code></pre></div></div>
-<h4 id="archlinux">ArchLinux</h4>
 
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>pacman <span class="nt">-S</span> go
+<h4 id="arch-linux">Arch Linux</h4>
 
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>pacman <span class="nt">-S</span> go
+</code></pre></div></div>
+
+<p>Alternatively, you can install Go manually:</p>
+
+<ol>
+  <li>Download the binary from <a href="https://go.dev/dl/">https://go.dev/dl/</a></li>
+  <li>Extract it to <code class="language-plaintext highlighter-rouge">/usr/local</code>:</li>
+</ol>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo tar</span> <span class="nt">-C</span> /usr/local <span class="nt">-xzf</span> go1.x.x.linux-amd64.tar.gz
+</code></pre></div></div>
+
+<ol>
+  <li>Add Go to your path by editing <code class="language-plaintext highlighter-rouge">~/.profile</code>, <code class="language-plaintext highlighter-rouge">~/.bashrc</code>, or <code class="language-plaintext highlighter-rouge">~/.zshrc</code>:</li>
+</ol>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:/usr/local/go/bin
 </code></pre></div></div>
 
 <h3 id="windows">Windows</h3>
 
-<p><small>If are you using WSL (Windows subsystem for linux) you can do the same steps for linux. If its not your case, follow the steps below:</small></p>
+<p><small>If you’re using <strong>WSL (Windows Subsystem for Linux)</strong>, follow the Linux steps above.</small></p>
+
+<p>Otherwise:</p>
 
 <ol>
-  <li>
-    <p>Download the MSI installer from https://go.dev/dl/.</p>
-  </li>
-  <li>
-    <p>Double tap to start the installation and follow the prompts. This will install Go in location c:\Go and will also add the directory c:\Go\bin to your path environment variable.</p>
-  </li>
-  <li>
-    <p>Now you can do the command to see go installed on your windows machine:</p>
-  </li>
+  <li>Download the <strong>MSI Installer</strong> from <a href="https://go.dev/dl/">https://go.dev/dl/</a></li>
+  <li>Double-click to run the installer and follow the instructions</li>
+  <li>It will install Go at <code class="language-plaintext highlighter-rouge">C:\Go</code> and update your <code class="language-plaintext highlighter-rouge">PATH</code> environment variable automatically</li>
 </ol>
 
-<h2 id="checking-your-installation">Checking your installation</h2>
+<hr />
 
-<p>If everything was installed ok you can run go version for check if go was installed on your machine</p>
+<h2 id="verifying-your-installation">Verifying Your Installation</h2>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>go version
+<p>To check if Go is installed correctly, run the following in your terminal or command prompt:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>go version
 </code></pre></div></div>
 
-<p>The output might be like this:</p>
+<p>Expected output:</p>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>➜  ~ go version
-go version go1.21.5 darwin/arm64
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>go version go1.21.5 darwin/arm64
 </code></pre></div></div>
 
-<p>(The version or architecture can be different depending of your system or installed version, but its ok)</p>
+<blockquote>
+  <p>The version and architecture may vary depending on your OS or Go version.</p>
+</blockquote>
 
-<p>If you can’t se version output, check your environment variables to ensure your installation can be found by your terminal.</p>
+<p>If you don’t see a version, double-check that the Go binary is available in your <code class="language-plaintext highlighter-rouge">PATH</code>.</p>
 
+<hr />
+
+<h2 id="whats-next">What’s Next?</h2>
+
+<p>In the next tutorial, we’ll write our first <strong>“Hello, World!”</strong> program using Go and explore how Go handles compilation, error messages, and project structure.</p>
+
+<p>Thanks for reading! If you found this helpful, feel free to share and leave your feedback. Let’s build something cool with Go! 🧑‍💻🚀</p>
 
 </div>
 
@@ -217,7 +277,7 @@ go version go1.21.5 darwin/arm64
  var disqus_config = function () {
      this.page.url = 'https://celsoinacio.com.br/2024/06/02/golang-series-chapter-one-installation.html';
      this.page.identifier = '/2024/06/02/golang-series-chapter-one-installation';
-     this.page.title = 'Golang series: Chapter one - Installation';
+     this.page.title = 'Golang series: Chapter one - Installation & Introduction';
  };
 
  (function() {  // REQUIRED CONFIGURATION VARIABLE: EDIT THE SHORTNAME BELOW
@@ -242,8 +302,24 @@ go version go1.21.5 darwin/arm64
     
       <li>
         <h3>
-          <a href="/pt-BR/podcast/2023/10/02/hacktober-fest-globo.html">
-            GloboTechCast EP 54 - Hacktoberfest na Globo. Como funciona?
+          <a href="/pt-BR/2024/07/03/golang-series-chapter-four-constants.html">
+            Golang series: Chapter Four - Connstants in Go!
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/pt-BR/2024/06/20/golang-series-chapter-three-variables-and-types.html">
+            Golang series: Chapter Three - A Complete Guide to use variables
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/pt-BR/2024/06/12/golang-series-chapter-two-hello-world.html">
+            Golang series: Chapter Two - Writing and Running Your First Go Program (Hello World)
           </a>
         </h3>
       </li>
@@ -256,7 +332,7 @@ go version go1.21.5 darwin/arm64
 
   
   <h2>all tags</h2>
-  <div class="tag-cloud"><a href="/pt-BR/tag/globo/" class="set-5">globo</a> <a href="/pt-BR/tag/golang/" class="set-5">golang</a> <a href="/pt-BR/tag/hacktoberfest/" class="set-5">hacktoberfest</a> <a href="/pt-BR/tag/introduction/" class="set-5">introduction</a> <a href="/pt-BR/tag/opensource/" class="set-5">opensource</a> <a href="/pt-BR/tag/podcast/" class="set-5">podcast</a> <a href="/pt-BR/tag/tech/" class="set-5">tech</a> <a href="/pt-BR/tag/tutorial/" class="set-5">tutorial</a></div>
+  <div class="tag-cloud"><a href="/pt-BR/tag/globo/" class="set-1">globo</a> <a href="/pt-BR/tag/golang/" class="set-5">golang</a> <a href="/pt-BR/tag/hacktoberfest/" class="set-1">hacktoberfest</a> <a href="/pt-BR/tag/introduction/" class="set-5">introduction</a> <a href="/pt-BR/tag/opensource/" class="set-1">opensource</a> <a href="/pt-BR/tag/podcast/" class="set-1">podcast</a> <a href="/pt-BR/tag/tech/" class="set-1">tech</a> <a href="/pt-BR/tag/tutorial/" class="set-5">tutorial</a></div>
   
 
 

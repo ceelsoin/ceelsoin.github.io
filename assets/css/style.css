@@ -4749,6 +4749,7 @@ html.direction--rtl pre {
   font-style: italic;
   display: inline-flex; }
   .author-box > .description {
+    text-align: justify;
     flex: 8; }
   .author-box > .author-avatar {
     margin-right: 1em;

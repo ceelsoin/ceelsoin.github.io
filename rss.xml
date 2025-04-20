@@ -1,100 +1,892 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.3">Jekyll</generator><link href="https://celsoinacio.com.br/rss.xml" rel="self" type="application/atom+xml" /><link href="https://celsoinacio.com.br/" rel="alternate" type="text/html" /><updated>2024-08-16T21:23:04+00:00</updated><id>https://celsoinacio.com.br/rss.xml</id><title type="html">codewithcelso</title><subtitle>Hi, my name is Celso. I am a Brazilian software engineer. I love to create and explore how things are made. I work as a web software engineer at Globo, a Brazilian television company, developing a serverless platform for their CMS.
-</subtitle><author><name>Celso Inácio</name></author><entry xml:lang="en"><title type="html">Golang series: Chapter one - Installation</title><link href="https://celsoinacio.com.br/2024/06/02/golang-series-chapter-one-installation.html" rel="alternate" type="text/html" title="Golang series: Chapter one - Installation" /><published>2024-06-02T00:00:00+00:00</published><updated>2024-06-02T00:00:00+00:00</updated><id>https://celsoinacio.com.br/2024/06/02/golang-series-chapter-one-installation</id><content type="html" xml:base="https://celsoinacio.com.br/2024/06/02/golang-series-chapter-one-installation.html"><![CDATA[<p>Hey everyone, this is the first tutorial series in my blog. We will learn golang, or simply called Go.</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.3">Jekyll</generator><link href="https://celsoinacio.com.br/rss.xml" rel="self" type="application/atom+xml" /><link href="https://celsoinacio.com.br/" rel="alternate" type="text/html" /><updated>2025-04-20T01:14:42+00:00</updated><id>https://celsoinacio.com.br/rss.xml</id><title type="html">codewithcelso</title><subtitle>Hi, I'm Celso, a passionate Brazilian software engineer who thrives on creating and exploring innovative solutions. I specialize in web engineering and work at Globo, Brazil's leading television company, where I'm shaping the future of their CMS with a cutting-edge serverless platform. Every challenge is an opportunity to learn and push boundaries, and I’m constantly inspired to build systems that make a real impact.
+</subtitle><author><name>Celso Inácio</name></author><entry xml:lang="en"><title type="html">Golang series: Chapter Four - Connstants in Go!</title><link href="https://celsoinacio.com.br/2024/07/03/golang-series-chapter-four-constants.html" rel="alternate" type="text/html" title="Golang series: Chapter Four - Connstants in Go!" /><published>2024-07-03T00:00:00+00:00</published><updated>2024-07-03T00:00:00+00:00</updated><id>https://celsoinacio.com.br/2024/07/03/golang-series-chapter-four-constants</id><content type="html" xml:base="https://celsoinacio.com.br/2024/07/03/golang-series-chapter-four-constants.html"><![CDATA[<h1 id="constants-in-go-a-modern-guide">Constants in Go: A Modern Guide</h1>
 
-<p>For follow this tutorial series you just will need a computer running Windows, mac or linux (any linux).  Because Go is a general purpose and multi platform language. Also Go is open source that means you can contribute for the language improvements and fixes.</p>
+<p>Constants are fundamental building blocks in Go programming that represent fixed values which remain unchanged throughout the application lifecycle. In this comprehensive guide, we’ll explore how constants work in Go, with updated examples and practical approaches for everyday coding.</p>
 
-<h2 id="why-i-chosen-go">Why i chosen Go?</h2>
+<h2 id="what-are-constants-in-go">What Are Constants in Go?</h2>
 
-<p>I’ve hear about Go 5 years ago by one college friend that was working in a finance startup with Go. He just talked that was a very fast language and simply to start. I confess that i didn’t care much at the time…</p>
-
-<p>4 years ago, I started to work at Globo, a brazilian television company that use Go in most part of theis systems, for high traffic softwares, and i started my journey with Go.</p>
-
-<h2 id="is-hard-to-work-with-go">Is hard to work with Go?</h2>
-
-<p>My experience starting with Go, was very easy to learn. Specially if you already use another language. Go implements very simply techniques for computer programming and straight to the point concepts like threads, pointers and vars.</p>
-
-<p>Go dont use classes, but use packages, is like classes but without hierarchy, that simplify the code design.</p>
-
-<h2 id="reasons-to-learn-go">Reasons to learn Go?</h2>
+<p>Constants in Go represent fixed values that won’t change during program execution, such as:</p>
 
 <ul>
-  <li>Easy to learn</li>
-  <li>Fast compilation (yes its a compilated language)</li>
-  <li>Static linging</li>
-  <li>Designed for easy work with concurrent programs</li>
-  <li>Adoption by market (Lot of companies using and hot opportunities)</li>
-  <li>A cute mascot called Gopher</li>
-  <li>Native garbage collection</li>
-  <li>Open source</li>
+  <li>Numbers: <code class="language-plaintext highlighter-rouge">95</code>, <code class="language-plaintext highlighter-rouge">67.89</code></li>
+  <li>Strings: <code class="language-plaintext highlighter-rouge">"I love Go"</code></li>
+  <li>Boolean values: <code class="language-plaintext highlighter-rouge">true</code>, <code class="language-plaintext highlighter-rouge">false</code></li>
 </ul>
 
-<h2 id="popular-softwares-made-with-go">Popular softwares made with go</h2>
-<p>If are you a software developer or student you may use go everyday. Some products of our day was made with Go like docker, kubernetes, dropbox and a lot of companies use Go like netflix, google, uber, twitch paypal and more.</p>
+<p>Constants provide immutability guarantees and help prevent accidental value modifications, making your code more reliable and maintainable.</p>
 
-<h2 id="lets-start">Let’s Start!</h2>
+<h2 id="declaring-constants">Declaring Constants</h2>
 
-<p>For install go in your machine you need to do some steps, i will split by operating system, follow the steps of your operating system below:</p>
+<p>The <code class="language-plaintext highlighter-rouge">const</code> keyword is used to declare constants in Go. Let’s see this in action:</p>
 
-<h3 id="macos">MacOS</h3>
-<p>For the first step, install homebrew as your package manager in mac (this will be very nice for install many developer tools at mac) running:</p>
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">main</span>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>/bin/bash <span class="nt">-c</span> <span class="s2">"</span><span class="si">$(</span>curl <span class="nt">-fsSL</span> https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh<span class="si">)</span><span class="s2">"</span>
+<span class="k">import</span> <span class="p">(</span>
+	<span class="s">"fmt"</span>
+<span class="p">)</span>
+
+<span class="k">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="k">const</span> <span class="n">a</span> <span class="o">=</span> <span class="m">50</span>
+	<span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"The value of constant a:"</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+	
+	<span class="c">// This would cause a compile-time error:</span>
+	<span class="c">// a = 100  // Cannot reassign constants</span>
+<span class="p">}</span>
 </code></pre></div></div>
 
-<p>Now you can install go using Homebrew</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>brew <span class="nb">install </span>go
+<p>When run, this program outputs:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>The value of constant a: 50
 </code></pre></div></div>
+
+<h2 id="group-declaration-syntax">Group Declaration Syntax</h2>
+
+<p>Go offers a convenient syntax for declaring multiple constants in a single block:</p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">main</span>
+
+<span class="k">import</span> <span class="p">(</span>
+	<span class="s">"fmt"</span>
+<span class="p">)</span>
+
+<span class="k">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="k">const</span> <span class="p">(</span>
+		<span class="n">apiTimeout</span>  <span class="o">=</span> <span class="m">30</span>
+		<span class="n">requestPath</span> <span class="o">=</span> <span class="s">"/api/v2/users"</span>
+		<span class="n">isEnabled</span>   <span class="o">=</span> <span class="no">true</span>
+	<span class="p">)</span>
+
+	<span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"API Timeout:"</span><span class="p">,</span> <span class="n">apiTimeout</span><span class="p">)</span>
+	<span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"Request Path:"</span><span class="p">,</span> <span class="n">requestPath</span><span class="p">)</span>
+	<span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"Feature Enabled:"</span><span class="p">,</span> <span class="n">isEnabled</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>This cleaner approach is commonly used in production Go code, especially for related constants.</p>
+
+<h2 id="constants-vs-variables">Constants vs Variables</h2>
+
+<p>The key distinction with constants is that they cannot be reassigned after declaration. This code won’t compile:</p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">main</span>
+
+<span class="k">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="k">const</span> <span class="n">maxRetries</span> <span class="o">=</span> <span class="m">5</span>
+	
+	<span class="c">// This will fail with: cannot assign to maxRetries</span>
+	<span class="c">// maxRetries = 10</span>
+	
+	<span class="c">// Variables can be reassigned</span>
+	<span class="k">var</span> <span class="n">currentRetries</span> <span class="o">=</span> <span class="m">0</span>
+	<span class="n">currentRetries</span> <span class="o">=</span> <span class="m">1</span> <span class="c">// This works fine</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="compile-time-evaluation">Compile-Time Evaluation</h2>
+
+<p>An important property of constants is that their values must be determinable at compile time:</p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">main</span>
+
+<span class="k">import</span> <span class="p">(</span>
+	<span class="s">"fmt"</span>
+	<span class="s">"math"</span>
+	<span class="s">"time"</span>
+<span class="p">)</span>
+
+<span class="k">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="c">// Variables can be assigned runtime values</span>
+	<span class="k">var</span> <span class="n">dynamicValue</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">Sqrt</span><span class="p">(</span><span class="m">16</span><span class="p">)</span>
+	<span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"Dynamic value:"</span><span class="p">,</span> <span class="n">dynamicValue</span><span class="p">)</span>
+	
+	<span class="c">// This works because 2*8 can be evaluated at compile time</span>
+	<span class="k">const</span> <span class="n">compiledValue</span> <span class="o">=</span> <span class="m">2</span> <span class="o">*</span> <span class="m">8</span>
+	<span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"Compiled value:"</span><span class="p">,</span> <span class="n">compiledValue</span><span class="p">)</span>
+	
+	<span class="c">// This won't compile:</span>
+	<span class="c">// const invalidConst = math.Sqrt(16)  // Error: math.Sqrt(16) is not constant</span>
+	<span class="c">// const currentTime = time.Now()      // Error: time.Now() is not constant</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="typed-vs-untyped-constants">Typed vs Untyped Constants</h2>
+
+<p>Go constants can be either typed or untyped, which affects how they interact with variables:</p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">main</span>
+
+<span class="k">import</span> <span class="p">(</span>
+	<span class="s">"fmt"</span>
+<span class="p">)</span>
+
+<span class="k">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="c">// Untyped constant (no explicit type)</span>
+	<span class="k">const</span> <span class="n">untyped</span> <span class="o">=</span> <span class="s">"Hello, Go!"</span>
+	
+	<span class="c">// Typed constant (explicitly specified type)</span>
+	<span class="k">const</span> <span class="n">typed</span> <span class="kt">string</span> <span class="o">=</span> <span class="s">"Hello, Go!"</span>
+	
+	<span class="c">// Untyped constants can be used with any compatible type</span>
+	<span class="k">var</span> <span class="n">s1</span> <span class="kt">string</span> <span class="o">=</span> <span class="n">untyped</span>       <span class="c">// Works fine</span>
+	<span class="k">var</span> <span class="n">s2</span> <span class="kt">string</span> <span class="o">=</span> <span class="n">typed</span>         <span class="c">// Works fine</span>
+	
+	<span class="c">// Create a custom string type</span>
+	<span class="k">type</span> <span class="n">customString</span> <span class="kt">string</span>
+	
+	<span class="c">// This works because untyped constants are flexible</span>
+	<span class="k">var</span> <span class="n">cs1</span> <span class="n">customString</span> <span class="o">=</span> <span class="n">untyped</span>
+	
+	<span class="c">// This would fail:</span>
+	<span class="c">// var cs2 customString = typed  // Cannot use typed (type string) as customString</span>
+	
+	<span class="n">fmt</span><span class="o">.</span><span class="n">Printf</span><span class="p">(</span><span class="s">"s1: %v (type %T)</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">s1</span><span class="p">,</span> <span class="n">s1</span><span class="p">)</span>
+	<span class="n">fmt</span><span class="o">.</span><span class="n">Printf</span><span class="p">(</span><span class="s">"s2: %v (type %T)</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">s2</span><span class="p">,</span> <span class="n">s2</span><span class="p">)</span>
+	<span class="n">fmt</span><span class="o">.</span><span class="n">Printf</span><span class="p">(</span><span class="s">"cs1: %v (type %T)</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">cs1</span><span class="p">,</span> <span class="n">cs1</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="type-conversion-with-constants">Type Conversion with Constants</h2>
+
+<p>When working with different types and constants, you may need explicit conversion:</p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">main</span>
+
+<span class="k">import</span> <span class="s">"fmt"</span>
+
+<span class="k">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="c">// Two different string types</span>
+	<span class="k">var</span> <span class="n">defaultName</span> <span class="o">=</span> <span class="s">"Alex"</span>            <span class="c">// Type: string</span>
+	<span class="k">type</span> <span class="n">customName</span> <span class="kt">string</span>
+	<span class="k">var</span> <span class="n">userName</span> <span class="n">customName</span> <span class="o">=</span> <span class="s">"Taylor"</span>  <span class="c">// Type: customName</span>
+	
+	<span class="c">// This would fail:</span>
+	<span class="c">// userName = defaultName  // Cannot use defaultName (type string) as customName</span>
+	
+	<span class="c">// With explicit conversion it works</span>
+	<span class="n">userName</span> <span class="o">=</span> <span class="n">customName</span><span class="p">(</span><span class="n">defaultName</span><span class="p">)</span>
+	<span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"Username after conversion:"</span><span class="p">,</span> <span class="n">userName</span><span class="p">)</span>
+	
+	<span class="c">// Numeric example</span>
+	<span class="k">const</span> <span class="n">ratio</span> <span class="o">=</span> <span class="m">2.5</span>  <span class="c">// Untyped constant</span>
+	<span class="k">var</span> <span class="n">intRatio</span> <span class="kt">int</span> <span class="o">=</span> <span class="kt">int</span><span class="p">(</span><span class="n">ratio</span><span class="p">)</span>
+	<span class="k">var</span> <span class="n">floatRatio</span> <span class="kt">float64</span> <span class="o">=</span> <span class="n">ratio</span>
+	
+	<span class="n">fmt</span><span class="o">.</span><span class="n">Printf</span><span class="p">(</span><span class="s">"Original ratio: %v</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">ratio</span><span class="p">)</span>
+	<span class="n">fmt</span><span class="o">.</span><span class="n">Printf</span><span class="p">(</span><span class="s">"Integer ratio: %v (type %T)</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">intRatio</span><span class="p">,</span> <span class="n">intRatio</span><span class="p">)</span>
+	<span class="n">fmt</span><span class="o">.</span><span class="n">Printf</span><span class="p">(</span><span class="s">"Float ratio: %v (type %T)</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">floatRatio</span><span class="p">,</span> <span class="n">floatRatio</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="numeric-constants-and-type-flexibility">Numeric Constants and Type Flexibility</h2>
+
+<p>Numeric constants in Go have remarkable flexibility, allowing them to be used with various numeric types:</p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">main</span>
+
+<span class="k">import</span> <span class="p">(</span>
+	<span class="s">"fmt"</span>
+<span class="p">)</span>
+
+<span class="k">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="k">const</span> <span class="n">magic</span> <span class="o">=</span> <span class="m">42</span>  <span class="c">// Untyped numeric constant</span>
+	
+	<span class="c">// This single constant can be used with various numeric types</span>
+	<span class="k">var</span> <span class="n">i</span> <span class="kt">int</span> <span class="o">=</span> <span class="n">magic</span>
+	<span class="k">var</span> <span class="n">i8</span> <span class="kt">int8</span> <span class="o">=</span> <span class="n">magic</span>        <span class="c">// Works if value fits in int8</span>
+	<span class="k">var</span> <span class="n">f</span> <span class="kt">float64</span> <span class="o">=</span> <span class="n">magic</span>
+	<span class="k">var</span> <span class="n">c</span> <span class="kt">complex128</span> <span class="o">=</span> <span class="n">magic</span>
+	
+	<span class="n">fmt</span><span class="o">.</span><span class="n">Printf</span><span class="p">(</span><span class="s">"int: %v</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+	<span class="n">fmt</span><span class="o">.</span><span class="n">Printf</span><span class="p">(</span><span class="s">"int8: %v</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">i8</span><span class="p">)</span>
+	<span class="n">fmt</span><span class="o">.</span><span class="n">Printf</span><span class="p">(</span><span class="s">"float64: %v</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+	<span class="n">fmt</span><span class="o">.</span><span class="n">Printf</span><span class="p">(</span><span class="s">"complex128: %v</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
+	
+	<span class="c">// Numeric constant expressions are also flexible</span>
+	<span class="k">const</span> <span class="n">result</span> <span class="o">=</span> <span class="m">5.0</span> <span class="o">/</span> <span class="m">3</span>  <span class="c">// Division of untyped constants</span>
+	<span class="n">fmt</span><span class="o">.</span><span class="n">Printf</span><span class="p">(</span><span class="s">"5.0/3 = %v (type %T)</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">result</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
+	
+	<span class="c">// Constants in expressions</span>
+	<span class="k">var</span> <span class="n">mix</span> <span class="o">=</span> <span class="m">1</span> <span class="o">+</span> <span class="n">result</span>  <span class="c">// Integer + floating point constant</span>
+	<span class="n">fmt</span><span class="o">.</span><span class="n">Printf</span><span class="p">(</span><span class="s">"1 + (5.0/3) = %v (type %T)</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">mix</span><span class="p">,</span> <span class="n">mix</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="constants-in-real-world-applications">Constants in Real-World Applications</h2>
+
+<p>Constants are incredibly useful in production Go code for:</p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">main</span>
+
+<span class="k">import</span> <span class="p">(</span>
+	<span class="s">"fmt"</span>
+	<span class="s">"time"</span>
+<span class="p">)</span>
+
+<span class="k">const</span> <span class="p">(</span>
+	<span class="c">// API configuration</span>
+	<span class="n">baseURL</span>           <span class="o">=</span> <span class="s">"https://api.example.com/v2"</span>
+	<span class="n">requestTimeout</span>    <span class="o">=</span> <span class="m">30</span> <span class="c">// seconds</span>
+	<span class="n">maxRetries</span>        <span class="o">=</span> <span class="m">3</span>
+	
+	<span class="c">// HTTP status codes</span>
+	<span class="n">statusOK</span>          <span class="o">=</span> <span class="m">200</span>
+	<span class="n">statusBadRequest</span>  <span class="o">=</span> <span class="m">400</span>
+	<span class="n">statusServerError</span> <span class="o">=</span> <span class="m">500</span>
+	
+	<span class="c">// Feature flags</span>
+	<span class="n">enableCaching</span>     <span class="o">=</span> <span class="no">true</span>
+	<span class="n">enableMetrics</span>     <span class="o">=</span> <span class="no">true</span>
+<span class="p">)</span>
+
+<span class="k">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"Starting API client with configuration:"</span><span class="p">)</span>
+	<span class="n">fmt</span><span class="o">.</span><span class="n">Printf</span><span class="p">(</span><span class="s">"- Base URL: %s</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">baseURL</span><span class="p">)</span>
+	<span class="n">fmt</span><span class="o">.</span><span class="n">Printf</span><span class="p">(</span><span class="s">"- Timeout: %d seconds</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">requestTimeout</span><span class="p">)</span>
+	<span class="n">fmt</span><span class="o">.</span><span class="n">Printf</span><span class="p">(</span><span class="s">"- Max retries: %d</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">maxRetries</span><span class="p">)</span>
+	
+	<span class="c">// Simulating an API call</span>
+	<span class="n">status</span> <span class="o">:=</span> <span class="n">simulateAPICall</span><span class="p">()</span>
+	
+	<span class="c">// Using constants for comparison</span>
+	<span class="k">switch</span> <span class="n">status</span> <span class="p">{</span>
+	<span class="k">case</span> <span class="n">statusOK</span><span class="o">:</span>
+		<span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"Request successful!"</span><span class="p">)</span>
+	<span class="k">case</span> <span class="n">statusBadRequest</span><span class="o">:</span>
+		<span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"Invalid request parameters"</span><span class="p">)</span>
+	<span class="k">case</span> <span class="n">statusServerError</span><span class="o">:</span>
+		<span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"Server error occurred"</span><span class="p">)</span>
+	<span class="k">default</span><span class="o">:</span>
+		<span class="n">fmt</span><span class="o">.</span><span class="n">Printf</span><span class="p">(</span><span class="s">"Unexpected status code: %d</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">status</span><span class="p">)</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">func</span> <span class="n">simulateAPICall</span><span class="p">()</span> <span class="kt">int</span> <span class="p">{</span>
+	<span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"Sending request to:"</span><span class="p">,</span> <span class="n">baseURL</span><span class="o">+</span><span class="s">"/users"</span><span class="p">)</span>
+	
+	<span class="c">// Simulate processing time</span>
+	<span class="n">time</span><span class="o">.</span><span class="n">Sleep</span><span class="p">(</span><span class="m">500</span> <span class="o">*</span> <span class="n">time</span><span class="o">.</span><span class="n">Millisecond</span><span class="p">)</span>
+	
+	<span class="k">return</span> <span class="n">statusOK</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="boolean-constants">Boolean Constants</h2>
+
+<p>Boolean constants in Go are straightforward but still follow the same rules as other constant types:</p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">main</span>
+
+<span class="k">import</span> <span class="s">"fmt"</span>
+
+<span class="k">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="k">const</span> <span class="p">(</span>
+		<span class="n">debugMode</span> <span class="o">=</span> <span class="no">true</span>
+		<span class="n">isProd</span>    <span class="o">=</span> <span class="no">false</span>
+	<span class="p">)</span>
+	
+	<span class="c">// Using boolean constants in conditionals</span>
+	<span class="k">if</span> <span class="n">debugMode</span> <span class="p">{</span>
+		<span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"Debug mode is enabled"</span><span class="p">)</span>
+	<span class="p">}</span>
+	
+	<span class="c">// Custom boolean type</span>
+	<span class="k">type</span> <span class="n">featureFlag</span> <span class="kt">bool</span>
+	
+	<span class="c">// Untyped boolean constants can be assigned to custom boolean types</span>
+	<span class="k">var</span> <span class="n">caching</span> <span class="n">featureFlag</span> <span class="o">=</span> <span class="n">debugMode</span>
+	<span class="n">fmt</span><span class="o">.</span><span class="n">Printf</span><span class="p">(</span><span class="s">"Caching enabled: %v (type %T)</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">caching</span><span class="p">,</span> <span class="n">caching</span><span class="p">)</span>
+	
+	<span class="c">// This would fail:</span>
+	<span class="c">// var boolVar bool = caching // Cannot use caching (type featureFlag) as bool</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="string-constants">String Constants</h2>
+
+<p>String constants are one of the most common types you’ll work with:</p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">main</span>
+
+<span class="k">import</span> <span class="s">"fmt"</span>
+
+<span class="k">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="k">const</span> <span class="p">(</span>
+		<span class="n">appName</span>    <span class="o">=</span> <span class="s">"GoApp"</span>
+		<span class="n">appVersion</span> <span class="o">=</span> <span class="s">"v1.2.3"</span>
+		<span class="n">copyright</span>  <span class="o">=</span> <span class="s">"© 2025 Go Developers"</span>
+	<span class="p">)</span>
+	
+	<span class="c">// String constants can be concatenated at compile time</span>
+	<span class="k">const</span> <span class="n">fullName</span> <span class="o">=</span> <span class="n">appName</span> <span class="o">+</span> <span class="s">" "</span> <span class="o">+</span> <span class="n">appVersion</span>
+	
+	<span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="n">fullName</span><span class="p">)</span>
+	<span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="n">copyright</span><span class="p">)</span>
+	
+	<span class="c">// Raw string literals preserve formatting (including newlines)</span>
+	<span class="k">const</span> <span class="n">configTemplate</span> <span class="o">=</span> <span class="s">`{
+  "app": "%s",
+  "version": "%s",
+  "debug": true
+}`</span>
+	
+	<span class="n">fmt</span><span class="o">.</span><span class="n">Printf</span><span class="p">(</span><span class="n">configTemplate</span><span class="p">,</span> <span class="n">appName</span><span class="p">,</span> <span class="n">appVersion</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="best-practices-for-using-constants-in-go">Best Practices for Using Constants in Go</h2>
+
+<ol>
+  <li><strong>Use constants for values that shouldn’t change</strong>, like configuration parameters, magic numbers, and status codes</li>
+  <li><strong>Group related constants</strong> using the block declaration syntax for better organization</li>
+  <li><strong>Prefer untyped constants</strong> unless you need explicit type enforcement</li>
+  <li><strong>Use constants to document intent</strong> - a constant named <code class="language-plaintext highlighter-rouge">maxRetries</code> is more meaningful than a literal <code class="language-plaintext highlighter-rouge">3</code></li>
+  <li><strong>Consider using <code class="language-plaintext highlighter-rouge">iota</code></strong> for creating sequences of related constants (covered in a separate guide)</li>
+</ol>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>Constants in Go provide immutability and type flexibility that help create more reliable and maintainable code. By understanding the nuances of typed versus untyped constants and their compile-time requirements, you can leverage them effectively in your Go applications.</p>
+
+<p>Whether you’re building a simple utility or a complex service, constants play a vital role in making your code more readable and robust. Take advantage of Go’s constant declaration syntax and type system to create cleaner, more expressive code.</p>]]></content><author><name>Celso Inácio</name></author><category term="golang" /><category term="introduction" /><category term="tutorial" /><summary type="html"><![CDATA[Lets build your own hello world in Go!]]></summary></entry><entry xml:lang="en"><title type="html">Golang series: Chapter Three - A Complete Guide to use variables</title><link href="https://celsoinacio.com.br/2024/06/20/golang-series-chapter-three-variables-and-types.html" rel="alternate" type="text/html" title="Golang series: Chapter Three - A Complete Guide to use variables" /><published>2024-06-20T00:00:00+00:00</published><updated>2024-06-20T00:00:00+00:00</updated><id>https://celsoinacio.com.br/2024/06/20/golang-series-chapter-three-variables-and-types</id><content type="html" xml:base="https://celsoinacio.com.br/2024/06/20/golang-series-chapter-three-variables-and-types.html"><![CDATA[<p>Welcome to the third tutorial in our Golang series! In this part, we’ll dive deep into <strong>variables in Go</strong>, including declaration styles, type inference, shorthand syntax, and some <strong>pro tips</strong> to help you master variable handling in Go.</p>
+
+<blockquote>
+  <p>🧠 Missed Part 2? <a href="/2024/06/12/golang-series-chapter-two-hello-world.html">Check it out here</a> to learn how to install Go and run your first Hello World program.</p>
+</blockquote>
+
+<hr />
+
+<h2 id="what-is-a-variable">What is a Variable?</h2>
+<p>A <strong>variable</strong> is a named storage in memory that holds a value of a specific <strong>type</strong>. Go is a statically typed language, meaning each variable has a fixed type that cannot change.</p>
+
+<hr />
+
+<h2 id="declaring-a-single-variable">Declaring a Single Variable</h2>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">var</span> <span class="n">name</span> <span class="k">type</span>
+</code></pre></div></div>
+
+<h3 id="example">Example</h3>
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">main</span>
+<span class="k">import</span> <span class="s">"fmt"</span>
+
+<span class="k">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">var</span> <span class="n">age</span> <span class="kt">int</span> <span class="c">// declaration without initialization</span>
+    <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"My initial age is"</span><span class="p">,</span> <span class="n">age</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p><strong>Output:</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>My initial age is 0
+</code></pre></div></div>
+
+<p>Go initializes variables with a <strong>zero value</strong> if no value is assigned:</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">int</code> → 0</li>
+  <li><code class="language-plaintext highlighter-rouge">string</code> → “”</li>
+  <li><code class="language-plaintext highlighter-rouge">bool</code> → false</li>
+  <li><code class="language-plaintext highlighter-rouge">pointer</code> → nil</li>
+</ul>
+
+<h3 id="assigning-values-later">Assigning Values Later</h3>
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">main</span>
+<span class="k">import</span> <span class="s">"fmt"</span>
+
+<span class="k">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">var</span> <span class="n">age</span> <span class="kt">int</span>
+    <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"Initial age:"</span><span class="p">,</span> <span class="n">age</span><span class="p">)</span>
+    <span class="n">age</span> <span class="o">=</span> <span class="m">29</span>
+    <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"Updated age:"</span><span class="p">,</span> <span class="n">age</span><span class="p">)</span>
+    <span class="n">age</span> <span class="o">=</span> <span class="m">54</span>
+    <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"Second update:"</span><span class="p">,</span> <span class="n">age</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="️-declaring-and-initializing-together">✍️ Declaring and Initializing Together</h2>
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">var</span> <span class="n">name</span> <span class="k">type</span> <span class="o">=</span> <span class="n">value</span>
+</code></pre></div></div>
+
+<h3 id="example-1">Example</h3>
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">var</span> <span class="n">age</span> <span class="kt">int</span> <span class="o">=</span> <span class="m">29</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="-type-inference">🤖 Type Inference</h2>
+<p>Go can <strong>infer the type</strong> from the value:</p>
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">var</span> <span class="n">age</span> <span class="o">=</span> <span class="m">29</span> <span class="c">// Inferred as int</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="-declaring-multiple-variables">📦 Declaring Multiple Variables</h2>
+<p>You can declare multiple variables of the same type:</p>
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">var</span> <span class="n">price</span><span class="p">,</span> <span class="n">quantity</span> <span class="kt">int</span> <span class="o">=</span> <span class="m">5000</span><span class="p">,</span> <span class="m">100</span>
+</code></pre></div></div>
+<p>Or use type inference:</p>
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">var</span> <span class="n">price</span><span class="p">,</span> <span class="n">quantity</span> <span class="o">=</span> <span class="m">5000</span><span class="p">,</span> <span class="m">100</span>
+</code></pre></div></div>
+
+<h3 id="without-initialization">Without Initialization</h3>
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">var</span> <span class="n">price</span><span class="p">,</span> <span class="n">quantity</span> <span class="kt">int</span>
+<span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="n">price</span><span class="p">,</span> <span class="n">quantity</span><span class="p">)</span> <span class="c">// Output: 0 0</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="-mixed-type-declaration-block">🧩 Mixed-Type Declaration Block</h2>
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">var</span> <span class="p">(</span>
+    <span class="n">name</span>   <span class="o">=</span> <span class="s">"Naveen"</span>
+    <span class="n">age</span>    <span class="o">=</span> <span class="m">38</span>
+    <span class="n">height</span> <span class="kt">int</span> <span class="c">// zero value</span>
+<span class="p">)</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="short-hand-declaration">Short Hand Declaration</h2>
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">name</span> <span class="o">:=</span> <span class="n">value</span>
+</code></pre></div></div>
+<p>Go infers the type automatically.</p>
+
+<h3 id="example-2">Example</h3>
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">count</span> <span class="o">:=</span> <span class="m">10</span>
+</code></pre></div></div>
+
+<h3 id="multiple-values">Multiple Values</h3>
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">name</span><span class="p">,</span> <span class="n">age</span> <span class="o">:=</span> <span class="s">"Naveen"</span><span class="p">,</span> <span class="m">29</span>
+</code></pre></div></div>
+
+<h3 id="gotcha-all-values-must-be-initialized">Gotcha: All values must be initialized</h3>
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">name</span><span class="p">,</span> <span class="n">age</span> <span class="o">:=</span> <span class="s">"Naveen"</span> <span class="c">//  Error: mismatch, only one value</span>
+</code></pre></div></div>
+
+<h3 id="reusing-variables">Reusing Variables</h3>
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">:=</span> <span class="m">20</span><span class="p">,</span> <span class="m">30</span>
+<span class="n">b</span><span class="p">,</span> <span class="n">c</span> <span class="o">:=</span> <span class="m">40</span><span class="p">,</span> <span class="m">50</span> <span class="c">// c is new, so it’s valid</span>
+<span class="n">b</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="m">80</span><span class="p">,</span> <span class="m">90</span> <span class="c">// reassign existing variables</span>
+</code></pre></div></div>
+
+<p>Invalid if all variables are already declared:</p>
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">:=</span> <span class="m">20</span><span class="p">,</span> <span class="m">30</span>
+<span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">:=</span> <span class="m">40</span><span class="p">,</span> <span class="m">50</span> <span class="c">//  Error: no new variables</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="runtime-assignment-example">Runtime Assignment Example</h2>
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">main</span>
+<span class="k">import</span> <span class="p">(</span>
+    <span class="s">"fmt"</span>
+    <span class="s">"math"</span>
+<span class="p">)</span>
+
+<span class="k">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">:=</span> <span class="m">145.8</span><span class="p">,</span> <span class="m">543.8</span>
+    <span class="n">c</span> <span class="o">:=</span> <span class="n">math</span><span class="o">.</span><span class="n">Min</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+    <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"Minimum value is"</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="type-safety-in-go">Type Safety in Go</h2>
+<p>Go is <strong>strongly typed</strong>. You cannot assign a value of a different type:</p>
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">age</span> <span class="o">:=</span> <span class="m">29</span>
+<span class="n">age</span> <span class="o">=</span> <span class="s">"Naveen"</span> <span class="c">//  Error: cannot use string as int</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="bonus-tips-and-tricks-for-variables-in-go">Bonus: Tips and Tricks for Variables in Go</h2>
+
+<h3 id="use-shorthand-for-local-variables">Use Shorthand for Local Variables</h3>
+<p>Use <code class="language-plaintext highlighter-rouge">:=</code> when declaring inside functions. It’s cleaner and concise.</p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">message</span> <span class="o">:=</span> <span class="s">"Hello Go"</span>
+</code></pre></div></div>
+
+<h3 id="group-declarations-for-readability">Group Declarations for Readability</h3>
+<p>Group related variables using <code class="language-plaintext highlighter-rouge">var ()</code> blocks:</p>
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">var</span> <span class="p">(</span>
+    <span class="n">username</span> <span class="o">=</span> <span class="s">"admin"</span>
+    <span class="n">isAdmin</span>  <span class="o">=</span> <span class="no">true</span>
+    <span class="n">id</span>       <span class="o">=</span> <span class="m">101</span>
+<span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="swap-variables-without-temp">Swap Variables Without Temp</h3>
+<p>Go supports value swapping out of the box:</p>
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">:=</span> <span class="m">1</span><span class="p">,</span> <span class="m">2</span>
+<span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">b</span><span class="p">,</span> <span class="n">a</span>
+</code></pre></div></div>
+
+<h3 id="check-zero-values-intelligently">Check Zero Values Intelligently</h3>
+<p>Zero values can help reduce code if you know what to expect:</p>
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">var</span> <span class="n">str</span> <span class="kt">string</span> <span class="c">// ""</span>
+<span class="k">var</span> <span class="n">n</span> <span class="kt">int</span>      <span class="c">// 0</span>
+<span class="k">if</span> <span class="n">str</span> <span class="o">==</span> <span class="s">""</span> <span class="o">&amp;&amp;</span> <span class="n">n</span> <span class="o">==</span> <span class="m">0</span> <span class="p">{</span>
+    <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"Defaults confirmed"</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="use-constants-when-values-dont-change">Use Constants When Values Don’t Change</h3>
+<p>Use <code class="language-plaintext highlighter-rouge">const</code> for unchanging values:</p>
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">const</span> <span class="n">pi</span> <span class="o">=</span> <span class="m">3.14</span>
+</code></pre></div></div>
+
+<h3 id="declare-but-dont-use-go-will-complain">Declare But Don’t Use? Go Will Complain</h3>
+<p>Unused variables will cause compile-time errors. This encourages cleaner code.</p>
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">var</span> <span class="n">unused</span> <span class="kt">string</span> <span class="c">//  Error if not used</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="whats-next">What’s Next?</h2>
+<p>In the next tutorial, we’ll explore <strong>data types in Go</strong>, including numeric types, strings, booleans, and complex types like arrays and structs.</p>
+
+<p>Stay tuned and keep coding with Go!</p>
+
+<blockquote>
+  <p>If this was helpful, share it with your dev circle on Twitter or LinkedIn!</p>
+</blockquote>]]></content><author><name>Celso Inácio</name></author><category term="golang" /><category term="introduction" /><category term="tutorial" /><summary type="html"><![CDATA[Lets build your own hello world in Go!]]></summary></entry><entry xml:lang="en"><title type="html">Golang series: Chapter Two - Writing and Running Your First Go Program (Hello World)</title><link href="https://celsoinacio.com.br/2024/06/12/golang-series-chapter-two-hello-world.html" rel="alternate" type="text/html" title="Golang series: Chapter Two - Writing and Running Your First Go Program (Hello World)" /><published>2024-06-12T00:00:00+00:00</published><updated>2024-06-12T00:00:00+00:00</updated><id>https://celsoinacio.com.br/2024/06/12/golang-series-chapter-two-hello-world</id><content type="html" xml:base="https://celsoinacio.com.br/2024/06/12/golang-series-chapter-two-hello-world.html"><![CDATA[<h1 id="golang-tutorial-part-2-writing-and-running-your-first-go-program">Golang Tutorial Part 2: Writing and Running Your First Go Program</h1>
+
+<p>Welcome to the second installment of our Go tutorial series! If you haven’t yet read <a href="/2024/06/02/golang-series-chapter-one-installation.html">Part 1: Introduction and Installation</a>, we highly recommend starting there to learn what Go is and how to install it on your system.</p>
+
+<p>Now, let’s get hands-on and write your very first Go program.</p>
+
+<hr />
+
+<h2 id="how-to-set-up-your-go-development-environment">How to Set Up Your Go Development Environment</h2>
+
+<p>Start by creating a directory for your Hello World program. Open your terminal and run:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir</span> ~/golang-hello
+</code></pre></div></div>
+
+<p>This creates a folder named <code class="language-plaintext highlighter-rouge">golang-hello</code> in your home directory. You can use another location if preferred.</p>
+
+<hr />
+
+<h2 id="initializing-a-go-module">Initializing a Go Module</h2>
+
+<p>Navigate into your new directory and initialize a Go module. Modules help manage dependencies in Go projects.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> ~/golang-hello
+go mod init module-hello
+</code></pre></div></div>
+
+<p>Expected output:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>go: creating new go.mod: module module-hello
+</code></pre></div></div>
+
+<p>Your <code class="language-plaintext highlighter-rouge">go.mod</code> file should contain:</p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">module</span> <span class="n">module</span><span class="o">-</span><span class="n">hello</span>
+
+<span class="k">go</span> <span class="m">1.21.0</span>
+</code></pre></div></div>
+
+<p>This defines the module name and the Go version.</p>
+
+<hr />
+
+<h2 id="writing-your-first-go-program">Writing Your First Go Program</h2>
+
+<p>Inside the <code class="language-plaintext highlighter-rouge">golang-hello</code> directory, create a new file named <code class="language-plaintext highlighter-rouge">main.go</code> and add the following code:</p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">main</span>
+
+<span class="k">import</span> <span class="s">"fmt"</span>
+
+<span class="k">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"Hello World"</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>This is the standard structure for a simple Go program.</p>
+
+<hr />
+
+<h2 id="how-to-run-a-go-program">How to Run a Go Program</h2>
+
+<p>There are multiple ways to execute your Go code. Let’s explore the most common options.</p>
+
+<h3 id="1-using-go-install">1. Using <code class="language-plaintext highlighter-rouge">go install</code></h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> ~/golang-hello
+go <span class="nb">install</span>
+</code></pre></div></div>
+
+<p>If you see an error such as:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>go install: no install location for directory ... outside GOPATH
+</code></pre></div></div>
+
+<p>Set the <code class="language-plaintext highlighter-rouge">GOBIN</code> environment variable:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">export </span><span class="nv">GOBIN</span><span class="o">=</span>~/go/bin/
+</code></pre></div></div>
+
+<p>Then run:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>go <span class="nb">install</span>
+</code></pre></div></div>
+
+<p>Now execute the binary:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~/go/bin/module-hello
+</code></pre></div></div>
+
+<p>Output:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Hello World
+</code></pre></div></div>
+
+<p>Add this to your shell’s PATH for easier access:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:~/go/bin
+</code></pre></div></div>
+
+<p>Now you can just type:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>module-hello
+</code></pre></div></div>
+
+<h3 id="2-using-go-build">2. Using <code class="language-plaintext highlighter-rouge">go build</code></h3>
+
+<p>This method compiles the code and outputs a binary in the current directory:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> ~/golang-hello
+go build
+./module-hello
+</code></pre></div></div>
+
+<p>Output:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Hello World
+</code></pre></div></div>
+
+<h3 id="3-using-go-run">3. Using <code class="language-plaintext highlighter-rouge">go run</code></h3>
+
+<p>This is the quickest way to run your code during development:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> ~/golang-hello
+go run main.go
+</code></pre></div></div>
+
+<p>Output:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Hello World
+</code></pre></div></div>
+
+<p>To view the temporary build directory:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>go run <span class="nt">--work</span> main.go
+</code></pre></div></div>
+
+<p>Sample output:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>WORK=/tmp/go-build199689936
+Hello World
+</code></pre></div></div>
+
+<h3 id="4-using-go-playground">4. Using Go Playground</h3>
+
+<p><a href="https://go.dev/play/">Go Playground</a> is an online environment where you can write, run, and share Go code. Try the Hello World example there!</p>
+
+<hr />
+
+<h2 id="which-go-run-method-should-you-use">Which Go Run Method Should You Use?</h2>
+
+<ul>
+  <li><strong>Go Playground</strong>: Best for sharing or testing small snippets.</li>
+  <li><strong>go run</strong>: Perfect for rapid development and debugging.</li>
+  <li><strong>go build</strong>: Great when you want a local binary for testing.</li>
+  <li><strong>go install</strong>: Ideal for globally installing CLI tools.</li>
+</ul>
+
+<hr />
+
+<h2 id="breakdown-of-the-maingo-file">Breakdown of the <code class="language-plaintext highlighter-rouge">main.go</code> File</h2>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">main</span>
+
+<span class="k">import</span> <span class="s">"fmt"</span>
+
+<span class="k">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"Hello World"</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">package main</code>: Defines the entry point of your application.</li>
+  <li><code class="language-plaintext highlighter-rouge">import "fmt"</code>: Imports Go’s standard formatting and I/O library.</li>
+  <li><code class="language-plaintext highlighter-rouge">func main()</code>: The main function where execution starts.</li>
+  <li><code class="language-plaintext highlighter-rouge">fmt.Println(...)</code>: Prints a line to the console.</li>
+</ul>
+
+<hr />
+
+<h2 id="whats-next-in-the-go-tutorial-series">What’s Next in the Go Tutorial Series?</h2>
+
+<p>In the next chapter, we’ll explore <strong>variables in Go</strong>, covering how to declare, assign, and use them effectively.</p>
+
+<p>Stay tuned and happy coding! 🚀</p>]]></content><author><name>Celso Inácio</name></author><category term="golang" /><category term="introduction" /><category term="tutorial" /><summary type="html"><![CDATA[Lets build your own hello world in Go!]]></summary></entry><entry xml:lang="en"><title type="html">Golang series: Chapter one - Installation &amp;amp; Introduction</title><link href="https://celsoinacio.com.br/2024/06/02/golang-series-chapter-one-installation.html" rel="alternate" type="text/html" title="Golang series: Chapter one - Installation &amp;amp; Introduction" /><published>2024-06-02T00:00:00+00:00</published><updated>2024-06-02T00:00:00+00:00</updated><id>https://celsoinacio.com.br/2024/06/02/golang-series-chapter-one-installation</id><content type="html" xml:base="https://celsoinacio.com.br/2024/06/02/golang-series-chapter-one-installation.html"><![CDATA[<h1 id="getting-started-with-golang-go">Getting Started with Golang (Go)</h1>
+
+<p><img src="/assets/img/articles/2024/06/golang.webp" alt="Golang (Go) programming language logo" /></p>
+
+<p>Hey everyone! Welcome to the first tutorial in my Go series. In this series, we’ll dive into <strong>Golang</strong>, or simply <strong>Go</strong>—a powerful, open-source programming language developed by Google.</p>
+
+<p>Whether you’re on <strong>Windows</strong>, <strong>macOS</strong>, or <strong>Linux</strong>, you can follow along. Go is a cross-platform, general-purpose language with fast compilation, great concurrency support, and a vibrant community. It’s also open source—so you can even contribute to its evolution!</p>
+
+<hr />
+
+<h2 id="why-i-chose-go">Why I Chose Go</h2>
+
+<p>I first heard about Go five years ago from a college friend working at a fintech startup. He said Go was super fast and easy to get into. I didn’t pay much attention back then.</p>
+
+<p>Fast forward a year later, I started working at <strong>Globo</strong>, one of Brazil’s biggest media companies. Most of their backend systems are written in Go—handling high-traffic services with ease. That’s when I seriously began learning and working with Go, and I haven’t looked back since.</p>
+
+<hr />
+
+<h2 id="is-go-hard-to-learn">Is Go Hard to Learn?</h2>
+
+<p>Not at all. If you’ve worked with any other programming language, Go is straightforward to pick up.</p>
+
+<p>Go avoids unnecessary complexity—it doesn’t have classes or inheritance. Instead, it uses <strong>packages</strong> and <strong>interfaces</strong>, promoting clean and simple design patterns.</p>
+
+<p>It also introduces modern concepts like goroutines (for concurrency), pointers (without the pain), and efficient memory management through garbage collection.</p>
+
+<hr />
+
+<h2 id="why-learn-go">Why Learn Go?</h2>
+
+<p>Here are a few reasons why Go might be the right language for you:</p>
+
+<ul>
+  <li>✅ Easy to learn and read</li>
+  <li>⚡ Fast compilation (Go is compiled to native binaries)</li>
+  <li>🔗 Static linking (easy deployment without worrying about dependencies)</li>
+  <li>🔄 Built-in concurrency with goroutines and channels</li>
+  <li>🚀 Widely adopted by the industry (used by companies like Google, Netflix, Uber)</li>
+  <li>🐹 A cute mascot called Gopher 😄</li>
+  <li>🧹 Garbage collection built-in</li>
+  <li>🌍 Fully open source and backed by a strong community</li>
+  <li>🛠️ Excellent tooling (<code class="language-plaintext highlighter-rouge">gofmt</code>, <code class="language-plaintext highlighter-rouge">vet</code>, <code class="language-plaintext highlighter-rouge">staticcheck</code>, and more)</li>
+</ul>
+
+<hr />
+
+<h2 id="popular-products-built-with-go">Popular Products Built with Go</h2>
+
+<p>You might already be using products powered by Go without even realizing it! Some notable examples include:</p>
+
+<ul>
+  <li><strong>Docker</strong> – Containerization platform</li>
+  <li><strong>Kubernetes</strong> – Container orchestration system by Google</li>
+  <li><strong>Dropbox</strong> – Migrated performance-critical components from Python to Go</li>
+  <li><strong>Twitch, Netflix, Uber, PayPal</strong> – All use Go in production</li>
+</ul>
+
+<hr />
+
+<h2 id="installing-go">Installing Go</h2>
+
+<p>Go can be installed on <strong>macOS</strong>, <strong>Linux</strong>, and <strong>Windows</strong>. Just follow the instructions for your OS below.</p>
+
+<h3 id="macos">macOS</h3>
+
+<ol>
+  <li>Install <a href="https://brew.sh/">Homebrew</a> if you haven’t already:</li>
+</ol>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/bin/bash <span class="nt">-c</span> <span class="s2">"</span><span class="si">$(</span>curl <span class="nt">-fsSL</span> https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh<span class="si">)</span><span class="s2">"</span>
+</code></pre></div></div>
+
+<ol>
+  <li>Install Go:</li>
+</ol>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew <span class="nb">install </span>go
+</code></pre></div></div>
+
 <h3 id="linux">Linux</h3>
-<p>For linux, depending of your distro follow the commands below for installation and the rest of the steps will be the same.</p>
+
+<p>Depending on your Linux distribution, use one of the following:</p>
 
 <h4 id="ubuntu--debian">Ubuntu / Debian</h4>
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>apt update
-<span class="nb">sudo </span>apt <span class="nb">install</span> <span class="nt">-y</span> Golang
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>apt update
+<span class="nb">sudo </span>apt <span class="nb">install</span> <span class="nt">-y</span> golang
 </code></pre></div></div>
 
 <h4 id="fedora">Fedora</h4>
 
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>dnf <span class="nb">install</span> <span class="nt">-y</span> golang
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>dnf <span class="nb">install</span> <span class="nt">-y</span> golang
 </code></pre></div></div>
-<h4 id="archlinux">ArchLinux</h4>
 
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>pacman <span class="nt">-S</span> go
+<h4 id="arch-linux">Arch Linux</h4>
 
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>pacman <span class="nt">-S</span> go
+</code></pre></div></div>
+
+<p>Alternatively, you can install Go manually:</p>
+
+<ol>
+  <li>Download the binary from <a href="https://go.dev/dl/">https://go.dev/dl/</a></li>
+  <li>Extract it to <code class="language-plaintext highlighter-rouge">/usr/local</code>:</li>
+</ol>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo tar</span> <span class="nt">-C</span> /usr/local <span class="nt">-xzf</span> go1.x.x.linux-amd64.tar.gz
+</code></pre></div></div>
+
+<ol>
+  <li>Add Go to your path by editing <code class="language-plaintext highlighter-rouge">~/.profile</code>, <code class="language-plaintext highlighter-rouge">~/.bashrc</code>, or <code class="language-plaintext highlighter-rouge">~/.zshrc</code>:</li>
+</ol>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:/usr/local/go/bin
 </code></pre></div></div>
 
 <h3 id="windows">Windows</h3>
 
-<p><small>If are you using WSL (Windows subsystem for linux) you can do the same steps for linux. If its not your case, follow the steps below:</small></p>
+<p><small>If you’re using <strong>WSL (Windows Subsystem for Linux)</strong>, follow the Linux steps above.</small></p>
+
+<p>Otherwise:</p>
 
 <ol>
-  <li>
-    <p>Download the MSI installer from https://go.dev/dl/.</p>
-  </li>
-  <li>
-    <p>Double tap to start the installation and follow the prompts. This will install Go in location c:\Go and will also add the directory c:\Go\bin to your path environment variable.</p>
-  </li>
-  <li>
-    <p>Now you can do the command to see go installed on your windows machine:</p>
-  </li>
+  <li>Download the <strong>MSI Installer</strong> from <a href="https://go.dev/dl/">https://go.dev/dl/</a></li>
+  <li>Double-click to run the installer and follow the instructions</li>
+  <li>It will install Go at <code class="language-plaintext highlighter-rouge">C:\Go</code> and update your <code class="language-plaintext highlighter-rouge">PATH</code> environment variable automatically</li>
 </ol>
 
-<h2 id="checking-your-installation">Checking your installation</h2>
+<hr />
 
-<p>If everything was installed ok you can run go version for check if go was installed on your machine</p>
+<h2 id="verifying-your-installation">Verifying Your Installation</h2>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>go version
+<p>To check if Go is installed correctly, run the following in your terminal or command prompt:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>go version
 </code></pre></div></div>
 
-<p>The output might be like this:</p>
+<p>Expected output:</p>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>➜  ~ go version
-go version go1.21.5 darwin/arm64
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>go version go1.21.5 darwin/arm64
 </code></pre></div></div>
 
-<p>(The version or architecture can be different depending of your system or installed version, but its ok)</p>
+<blockquote>
+  <p>The version and architecture may vary depending on your OS or Go version.</p>
+</blockquote>
 
-<p>If you can’t se version output, check your environment variables to ensure your installation can be found by your terminal.</p>]]></content><author><name>Celso Inácio</name></author><category term="golang" /><category term="introduction" /><category term="tutorial" /><summary type="html"><![CDATA[Let's start our first series at this blog. We will learn golang.]]></summary></entry><entry><title type="html">GloboTechCast EP 54 - Hacktoberfest na Globo. Como funciona?</title><link href="https://celsoinacio.com.br/podcast/2023/10/02/hacktober-fest-globo.html" rel="alternate" type="text/html" title="GloboTechCast EP 54 - Hacktoberfest na Globo. Como funciona?" /><published>2023-10-02T00:00:00+00:00</published><updated>2023-10-02T00:00:00+00:00</updated><id>https://celsoinacio.com.br/podcast/2023/10/02/hacktober-fest-globo</id><content type="html" xml:base="https://celsoinacio.com.br/podcast/2023/10/02/hacktober-fest-globo.html"><![CDATA[<p><b>english:</b> In this episode i've participated together with people from tech area from Globo and we have spoken about Globo Hacktoberfest, one variation of global Hacktoberfest event.<p>
+<p>If you don’t see a version, double-check that the Go binary is available in your <code class="language-plaintext highlighter-rouge">PATH</code>.</p>
+
+<hr />
+
+<h2 id="whats-next">What’s Next?</h2>
+
+<p>In the next tutorial, we’ll write our first <strong>“Hello, World!”</strong> program using Go and explore how Go handles compilation, error messages, and project structure.</p>
+
+<p>Thanks for reading! If you found this helpful, feel free to share and leave your feedback. Let’s build something cool with Go! 🧑‍💻🚀</p>]]></content><author><name>Celso Inácio</name></author><category term="golang" /><category term="introduction" /><category term="tutorial" /><summary type="html"><![CDATA[Let's start our first series at this blog. We will learn golang.]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://celsoinacio.com.br/assets/img/articles/2024/06/golang.webp" /><media:content medium="image" url="https://celsoinacio.com.br/assets/img/articles/2024/06/golang.webp" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">GloboTechCast EP 54 - Hacktoberfest na Globo. Como funciona?</title><link href="https://celsoinacio.com.br/podcast/2023/10/02/hacktober-fest-globo.html" rel="alternate" type="text/html" title="GloboTechCast EP 54 - Hacktoberfest na Globo. Como funciona?" /><published>2023-10-02T00:00:00+00:00</published><updated>2023-10-02T00:00:00+00:00</updated><id>https://celsoinacio.com.br/podcast/2023/10/02/hacktober-fest-globo</id><content type="html" xml:base="https://celsoinacio.com.br/podcast/2023/10/02/hacktober-fest-globo.html"><![CDATA[<p><b>english:</b> In this episode i've participated together with people from tech area from Globo and we have spoken about Globo Hacktoberfest, one variation of global Hacktoberfest event.<p>
 
 <p><b>portuguese:</b> Neste episódio eu participei junto de outras pessoas da área de tecnologia na globo e falamos sobre o Hacktoberfest Globo, uma vertente do evento Hacktoberfest global.</p>
 </p></p>]]></content><author><name>Celso Inácio</name></author><category term="podcast" /><category term="podcast" /><category term="tech" /><category term="globo" /><category term="hacktoberfest" /><category term="opensource" /><summary type="html"><![CDATA[english: In this episode i've participated together with people from tech area from Globo and we have spoken about Globo Hacktoberfest, one variation of global Hacktoberfest event.]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://picsum.photos/200" /><media:content medium="image" url="https://picsum.photos/200" xmlns:media="http://search.yahoo.com/mrss/" /></entry></feed>
