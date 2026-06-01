@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html class="direction--ltr"lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Golang series: Chapter Twenty - Final Project: Building a REST API | codewithcelso</title>
+<meta name="generator" content="Jekyll v3.9.3" />
+<meta property="og:title" content="Golang series: Chapter Twenty - Final Project: Building a REST API" />
+<meta name="author" content="Celso Inácio" />
+<meta property="og:locale" content="en" />
+<meta name="description" content="Put everything together — build a complete REST API in Go using only the standard library." />
+<meta property="og:description" content="Put everything together — build a complete REST API in Go using only the standard library." />
+<link rel="canonical" href="https://celsoinacio.com.br/pt-BR/2025/06/12/golang-series-chapter-twenty-final-project-rest-api.html" />
+<meta property="og:url" content="https://celsoinacio.com.br/2025/06/12/golang-series-chapter-twenty-final-project-rest-api.html" />
+<meta property="og:site_name" content="codewithcelso" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2025-06-12T00:00:00+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Golang series: Chapter Twenty - Final Project: Building a REST API" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Celso Inácio"},"dateModified":"2025-06-12T00:00:00+00:00","datePublished":"2025-06-12T00:00:00+00:00","description":"Put everything together — build a complete REST API in Go using only the standard library.","headline":"Golang series: Chapter Twenty - Final Project: Building a REST API","mainEntityOfPage":{"@type":"WebPage","@id":"https://celsoinacio.com.br/2025/06/12/golang-series-chapter-twenty-final-project-rest-api.html"},"url":"https://celsoinacio.com.br/2025/06/12/golang-series-chapter-twenty-final-project-rest-api.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/pt-BR/assets/css/style.css">
+  <link rel="icon" type="image/png" href="/pt-BR/assets/favicon.png" />
+  <link rel="stylesheet" href="/pt-BR/assets/css/magnific-popup.css">
+
+  
+    
+    <link rel="alternate" hreflang="en" href="/" />
+  
+    
+    <link rel="alternate" hreflang="pt-BR" href="/pt-BR/" />
+  <link type="application/atom+xml" rel="alternate" href="https://celsoinacio.com.br/pt-BR/rss.xml" title="codewithcelso" /><script src="https://code.jquery.com/jquery-3.2.0.min.js"></script> 
+  <script src="/assets/js/jquery.magnific-popup.js"></script>
+  <script src="//cdn.podlove.org/web-player/5.x/embed.js"></script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q3ZXG8RKS9"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-Q3ZXG8RKS9');
+  </script>
+
+</head>
+
+<body><div class="site-header">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/pt-BR/">codewithcelso<b class="command_prompt" style="color: #2271c0;"></b><b class="blinking_cursor">_</b></a>
+      
+    <span class="social_links">
+        <a rel="menu" class="menu-link" href="/pt-BR/">home</a>
+        <a rel="menu" class="menu-link" href="/pt-BR/about">about me</a>
+        <a rel="menu" class="menu-link" href="/pt-BR/books">books</a>
+        <a rel="menu" class="menu-link" href="/pt-BR/podcasts">podcasts</a>
+        
+        
+        <a class="color-cyan-hover" class="social-icon" href="https://twitter.com/ceelsoinacio"><i class="fab fa-twitter-square"></i></a>
+        
+        
+        
+        <a class="color-purple-hover" class="social-icon" href="https://github.com/ceelsoin"><i class="fab fa-github-square"></i></a>
+        
+        
+        
+        <a class="color-blue-hover" class="social-icon" href="https://www.linkedin.com/in/ceelsoinacio/"><i class="fab fa-linkedin"></i></a>
+        
+        
+    </span>
+  </div>
+</div>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        
+  <div class="author-box">
+
+
+<img src="
+    https://github.com/ceelsoin.png
+" class="author-avatar" alt="Avatar" />
+<div class="description">Hi, I'm Celso, a passionate Brazilian software engineer who thrives on creating and exploring innovative solutions. I specialize in web engineering and work at Globo, Brazil's leading television company, where I'm shaping the future of their CMS with a cutting-edge serverless platform. Every challenge is an opportunity to learn and push boundaries, and I’m constantly inspired to build systems that make a real impact.
+</div>
+
+</div>
+
+
+<div class="post">
+  <h1 class="post-title">Golang series: Chapter Twenty - Final Project: Building a REST API</h1>
+  
+  <div class="post-tags">
+      
+      <a class="tag" href="/pt-BR/tag/golang/">golang</a>
+      
+      <a class="tag" href="/pt-BR/tag/rest-api/">rest-api</a>
+      
+      <a class="tag" href="/pt-BR/tag/http/">http</a>
+      
+      <a class="tag" href="/pt-BR/tag/tutorial/">tutorial</a>
+      
+  </div>
+  
+  <div class="post-date">
+    Published on 12 Jun 2025
+    
+      
+    
+  </div>
+  
+  <noscript>
+    <div class="post-description">Put everything together — build a complete REST API in Go using only the standard library.</div>
+  </noscript>
+  <div id="animated-post-description" class="post-description" style="display: none;"></div>
+  
+  <h1 id="final-project-building-a-rest-api-in-go">Final Project: Building a REST API in Go</h1>
+
+<p>We made it! This is the final chapter of the Golang series, and we’re going to put everything we’ve learned together into something real: a <strong>REST API</strong> built with Go’s standard library — no external frameworks needed.</p>
+
+<p>If you’ve followed along from Chapter 1, you now have everything you need to write production-quality Go. Let’s use it.</p>
+
+<blockquote>
+  <p>🧠 Missed Chapter 19? <a href="/pt-BR/2025/05/22/golang-series-chapter-nineteen-testing.html">Check it out here</a> — testing is part of what we’ll build today.</p>
+</blockquote>
+
+<hr />
+
+<h2 id="what-were-building">What We’re Building</h2>
+
+<p>A simple <strong>Task Manager API</strong> with full CRUD:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Method</th>
+      <th>Endpoint</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">GET</code></td>
+      <td><code class="language-plaintext highlighter-rouge">/tasks</code></td>
+      <td>List all tasks</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">GET</code></td>
+      <td><code class="language-plaintext highlighter-rouge">/tasks/{id}</code></td>
+      <td>Get a specific task</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">POST</code></td>
+      <td><code class="language-plaintext highlighter-rouge">/tasks</code></td>
+      <td>Create a new task</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">PUT</code></td>
+      <td><code class="language-plaintext highlighter-rouge">/tasks/{id}</code></td>
+      <td>Update a task</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">DELETE</code></td>
+      <td><code class="language-plaintext highlighter-rouge">/tasks/{id}</code></td>
+      <td>Delete a task</td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+
+<h2 id="project-structure">Project Structure</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>taskapi/
+  go.mod
+  main.go
+  task/
+    task.go
+    store.go
+    handler.go
+  task/
+    handler_test.go
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="step-1-the-task-model">Step 1: The Task Model</h2>
+
+<p><strong>task/task.go:</strong></p>
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">task</span>
+
+<span class="k">import</span> <span class="s">"time"</span>
+
+<span class="k">type</span> <span class="n">Task</span> <span class="k">struct</span> <span class="p">{</span>
+    <span class="n">ID</span>        <span class="kt">int</span>       <span class="s">`json:"id"`</span>
+    <span class="n">Title</span>     <span class="kt">string</span>    <span class="s">`json:"title"`</span>
+    <span class="n">Done</span>      <span class="kt">bool</span>      <span class="s">`json:"done"`</span>
+    <span class="n">CreatedAt</span> <span class="n">time</span><span class="o">.</span><span class="n">Time</span> <span class="s">`json:"created_at"`</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="step-2-in-memory-store">Step 2: In-Memory Store</h2>
+
+<p><strong>task/store.go:</strong></p>
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">task</span>
+
+<span class="k">import</span> <span class="p">(</span>
+    <span class="s">"errors"</span>
+    <span class="s">"sync"</span>
+    <span class="s">"time"</span>
+<span class="p">)</span>
+
+<span class="k">var</span> <span class="n">ErrNotFound</span> <span class="o">=</span> <span class="n">errors</span><span class="o">.</span><span class="n">New</span><span class="p">(</span><span class="s">"task not found"</span><span class="p">)</span>
+
+<span class="k">type</span> <span class="n">Store</span> <span class="k">struct</span> <span class="p">{</span>
+    <span class="n">mu</span>     <span class="n">sync</span><span class="o">.</span><span class="n">RWMutex</span>
+    <span class="n">tasks</span>  <span class="k">map</span><span class="p">[</span><span class="kt">int</span><span class="p">]</span><span class="n">Task</span>
+    <span class="n">nextID</span> <span class="kt">int</span>
+<span class="p">}</span>
+
+<span class="k">func</span> <span class="n">NewStore</span><span class="p">()</span> <span class="o">*</span><span class="n">Store</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="o">&amp;</span><span class="n">Store</span><span class="p">{</span>
+        <span class="n">tasks</span><span class="o">:</span>  <span class="nb">make</span><span class="p">(</span><span class="k">map</span><span class="p">[</span><span class="kt">int</span><span class="p">]</span><span class="n">Task</span><span class="p">),</span>
+        <span class="n">nextID</span><span class="o">:</span> <span class="m">1</span><span class="p">,</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">func</span> <span class="p">(</span><span class="n">s</span> <span class="o">*</span><span class="n">Store</span><span class="p">)</span> <span class="n">Create</span><span class="p">(</span><span class="n">title</span> <span class="kt">string</span><span class="p">)</span> <span class="n">Task</span> <span class="p">{</span>
+    <span class="n">s</span><span class="o">.</span><span class="n">mu</span><span class="o">.</span><span class="n">Lock</span><span class="p">()</span>
+    <span class="k">defer</span> <span class="n">s</span><span class="o">.</span><span class="n">mu</span><span class="o">.</span><span class="n">Unlock</span><span class="p">()</span>
+
+    <span class="n">t</span> <span class="o">:=</span> <span class="n">Task</span><span class="p">{</span><span class="n">ID</span><span class="o">:</span> <span class="n">s</span><span class="o">.</span><span class="n">nextID</span><span class="p">,</span> <span class="n">Title</span><span class="o">:</span> <span class="n">title</span><span class="p">,</span> <span class="n">CreatedAt</span><span class="o">:</span> <span class="n">time</span><span class="o">.</span><span class="n">Now</span><span class="p">()}</span>
+    <span class="n">s</span><span class="o">.</span><span class="n">tasks</span><span class="p">[</span><span class="n">s</span><span class="o">.</span><span class="n">nextID</span><span class="p">]</span> <span class="o">=</span> <span class="n">t</span>
+    <span class="n">s</span><span class="o">.</span><span class="n">nextID</span><span class="o">++</span>
+    <span class="k">return</span> <span class="n">t</span>
+<span class="p">}</span>
+
+<span class="k">func</span> <span class="p">(</span><span class="n">s</span> <span class="o">*</span><span class="n">Store</span><span class="p">)</span> <span class="n">GetAll</span><span class="p">()</span> <span class="p">[]</span><span class="n">Task</span> <span class="p">{</span>
+    <span class="n">s</span><span class="o">.</span><span class="n">mu</span><span class="o">.</span><span class="n">RLock</span><span class="p">()</span>
+    <span class="k">defer</span> <span class="n">s</span><span class="o">.</span><span class="n">mu</span><span class="o">.</span><span class="n">RUnlock</span><span class="p">()</span>
+
+    <span class="n">tasks</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">([]</span><span class="n">Task</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">tasks</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">t</span> <span class="o">:=</span> <span class="k">range</span> <span class="n">s</span><span class="o">.</span><span class="n">tasks</span> <span class="p">{</span>
+        <span class="n">tasks</span> <span class="o">=</span> <span class="nb">append</span><span class="p">(</span><span class="n">tasks</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">tasks</span>
+<span class="p">}</span>
+
+<span class="k">func</span> <span class="p">(</span><span class="n">s</span> <span class="o">*</span><span class="n">Store</span><span class="p">)</span> <span class="n">GetByID</span><span class="p">(</span><span class="n">id</span> <span class="kt">int</span><span class="p">)</span> <span class="p">(</span><span class="n">Task</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">s</span><span class="o">.</span><span class="n">mu</span><span class="o">.</span><span class="n">RLock</span><span class="p">()</span>
+    <span class="k">defer</span> <span class="n">s</span><span class="o">.</span><span class="n">mu</span><span class="o">.</span><span class="n">RUnlock</span><span class="p">()</span>
+
+    <span class="n">t</span><span class="p">,</span> <span class="n">ok</span> <span class="o">:=</span> <span class="n">s</span><span class="o">.</span><span class="n">tasks</span><span class="p">[</span><span class="n">id</span><span class="p">]</span>
+    <span class="k">if</span> <span class="o">!</span><span class="n">ok</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">Task</span><span class="p">{},</span> <span class="n">ErrNotFound</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">t</span><span class="p">,</span> <span class="no">nil</span>
+<span class="p">}</span>
+
+<span class="k">func</span> <span class="p">(</span><span class="n">s</span> <span class="o">*</span><span class="n">Store</span><span class="p">)</span> <span class="n">Update</span><span class="p">(</span><span class="n">id</span> <span class="kt">int</span><span class="p">,</span> <span class="n">title</span> <span class="kt">string</span><span class="p">,</span> <span class="n">done</span> <span class="kt">bool</span><span class="p">)</span> <span class="p">(</span><span class="n">Task</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">s</span><span class="o">.</span><span class="n">mu</span><span class="o">.</span><span class="n">Lock</span><span class="p">()</span>
+    <span class="k">defer</span> <span class="n">s</span><span class="o">.</span><span class="n">mu</span><span class="o">.</span><span class="n">Unlock</span><span class="p">()</span>
+
+    <span class="n">t</span><span class="p">,</span> <span class="n">ok</span> <span class="o">:=</span> <span class="n">s</span><span class="o">.</span><span class="n">tasks</span><span class="p">[</span><span class="n">id</span><span class="p">]</span>
+    <span class="k">if</span> <span class="o">!</span><span class="n">ok</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">Task</span><span class="p">{},</span> <span class="n">ErrNotFound</span>
+    <span class="p">}</span>
+
+    <span class="n">t</span><span class="o">.</span><span class="n">Title</span> <span class="o">=</span> <span class="n">title</span>
+    <span class="n">t</span><span class="o">.</span><span class="n">Done</span> <span class="o">=</span> <span class="n">done</span>
+    <span class="n">s</span><span class="o">.</span><span class="n">tasks</span><span class="p">[</span><span class="n">id</span><span class="p">]</span> <span class="o">=</span> <span class="n">t</span>
+    <span class="k">return</span> <span class="n">t</span><span class="p">,</span> <span class="no">nil</span>
+<span class="p">}</span>
+
+<span class="k">func</span> <span class="p">(</span><span class="n">s</span> <span class="o">*</span><span class="n">Store</span><span class="p">)</span> <span class="n">Delete</span><span class="p">(</span><span class="n">id</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">error</span> <span class="p">{</span>
+    <span class="n">s</span><span class="o">.</span><span class="n">mu</span><span class="o">.</span><span class="n">Lock</span><span class="p">()</span>
+    <span class="k">defer</span> <span class="n">s</span><span class="o">.</span><span class="n">mu</span><span class="o">.</span><span class="n">Unlock</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">_</span><span class="p">,</span> <span class="n">ok</span> <span class="o">:=</span> <span class="n">s</span><span class="o">.</span><span class="n">tasks</span><span class="p">[</span><span class="n">id</span><span class="p">];</span> <span class="o">!</span><span class="n">ok</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">ErrNotFound</span>
+    <span class="p">}</span>
+    <span class="nb">delete</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">tasks</span><span class="p">,</span> <span class="n">id</span><span class="p">)</span>
+    <span class="k">return</span> <span class="no">nil</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Notice:</p>
+<ul>
+  <li><strong><code class="language-plaintext highlighter-rouge">sync.RWMutex</code></strong> — allows multiple concurrent reads, exclusive writes</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">defer s.mu.Unlock()</code></strong> — ensures we never forget to unlock</li>
+</ul>
+
+<hr />
+
+<h2 id="step-3-http-handlers">Step 3: HTTP Handlers</h2>
+
+<p><strong>task/handler.go:</strong></p>
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">task</span>
+
+<span class="k">import</span> <span class="p">(</span>
+    <span class="s">"encoding/json"</span>
+    <span class="s">"errors"</span>
+    <span class="s">"net/http"</span>
+    <span class="s">"strconv"</span>
+    <span class="s">"strings"</span>
+<span class="p">)</span>
+
+<span class="k">type</span> <span class="n">Handler</span> <span class="k">struct</span> <span class="p">{</span>
+    <span class="n">store</span> <span class="o">*</span><span class="n">Store</span>
+<span class="p">}</span>
+
+<span class="k">func</span> <span class="n">NewHandler</span><span class="p">(</span><span class="n">store</span> <span class="o">*</span><span class="n">Store</span><span class="p">)</span> <span class="o">*</span><span class="n">Handler</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="o">&amp;</span><span class="n">Handler</span><span class="p">{</span><span class="n">store</span><span class="o">:</span> <span class="n">store</span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">func</span> <span class="p">(</span><span class="n">h</span> <span class="o">*</span><span class="n">Handler</span><span class="p">)</span> <span class="n">ServeHTTP</span><span class="p">(</span><span class="n">w</span> <span class="n">http</span><span class="o">.</span><span class="n">ResponseWriter</span><span class="p">,</span> <span class="n">r</span> <span class="o">*</span><span class="n">http</span><span class="o">.</span><span class="n">Request</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c">// Route: /tasks or /tasks/{id}</span>
+    <span class="n">parts</span> <span class="o">:=</span> <span class="n">strings</span><span class="o">.</span><span class="n">Split</span><span class="p">(</span><span class="n">strings</span><span class="o">.</span><span class="n">Trim</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">URL</span><span class="o">.</span><span class="n">Path</span><span class="p">,</span> <span class="s">"/"</span><span class="p">),</span> <span class="s">"/"</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">parts</span><span class="p">)</span> <span class="o">==</span> <span class="m">1</span> <span class="o">&amp;&amp;</span> <span class="n">parts</span><span class="p">[</span><span class="m">0</span><span class="p">]</span> <span class="o">==</span> <span class="s">"tasks"</span> <span class="p">{</span>
+        <span class="k">switch</span> <span class="n">r</span><span class="o">.</span><span class="n">Method</span> <span class="p">{</span>
+        <span class="k">case</span> <span class="n">http</span><span class="o">.</span><span class="n">MethodGet</span><span class="o">:</span>
+            <span class="n">h</span><span class="o">.</span><span class="n">listTasks</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span>
+        <span class="k">case</span> <span class="n">http</span><span class="o">.</span><span class="n">MethodPost</span><span class="o">:</span>
+            <span class="n">h</span><span class="o">.</span><span class="n">createTask</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span>
+        <span class="k">default</span><span class="o">:</span>
+            <span class="n">http</span><span class="o">.</span><span class="n">Error</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="s">"Method not allowed"</span><span class="p">,</span> <span class="n">http</span><span class="o">.</span><span class="n">StatusMethodNotAllowed</span><span class="p">)</span>
+        <span class="p">}</span>
+        <span class="k">return</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">parts</span><span class="p">)</span> <span class="o">==</span> <span class="m">2</span> <span class="o">&amp;&amp;</span> <span class="n">parts</span><span class="p">[</span><span class="m">0</span><span class="p">]</span> <span class="o">==</span> <span class="s">"tasks"</span> <span class="p">{</span>
+        <span class="n">id</span><span class="p">,</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">strconv</span><span class="o">.</span><span class="n">Atoi</span><span class="p">(</span><span class="n">parts</span><span class="p">[</span><span class="m">1</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+            <span class="n">http</span><span class="o">.</span><span class="n">Error</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="s">"Invalid task ID"</span><span class="p">,</span> <span class="n">http</span><span class="o">.</span><span class="n">StatusBadRequest</span><span class="p">)</span>
+            <span class="k">return</span>
+        <span class="p">}</span>
+        <span class="k">switch</span> <span class="n">r</span><span class="o">.</span><span class="n">Method</span> <span class="p">{</span>
+        <span class="k">case</span> <span class="n">http</span><span class="o">.</span><span class="n">MethodGet</span><span class="o">:</span>
+            <span class="n">h</span><span class="o">.</span><span class="n">getTask</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">id</span><span class="p">)</span>
+        <span class="k">case</span> <span class="n">http</span><span class="o">.</span><span class="n">MethodPut</span><span class="o">:</span>
+            <span class="n">h</span><span class="o">.</span><span class="n">updateTask</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">id</span><span class="p">)</span>
+        <span class="k">case</span> <span class="n">http</span><span class="o">.</span><span class="n">MethodDelete</span><span class="o">:</span>
+            <span class="n">h</span><span class="o">.</span><span class="n">deleteTask</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">id</span><span class="p">)</span>
+        <span class="k">default</span><span class="o">:</span>
+            <span class="n">http</span><span class="o">.</span><span class="n">Error</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="s">"Method not allowed"</span><span class="p">,</span> <span class="n">http</span><span class="o">.</span><span class="n">StatusMethodNotAllowed</span><span class="p">)</span>
+        <span class="p">}</span>
+        <span class="k">return</span>
+    <span class="p">}</span>
+
+    <span class="n">http</span><span class="o">.</span><span class="n">NotFound</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="k">func</span> <span class="p">(</span><span class="n">h</span> <span class="o">*</span><span class="n">Handler</span><span class="p">)</span> <span class="n">listTasks</span><span class="p">(</span><span class="n">w</span> <span class="n">http</span><span class="o">.</span><span class="n">ResponseWriter</span><span class="p">,</span> <span class="n">r</span> <span class="o">*</span><span class="n">http</span><span class="o">.</span><span class="n">Request</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">tasks</span> <span class="o">:=</span> <span class="n">h</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">GetAll</span><span class="p">()</span>
+    <span class="n">writeJSON</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">http</span><span class="o">.</span><span class="n">StatusOK</span><span class="p">,</span> <span class="n">tasks</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="k">func</span> <span class="p">(</span><span class="n">h</span> <span class="o">*</span><span class="n">Handler</span><span class="p">)</span> <span class="n">createTask</span><span class="p">(</span><span class="n">w</span> <span class="n">http</span><span class="o">.</span><span class="n">ResponseWriter</span><span class="p">,</span> <span class="n">r</span> <span class="o">*</span><span class="n">http</span><span class="o">.</span><span class="n">Request</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">var</span> <span class="n">body</span> <span class="k">struct</span> <span class="p">{</span>
+        <span class="n">Title</span> <span class="kt">string</span> <span class="s">`json:"title"`</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">json</span><span class="o">.</span><span class="n">NewDecoder</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">Body</span><span class="p">)</span><span class="o">.</span><span class="n">Decode</span><span class="p">(</span><span class="o">&amp;</span><span class="n">body</span><span class="p">);</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="o">||</span> <span class="n">body</span><span class="o">.</span><span class="n">Title</span> <span class="o">==</span> <span class="s">""</span> <span class="p">{</span>
+        <span class="n">http</span><span class="o">.</span><span class="n">Error</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="s">"Invalid request body"</span><span class="p">,</span> <span class="n">http</span><span class="o">.</span><span class="n">StatusBadRequest</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="p">}</span>
+    <span class="n">t</span> <span class="o">:=</span> <span class="n">h</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">Create</span><span class="p">(</span><span class="n">body</span><span class="o">.</span><span class="n">Title</span><span class="p">)</span>
+    <span class="n">writeJSON</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">http</span><span class="o">.</span><span class="n">StatusCreated</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="k">func</span> <span class="p">(</span><span class="n">h</span> <span class="o">*</span><span class="n">Handler</span><span class="p">)</span> <span class="n">getTask</span><span class="p">(</span><span class="n">w</span> <span class="n">http</span><span class="o">.</span><span class="n">ResponseWriter</span><span class="p">,</span> <span class="n">r</span> <span class="o">*</span><span class="n">http</span><span class="o">.</span><span class="n">Request</span><span class="p">,</span> <span class="n">id</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">t</span><span class="p">,</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">h</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">GetByID</span><span class="p">(</span><span class="n">id</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">errors</span><span class="o">.</span><span class="n">Is</span><span class="p">(</span><span class="n">err</span><span class="p">,</span> <span class="n">ErrNotFound</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">http</span><span class="o">.</span><span class="n">Error</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="s">"Task not found"</span><span class="p">,</span> <span class="n">http</span><span class="o">.</span><span class="n">StatusNotFound</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="p">}</span>
+    <span class="n">writeJSON</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">http</span><span class="o">.</span><span class="n">StatusOK</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="k">func</span> <span class="p">(</span><span class="n">h</span> <span class="o">*</span><span class="n">Handler</span><span class="p">)</span> <span class="n">updateTask</span><span class="p">(</span><span class="n">w</span> <span class="n">http</span><span class="o">.</span><span class="n">ResponseWriter</span><span class="p">,</span> <span class="n">r</span> <span class="o">*</span><span class="n">http</span><span class="o">.</span><span class="n">Request</span><span class="p">,</span> <span class="n">id</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">var</span> <span class="n">body</span> <span class="k">struct</span> <span class="p">{</span>
+        <span class="n">Title</span> <span class="kt">string</span> <span class="s">`json:"title"`</span>
+        <span class="n">Done</span>  <span class="kt">bool</span>   <span class="s">`json:"done"`</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">json</span><span class="o">.</span><span class="n">NewDecoder</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">Body</span><span class="p">)</span><span class="o">.</span><span class="n">Decode</span><span class="p">(</span><span class="o">&amp;</span><span class="n">body</span><span class="p">);</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+        <span class="n">http</span><span class="o">.</span><span class="n">Error</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="s">"Invalid request body"</span><span class="p">,</span> <span class="n">http</span><span class="o">.</span><span class="n">StatusBadRequest</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="p">}</span>
+    <span class="n">t</span><span class="p">,</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">h</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">Update</span><span class="p">(</span><span class="n">id</span><span class="p">,</span> <span class="n">body</span><span class="o">.</span><span class="n">Title</span><span class="p">,</span> <span class="n">body</span><span class="o">.</span><span class="n">Done</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">errors</span><span class="o">.</span><span class="n">Is</span><span class="p">(</span><span class="n">err</span><span class="p">,</span> <span class="n">ErrNotFound</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">http</span><span class="o">.</span><span class="n">Error</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="s">"Task not found"</span><span class="p">,</span> <span class="n">http</span><span class="o">.</span><span class="n">StatusNotFound</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="p">}</span>
+    <span class="n">writeJSON</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">http</span><span class="o">.</span><span class="n">StatusOK</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="k">func</span> <span class="p">(</span><span class="n">h</span> <span class="o">*</span><span class="n">Handler</span><span class="p">)</span> <span class="n">deleteTask</span><span class="p">(</span><span class="n">w</span> <span class="n">http</span><span class="o">.</span><span class="n">ResponseWriter</span><span class="p">,</span> <span class="n">r</span> <span class="o">*</span><span class="n">http</span><span class="o">.</span><span class="n">Request</span><span class="p">,</span> <span class="n">id</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">h</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">Delete</span><span class="p">(</span><span class="n">id</span><span class="p">);</span> <span class="n">errors</span><span class="o">.</span><span class="n">Is</span><span class="p">(</span><span class="n">err</span><span class="p">,</span> <span class="n">ErrNotFound</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">http</span><span class="o">.</span><span class="n">Error</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="s">"Task not found"</span><span class="p">,</span> <span class="n">http</span><span class="o">.</span><span class="n">StatusNotFound</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="p">}</span>
+    <span class="n">w</span><span class="o">.</span><span class="n">WriteHeader</span><span class="p">(</span><span class="n">http</span><span class="o">.</span><span class="n">StatusNoContent</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="k">func</span> <span class="n">writeJSON</span><span class="p">(</span><span class="n">w</span> <span class="n">http</span><span class="o">.</span><span class="n">ResponseWriter</span><span class="p">,</span> <span class="n">status</span> <span class="kt">int</span><span class="p">,</span> <span class="n">v</span> <span class="n">any</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">w</span><span class="o">.</span><span class="n">Header</span><span class="p">()</span><span class="o">.</span><span class="n">Set</span><span class="p">(</span><span class="s">"Content-Type"</span><span class="p">,</span> <span class="s">"application/json"</span><span class="p">)</span>
+    <span class="n">w</span><span class="o">.</span><span class="n">WriteHeader</span><span class="p">(</span><span class="n">status</span><span class="p">)</span>
+    <span class="n">json</span><span class="o">.</span><span class="n">NewEncoder</span><span class="p">(</span><span class="n">w</span><span class="p">)</span><span class="o">.</span><span class="n">Encode</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="step-4-maingo">Step 4: main.go</h2>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">main</span>
+
+<span class="k">import</span> <span class="p">(</span>
+    <span class="s">"fmt"</span>
+    <span class="s">"log"</span>
+    <span class="s">"net/http"</span>
+
+    <span class="s">"taskapi/task"</span>
+<span class="p">)</span>
+
+<span class="k">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">store</span> <span class="o">:=</span> <span class="n">task</span><span class="o">.</span><span class="n">NewStore</span><span class="p">()</span>
+    <span class="n">handler</span> <span class="o">:=</span> <span class="n">task</span><span class="o">.</span><span class="n">NewHandler</span><span class="p">(</span><span class="n">store</span><span class="p">)</span>
+
+    <span class="n">mux</span> <span class="o">:=</span> <span class="n">http</span><span class="o">.</span><span class="n">NewServeMux</span><span class="p">()</span>
+    <span class="n">mux</span><span class="o">.</span><span class="n">Handle</span><span class="p">(</span><span class="s">"/tasks"</span><span class="p">,</span> <span class="n">handler</span><span class="p">)</span>
+    <span class="n">mux</span><span class="o">.</span><span class="n">Handle</span><span class="p">(</span><span class="s">"/tasks/"</span><span class="p">,</span> <span class="n">handler</span><span class="p">)</span>
+
+    <span class="n">addr</span> <span class="o">:=</span> <span class="s">":8080"</span>
+    <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"Task API running on"</span><span class="p">,</span> <span class="n">addr</span><span class="p">)</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">Fatal</span><span class="p">(</span><span class="n">http</span><span class="o">.</span><span class="n">ListenAndServe</span><span class="p">(</span><span class="n">addr</span><span class="p">,</span> <span class="n">mux</span><span class="p">))</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="step-5-run-it">Step 5: Run It</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>go mod init taskapi
+go run main.go
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Task API running on :8080
+</code></pre></div></div>
+
+<h3 id="test-with-curl">Test with curl</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Create a task</span>
+curl <span class="nt">-X</span> POST http://localhost:8080/tasks <span class="se">\</span>
+  <span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+  <span class="nt">-d</span> <span class="s1">'{"title": "Learn Go"}'</span>
+
+<span class="c"># List all tasks</span>
+curl http://localhost:8080/tasks
+
+<span class="c"># Get one task</span>
+curl http://localhost:8080/tasks/1
+
+<span class="c"># Update a task</span>
+curl <span class="nt">-X</span> PUT http://localhost:8080/tasks/1 <span class="se">\</span>
+  <span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+  <span class="nt">-d</span> <span class="s1">'{"title": "Learn Go", "done": true}'</span>
+
+<span class="c"># Delete a task</span>
+curl <span class="nt">-X</span> DELETE http://localhost:8080/tasks/1
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="what-we-used-from-this-series">What We Used From This Series</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Concept</th>
+      <th>Where</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Structs &amp; tags</td>
+      <td><code class="language-plaintext highlighter-rouge">Task</code> model, JSON encoding</td>
+    </tr>
+    <tr>
+      <td>Maps</td>
+      <td>In-memory store</td>
+    </tr>
+    <tr>
+      <td>Methods</td>
+      <td>Store and Handler methods</td>
+    </tr>
+    <tr>
+      <td>Pointers</td>
+      <td>Passing <code class="language-plaintext highlighter-rouge">*Store</code> and <code class="language-plaintext highlighter-rouge">*Handler</code></td>
+    </tr>
+    <tr>
+      <td>Interfaces</td>
+      <td><code class="language-plaintext highlighter-rouge">http.Handler</code></td>
+    </tr>
+    <tr>
+      <td>Error handling</td>
+      <td><code class="language-plaintext highlighter-rouge">ErrNotFound</code>, <code class="language-plaintext highlighter-rouge">errors.Is</code></td>
+    </tr>
+    <tr>
+      <td>Defer</td>
+      <td><code class="language-plaintext highlighter-rouge">defer s.mu.Unlock()</code></td>
+    </tr>
+    <tr>
+      <td>Goroutines &amp; sync</td>
+      <td><code class="language-plaintext highlighter-rouge">sync.RWMutex</code> for concurrent access</td>
+    </tr>
+    <tr>
+      <td>Packages &amp; modules</td>
+      <td><code class="language-plaintext highlighter-rouge">task</code> package, <code class="language-plaintext highlighter-rouge">go.mod</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+
+<h2 id="whats-next">What’s Next?</h2>
+
+<p>This is the end of the foundation series, but there’s so much more to explore:</p>
+
+<ul>
+  <li>🗄️ Connecting to a real database (PostgreSQL with <code class="language-plaintext highlighter-rouge">pgx</code> or <code class="language-plaintext highlighter-rouge">database/sql</code>)</li>
+  <li>🔐 Adding authentication (JWT, sessions)</li>
+  <li>⚙️ Configuration management</li>
+  <li>🧪 Integration tests with <code class="language-plaintext highlighter-rouge">httptest</code></li>
+  <li>🚀 Deploying on Cloud Run, Fly.io, or a Linux VPS</li>
+  <li>📦 Using a router like <code class="language-plaintext highlighter-rouge">chi</code> or <code class="language-plaintext highlighter-rouge">gorilla/mux</code> for cleaner routing</li>
+</ul>
+
+<p>Thank you for following along! If you have questions, drop them in the comments below. See you in the next series. 🐹</p>
+
+<hr />
+
+<blockquote>
+  <p>🔗 Missed any chapter? <a href="/pt-BR/2024/06/02/golang-series-chapter-one-installation.html">Start from Chapter One</a> and follow the full journey.</p>
+</blockquote>
+
+</div>
+
+
+<div class="comments">
+<div id="disqus_thread"></div>
+<script>
+ var disqus_config = function () {
+     this.page.url = 'https://celsoinacio.com.br/2025/06/12/golang-series-chapter-twenty-final-project-rest-api.html';
+     this.page.identifier = '/2025/06/12/golang-series-chapter-twenty-final-project-rest-api';
+     this.page.title = 'Golang series: Chapter Twenty - Final Project: Building a REST API';
+ };
+
+ (function() {  // REQUIRED CONFIGURATION VARIABLE: EDIT THE SHORTNAME BELOW
+     var d = document, s = d.createElement('script');
+
+     s.src = '//blog-from-celso-inacio.disqus.com/embed.js';
+
+     s.setAttribute('data-timestamp', +new Date());
+     (d.head || d.body).appendChild(s);
+ })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+</div>
+
+
+
+
+<div class="related">
+  <h2>related posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/pt-BR/2025/05/22/golang-series-chapter-nineteen-testing.html">
+            Golang series: Chapter Nineteen - Testing in Go
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/pt-BR/2025/05/01/golang-series-chapter-eighteen-packages-and-modules.html">
+            Golang series: Chapter Eighteen - Packages & Modules
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/pt-BR/2025/04/10/golang-series-chapter-seventeen-channels.html">
+            Golang series: Chapter Seventeen - Channels
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+  
+  <h2>all tags</h2>
+  <div class="tag-cloud"><a href="/pt-BR/tag/arrays/" class="set-1">arrays</a> <a href="/pt-BR/tag/channels/" class="set-1">channels</a> <a href="/pt-BR/tag/concurrency/" class="set-1">concurrency</a> <a href="/pt-BR/tag/control-flow/" class="set-1">control-flow</a> <a href="/pt-BR/tag/defer/" class="set-1">defer</a> <a href="/pt-BR/tag/errors/" class="set-1">errors</a> <a href="/pt-BR/tag/functions/" class="set-1">functions</a> <a href="/pt-BR/tag/globo/" class="set-1">globo</a> <a href="/pt-BR/tag/golang/" class="set-5">golang</a> <a href="/pt-BR/tag/goroutines/" class="set-1">goroutines</a> <a href="/pt-BR/tag/hacktoberfest/" class="set-1">hacktoberfest</a> <a href="/pt-BR/tag/http/" class="set-1">http</a> <a href="/pt-BR/tag/interfaces/" class="set-1">interfaces</a> <a href="/pt-BR/tag/introduction/" class="set-1">introduction</a> <a href="/pt-BR/tag/loops/" class="set-1">loops</a> <a href="/pt-BR/tag/maps/" class="set-1">maps</a> <a href="/pt-BR/tag/methods/" class="set-1">methods</a> <a href="/pt-BR/tag/modules/" class="set-1">modules</a> <a href="/pt-BR/tag/opensource/" class="set-1">opensource</a> <a href="/pt-BR/tag/packages/" class="set-1">packages</a> <a href="/pt-BR/tag/panic/" class="set-1">panic</a> <a href="/pt-BR/tag/podcast/" class="set-1">podcast</a> <a href="/pt-BR/tag/pointers/" class="set-1">pointers</a> <a href="/pt-BR/tag/recover/" class="set-1">recover</a> <a href="/pt-BR/tag/rest-api/" class="set-1">rest-api</a> <a href="/pt-BR/tag/slices/" class="set-1">slices</a> <a href="/pt-BR/tag/structs/" class="set-1">structs</a> <a href="/pt-BR/tag/tech/" class="set-1">tech</a> <a href="/pt-BR/tag/testing/" class="set-1">testing</a> <a href="/pt-BR/tag/tutorial/" class="set-5">tutorial</a></div>
+  
+
+
+
+
+<script>
+  let i = 0;
+  const text = 'Put everything together — build a complete REST API in Go using only the standard library.';
+  const speed = parseInt('50');
+  
+  function typeWriter() {
+    if (i < text.length) {
+      document.getElementById('animated-post-description').innerHTML += text.charAt(i);
+      i++;
+      setTimeout(typeWriter, speed);
+    }
+  }
+
+  document.getElementById('animated-post-description').style.display = 'initial';
+  typeWriter();
+
+  // Image modal
+  var $imgs = [];
+  $('img').each(function(idx) {
+    var obj = {
+      src: $(this).attr('src')
+    }
+    $imgs.push(obj);
+    var elem = $(this);
+    $(this).click(function() {
+      $('.modal').magnificPopup('open', idx);
+    });
+  });
+
+  $('.modal').magnificPopup({
+    items: $imgs,
+    type: 'image',
+    closeOnContentClick: true,
+    mainClass: 'mfp-img-mobile',
+    image: {
+      verticalFit: true
+    }
+    
+  });
+</script>
+
+      </div>
+    </main><footer class="site-footer">
+  <div class="wrapper">
+    <div class="credits"><a href="https://github.com/bitbrain/jekyll-dash">dash</a> theme for Jekyll by <a href="https://github.com/bitbrain">bitbrain</a> made with <i class="fas fa-heart"></i><!-- <div class="toggleWrapper">
+    <input type="checkbox" class="dn" id="theme-toggle" onclick="modeSwitcher()" checked />
+    <label for="theme-toggle" class="toggle">
+    <span class="toggle__handler">
+      <span class="crater crater--1"></span>
+      <span class="crater crater--2"></span>
+      <span class="crater crater--3"></span>
+    </span>
+        <span class="star star--1"></span>
+        <span class="star star--2"></span>
+        <span class="star star--3"></span>
+        <span class="star star--4"></span>
+        <span class="star star--5"></span>
+        <span class="star star--6"></span>
+    </label>
+</div> -->
+<script type="text/javascript">
+const theme = localStorage.getItem('theme');
+
+// if (theme === "light") {
+    // document.documentElement.setAttribute('data-theme', 'light');
+// } else {
+    document.documentElement.setAttribute('data-theme', 'dark');
+// }
+const userPrefers = getComputedStyle(document.documentElement).getPropertyValue('content');
+
+function activateDarkTheme() {
+    document.getElementById('theme-toggle').checked = true;
+    document.documentElement.setAttribute('data-theme', 'dark');
+    document.documentElement.classList.add('theme--dark');
+    document.documentElement.classList.remove('theme--light');
+	document.getElementById("theme-toggle").className = 'light';
+	window.localStorage.setItem('theme', 'dark');
+}
+
+function activateLightTheme() {
+    document.getElementById('theme-toggle').checked = false;
+    document.documentElement.setAttribute('data-theme', 'light');
+    document.documentElement.classList.add('theme--light');
+    document.documentElement.classList.remove('theme--dark');
+	document.getElementById("theme-toggle").className = 'dark';
+	window.localStorage.setItem('theme', 'light');
+}
+
+// if (theme === "dark") {
+//     activateDarkTheme();
+// } else if (theme === "light") {
+//     activateLightTheme();
+// } else if  (userPrefers === "light") {
+//     activateDarkTheme();
+// } else {
+//     activateLightTheme();
+// }
+
+activateLightTheme()
+
+function modeSwitcher() {
+	let currentMode = document.documentElement.getAttribute('data-theme');
+	if (currentMode === "dark") {
+	    activateLightTheme();
+	} else {
+	    activateDarkTheme();
+	}
+}
+</script></div>
+  </div>
+</footer>
+
+
+<script>
+      window.FontAwesomeConfig = {
+        searchPseudoElements: true
+      }
+    </script>
+  </body>
+
+</html>
+

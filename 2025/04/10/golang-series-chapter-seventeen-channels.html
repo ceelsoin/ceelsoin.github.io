@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html class="direction--ltr"lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Golang series: Chapter Seventeen - Channels | codewithcelso</title>
+<meta name="generator" content="Jekyll v3.9.3" />
+<meta property="og:title" content="Golang series: Chapter Seventeen - Channels" />
+<meta name="author" content="Celso Inácio" />
+<meta property="og:locale" content="en" />
+<meta name="description" content="Channels are Go’s way of communicating between goroutines safely. Learn buffered, unbuffered, and the select statement." />
+<meta property="og:description" content="Channels are Go’s way of communicating between goroutines safely. Learn buffered, unbuffered, and the select statement." />
+<link rel="canonical" href="https://celsoinacio.com.br/2025/04/10/golang-series-chapter-seventeen-channels.html" />
+<meta property="og:url" content="https://celsoinacio.com.br/2025/04/10/golang-series-chapter-seventeen-channels.html" />
+<meta property="og:site_name" content="codewithcelso" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2025-04-10T00:00:00+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Golang series: Chapter Seventeen - Channels" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Celso Inácio"},"dateModified":"2025-04-10T00:00:00+00:00","datePublished":"2025-04-10T00:00:00+00:00","description":"Channels are Go’s way of communicating between goroutines safely. Learn buffered, unbuffered, and the select statement.","headline":"Golang series: Chapter Seventeen - Channels","mainEntityOfPage":{"@type":"WebPage","@id":"https://celsoinacio.com.br/2025/04/10/golang-series-chapter-seventeen-channels.html"},"url":"https://celsoinacio.com.br/2025/04/10/golang-series-chapter-seventeen-channels.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="icon" type="image/png" href="/assets/favicon.png" />
+  <link rel="stylesheet" href="/assets/css/magnific-popup.css">
+
+  
+    
+    <link rel="alternate" hreflang="en" href="/" />
+  
+    
+    <link rel="alternate" hreflang="pt-BR" href="/pt-BR/" />
+  <link type="application/atom+xml" rel="alternate" href="https://celsoinacio.com.br/rss.xml" title="codewithcelso" /><script src="https://code.jquery.com/jquery-3.2.0.min.js"></script> 
+  <script src="/assets/js/jquery.magnific-popup.js"></script>
+  <script src="//cdn.podlove.org/web-player/5.x/embed.js"></script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q3ZXG8RKS9"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-Q3ZXG8RKS9');
+  </script>
+
+</head>
+
+<body><div class="site-header">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/">codewithcelso<b class="command_prompt" style="color: #2271c0;"></b><b class="blinking_cursor">_</b></a>
+      
+    <span class="social_links">
+        <a rel="menu" class="menu-link" href="/">home</a>
+        <a rel="menu" class="menu-link" href="/about">about me</a>
+        <a rel="menu" class="menu-link" href="/books">books</a>
+        <a rel="menu" class="menu-link" href="/podcasts">podcasts</a>
+        
+        
+        <a class="color-cyan-hover" class="social-icon" href="https://twitter.com/ceelsoinacio"><i class="fab fa-twitter-square"></i></a>
+        
+        
+        
+        <a class="color-purple-hover" class="social-icon" href="https://github.com/ceelsoin"><i class="fab fa-github-square"></i></a>
+        
+        
+        
+        <a class="color-blue-hover" class="social-icon" href="https://www.linkedin.com/in/ceelsoinacio/"><i class="fab fa-linkedin"></i></a>
+        
+        
+    </span>
+  </div>
+</div>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        
+  <div class="author-box">
+
+
+<img src="
+    https://github.com/ceelsoin.png
+" class="author-avatar" alt="Avatar" />
+<div class="description">Hi, I'm Celso, a passionate Brazilian software engineer who thrives on creating and exploring innovative solutions. I specialize in web engineering and work at Globo, Brazil's leading television company, where I'm shaping the future of their CMS with a cutting-edge serverless platform. Every challenge is an opportunity to learn and push boundaries, and I’m constantly inspired to build systems that make a real impact.
+</div>
+
+</div>
+
+
+<div class="post">
+  <h1 class="post-title">Golang series: Chapter Seventeen - Channels</h1>
+  
+  <div class="post-tags">
+      
+      <a class="tag" href="/tag/golang/">golang</a>
+      
+      <a class="tag" href="/tag/channels/">channels</a>
+      
+      <a class="tag" href="/tag/concurrency/">concurrency</a>
+      
+      <a class="tag" href="/tag/tutorial/">tutorial</a>
+      
+  </div>
+  
+  <div class="post-date">
+    Published on 10 Apr 2025
+    
+      
+    
+  </div>
+  
+  <noscript>
+    <div class="post-description">Channels are Go's way of communicating between goroutines safely. Learn buffered, unbuffered, and the select statement.</div>
+  </noscript>
+  <div id="animated-post-description" class="post-description" style="display: none;"></div>
+  
+  <h1 id="channels-in-go-communicating-between-goroutines">Channels in Go: Communicating Between Goroutines</h1>
+
+<p>Last chapter we saw goroutines sharing state with mutexes. But Go has a higher-level tool for concurrent communication: <strong>channels</strong>. They’re built on a simple philosophy from Tony Hoare’s CSP model, adopted as Go’s motto:</p>
+
+<blockquote>
+  <p><em>“Do not communicate by sharing memory; instead, share memory by communicating.”</em></p>
+</blockquote>
+
+<p>A channel is a typed conduit through which goroutines can send and receive values — safely, without mutexes.</p>
+
+<blockquote>
+  <p>🧠 Missed Chapter 16? <a href="/2025/03/20/golang-series-chapter-sixteen-goroutines.html">Check it out here</a> to understand goroutines before diving into how they communicate.</p>
+</blockquote>
+
+<hr />
+
+<h2 id="creating-a-channel">Creating a Channel</h2>
+
+<p>Use <code class="language-plaintext highlighter-rouge">make</code> with the channel type:</p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ch</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="k">chan</span> <span class="kt">int</span><span class="p">)</span>       <span class="c">// unbuffered channel of int</span>
+<span class="n">ch</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="k">chan</span> <span class="kt">string</span><span class="p">,</span> <span class="m">5</span><span class="p">)</span> <span class="c">// buffered channel with capacity 5</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="sending-and-receiving">Sending and Receiving</h2>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">ch &lt;- value</code> — send a value into the channel</li>
+  <li><code class="language-plaintext highlighter-rouge">value := &lt;-ch</code> — receive a value from the channel</li>
+</ul>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">main</span>
+
+<span class="k">import</span> <span class="s">"fmt"</span>
+
+<span class="k">func</span> <span class="n">sum</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="kt">int</span><span class="p">,</span> <span class="n">ch</span> <span class="k">chan</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">ch</span> <span class="o">&lt;-</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+<span class="p">}</span>
+
+<span class="k">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">ch</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="k">chan</span> <span class="kt">int</span><span class="p">)</span>
+    <span class="k">go</span> <span class="n">sum</span><span class="p">(</span><span class="m">10</span><span class="p">,</span> <span class="m">20</span><span class="p">,</span> <span class="n">ch</span><span class="p">)</span>
+
+    <span class="n">result</span> <span class="o">:=</span> <span class="o">&lt;-</span><span class="n">ch</span> <span class="c">// blocks until sum sends</span>
+    <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"Result:"</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>Output:</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Result: 30
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="unbuffered-channels">Unbuffered Channels</h2>
+
+<p>An <strong>unbuffered channel</strong> has no storage. A send blocks until a receiver is ready, and a receive blocks until a sender sends. This synchronization is built in:</p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">main</span>
+
+<span class="k">import</span> <span class="s">"fmt"</span>
+
+<span class="k">func</span> <span class="n">ping</span><span class="p">(</span><span class="n">ch</span> <span class="k">chan</span> <span class="kt">string</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">ch</span> <span class="o">&lt;-</span> <span class="s">"ping"</span>
+<span class="p">}</span>
+
+<span class="k">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">ch</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="k">chan</span> <span class="kt">string</span><span class="p">)</span>
+    <span class="k">go</span> <span class="n">ping</span><span class="p">(</span><span class="n">ch</span><span class="p">)</span>
+
+    <span class="n">msg</span> <span class="o">:=</span> <span class="o">&lt;-</span><span class="n">ch</span>
+    <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>Output:</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ping
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="buffered-channels">Buffered Channels</h2>
+
+<p>A <strong>buffered channel</strong> has a capacity. Sends don’t block until the buffer is full:</p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">main</span>
+
+<span class="k">import</span> <span class="s">"fmt"</span>
+
+<span class="k">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">ch</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="k">chan</span> <span class="kt">int</span><span class="p">,</span> <span class="m">3</span><span class="p">)</span>
+
+    <span class="n">ch</span> <span class="o">&lt;-</span> <span class="m">1</span>
+    <span class="n">ch</span> <span class="o">&lt;-</span> <span class="m">2</span>
+    <span class="n">ch</span> <span class="o">&lt;-</span> <span class="m">3</span>
+    <span class="c">// ch &lt;- 4 would block here — buffer is full</span>
+
+    <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="o">&lt;-</span><span class="n">ch</span><span class="p">)</span>
+    <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="o">&lt;-</span><span class="n">ch</span><span class="p">)</span>
+    <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="o">&lt;-</span><span class="n">ch</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>Output:</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1
+2
+3
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="closing-a-channel">Closing a Channel</h2>
+
+<p>A sender can <strong>close</strong> a channel to signal that no more values will be sent:</p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">main</span>
+
+<span class="k">import</span> <span class="s">"fmt"</span>
+
+<span class="k">func</span> <span class="n">generate</span><span class="p">(</span><span class="n">ch</span> <span class="k">chan</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="o">:=</span> <span class="m">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="m">5</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span> <span class="p">{</span>
+        <span class="n">ch</span> <span class="o">&lt;-</span> <span class="n">i</span>
+    <span class="p">}</span>
+    <span class="nb">close</span><span class="p">(</span><span class="n">ch</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="k">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">ch</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="k">chan</span> <span class="kt">int</span><span class="p">,</span> <span class="m">5</span><span class="p">)</span>
+    <span class="k">go</span> <span class="n">generate</span><span class="p">(</span><span class="n">ch</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">v</span> <span class="o">:=</span> <span class="k">range</span> <span class="n">ch</span> <span class="p">{</span> <span class="c">// range receives until channel is closed</span>
+        <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>Output:</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1
+2
+3
+4
+5
+</code></pre></div></div>
+
+<blockquote>
+  <p>⚠️ Only the <strong>sender</strong> should close a channel. Sending to a closed channel panics. Receiving from a closed channel returns the zero value immediately.</p>
+</blockquote>
+
+<hr />
+
+<h2 id="checking-if-a-channel-is-closed">Checking if a Channel Is Closed</h2>
+
+<p>Use the two-value receive form:</p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">v</span><span class="p">,</span> <span class="n">ok</span> <span class="o">:=</span> <span class="o">&lt;-</span><span class="n">ch</span>
+<span class="k">if</span> <span class="o">!</span><span class="n">ok</span> <span class="p">{</span>
+    <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"Channel is closed"</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="the-select-statement">The select Statement</h2>
+
+<p><code class="language-plaintext highlighter-rouge">select</code> lets a goroutine wait on multiple channel operations at once — like a switch for channels:</p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">main</span>
+
+<span class="k">import</span> <span class="p">(</span>
+    <span class="s">"fmt"</span>
+    <span class="s">"time"</span>
+<span class="p">)</span>
+
+<span class="k">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">ch1</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="k">chan</span> <span class="kt">string</span><span class="p">)</span>
+    <span class="n">ch2</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="k">chan</span> <span class="kt">string</span><span class="p">)</span>
+
+    <span class="k">go</span> <span class="k">func</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">Sleep</span><span class="p">(</span><span class="m">100</span> <span class="o">*</span> <span class="n">time</span><span class="o">.</span><span class="n">Millisecond</span><span class="p">)</span>
+        <span class="n">ch1</span> <span class="o">&lt;-</span> <span class="s">"from ch1"</span>
+    <span class="p">}()</span>
+
+    <span class="k">go</span> <span class="k">func</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">Sleep</span><span class="p">(</span><span class="m">200</span> <span class="o">*</span> <span class="n">time</span><span class="o">.</span><span class="n">Millisecond</span><span class="p">)</span>
+        <span class="n">ch2</span> <span class="o">&lt;-</span> <span class="s">"from ch2"</span>
+    <span class="p">}()</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="o">:=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="m">2</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span> <span class="p">{</span>
+        <span class="k">select</span> <span class="p">{</span>
+        <span class="k">case</span> <span class="n">msg</span> <span class="o">:=</span> <span class="o">&lt;-</span><span class="n">ch1</span><span class="o">:</span>
+            <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="k">case</span> <span class="n">msg</span> <span class="o">:=</span> <span class="o">&lt;-</span><span class="n">ch2</span><span class="o">:</span>
+            <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>Output:</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>from ch1
+from ch2
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">select</code> picks whichever case is ready first. If multiple are ready simultaneously, it picks one at random.</p>
+
+<hr />
+
+<h2 id="select-with-default-non-blocking">select with Default (Non-Blocking)</h2>
+
+<p>Add a <code class="language-plaintext highlighter-rouge">default</code> case to avoid blocking:</p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">select</span> <span class="p">{</span>
+<span class="k">case</span> <span class="n">msg</span> <span class="o">:=</span> <span class="o">&lt;-</span><span class="n">ch</span><span class="o">:</span>
+    <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"Received:"</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
+<span class="k">default</span><span class="o">:</span>
+    <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"No message ready"</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="timeout-pattern-with-select">Timeout Pattern with select</h2>
+
+<p>Combining <code class="language-plaintext highlighter-rouge">select</code> and <code class="language-plaintext highlighter-rouge">time.After</code> is idiomatic for adding timeouts:</p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">main</span>
+
+<span class="k">import</span> <span class="p">(</span>
+    <span class="s">"fmt"</span>
+    <span class="s">"time"</span>
+<span class="p">)</span>
+
+<span class="k">func</span> <span class="n">slowOperation</span><span class="p">(</span><span class="n">ch</span> <span class="k">chan</span> <span class="kt">string</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">Sleep</span><span class="p">(</span><span class="m">2</span> <span class="o">*</span> <span class="n">time</span><span class="o">.</span><span class="n">Second</span><span class="p">)</span>
+    <span class="n">ch</span> <span class="o">&lt;-</span> <span class="s">"result"</span>
+<span class="p">}</span>
+
+<span class="k">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">ch</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="k">chan</span> <span class="kt">string</span><span class="p">)</span>
+    <span class="k">go</span> <span class="n">slowOperation</span><span class="p">(</span><span class="n">ch</span><span class="p">)</span>
+
+    <span class="k">select</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="n">result</span> <span class="o">:=</span> <span class="o">&lt;-</span><span class="n">ch</span><span class="o">:</span>
+        <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"Got result:"</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
+    <span class="k">case</span> <span class="o">&lt;-</span><span class="n">time</span><span class="o">.</span><span class="n">After</span><span class="p">(</span><span class="m">1</span> <span class="o">*</span> <span class="n">time</span><span class="o">.</span><span class="n">Second</span><span class="p">)</span><span class="o">:</span>
+        <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"Timed out!"</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>Output:</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Timed out!
+</code></pre></div></div>
+
+<p>This pattern is everywhere in real-world Go services — any network call or database query should have a timeout.</p>
+
+<hr />
+
+<h2 id="fan-out-one-sender-many-workers">Fan-Out: One Sender, Many Workers</h2>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">main</span>
+
+<span class="k">import</span> <span class="p">(</span>
+    <span class="s">"fmt"</span>
+    <span class="s">"sync"</span>
+<span class="p">)</span>
+
+<span class="k">func</span> <span class="n">worker</span><span class="p">(</span><span class="n">id</span> <span class="kt">int</span><span class="p">,</span> <span class="n">jobs</span> <span class="o">&lt;-</span><span class="k">chan</span> <span class="kt">int</span><span class="p">,</span> <span class="n">wg</span> <span class="o">*</span><span class="n">sync</span><span class="o">.</span><span class="n">WaitGroup</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">defer</span> <span class="n">wg</span><span class="o">.</span><span class="n">Done</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="o">:=</span> <span class="k">range</span> <span class="n">jobs</span> <span class="p">{</span>
+        <span class="n">fmt</span><span class="o">.</span><span class="n">Printf</span><span class="p">(</span><span class="s">"Worker %d processed job %d</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">id</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">jobs</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="k">chan</span> <span class="kt">int</span><span class="p">,</span> <span class="m">10</span><span class="p">)</span>
+    <span class="k">var</span> <span class="n">wg</span> <span class="n">sync</span><span class="o">.</span><span class="n">WaitGroup</span>
+
+    <span class="k">for</span> <span class="n">w</span> <span class="o">:=</span> <span class="m">1</span><span class="p">;</span> <span class="n">w</span> <span class="o">&lt;=</span> <span class="m">3</span><span class="p">;</span> <span class="n">w</span><span class="o">++</span> <span class="p">{</span>
+        <span class="n">wg</span><span class="o">.</span><span class="n">Add</span><span class="p">(</span><span class="m">1</span><span class="p">)</span>
+        <span class="k">go</span> <span class="n">worker</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">jobs</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">wg</span><span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="k">for</span> <span class="n">j</span> <span class="o">:=</span> <span class="m">1</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;=</span> <span class="m">9</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span> <span class="p">{</span>
+        <span class="n">jobs</span> <span class="o">&lt;-</span> <span class="n">j</span>
+    <span class="p">}</span>
+    <span class="nb">close</span><span class="p">(</span><span class="n">jobs</span><span class="p">)</span>
+
+    <span class="n">wg</span><span class="o">.</span><span class="n">Wait</span><span class="p">()</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>This worker pool pattern is one of the most common Go concurrency patterns in production.</p>
+
+<hr />
+
+<h2 id="quick-reference">Quick Reference</h2>
+
+<ul>
+  <li>✅ <code class="language-plaintext highlighter-rouge">make(chan T)</code> — unbuffered channel</li>
+  <li>✅ <code class="language-plaintext highlighter-rouge">make(chan T, n)</code> — buffered channel with capacity n</li>
+  <li>✅ <code class="language-plaintext highlighter-rouge">ch &lt;- v</code> — send (blocks if no receiver / buffer full)</li>
+  <li>✅ <code class="language-plaintext highlighter-rouge">v := &lt;-ch</code> — receive (blocks if nothing to receive)</li>
+  <li>✅ <code class="language-plaintext highlighter-rouge">close(ch)</code> — signal no more values (sender only)</li>
+  <li>✅ <code class="language-plaintext highlighter-rouge">for v := range ch {}</code> — receive until closed</li>
+  <li>✅ <code class="language-plaintext highlighter-rouge">select</code> — wait on multiple channels at once</li>
+  <li>⚠️ Sending to a closed channel panics</li>
+</ul>
+
+<hr />
+
+<blockquote>
+  <p>🔗 Next up: <strong>Chapter Eighteen — Packages &amp; Modules</strong> → <a href="/2025/05/01/golang-series-chapter-eighteen-packages-and-modules.html">Read it here</a></p>
+</blockquote>
+
+</div>
+
+
+<div class="comments">
+<div id="disqus_thread"></div>
+<script>
+ var disqus_config = function () {
+     this.page.url = 'https://celsoinacio.com.br/2025/04/10/golang-series-chapter-seventeen-channels.html';
+     this.page.identifier = '/2025/04/10/golang-series-chapter-seventeen-channels';
+     this.page.title = 'Golang series: Chapter Seventeen - Channels';
+ };
+
+ (function() {  // REQUIRED CONFIGURATION VARIABLE: EDIT THE SHORTNAME BELOW
+     var d = document, s = d.createElement('script');
+
+     s.src = '//blog-from-celso-inacio.disqus.com/embed.js';
+
+     s.setAttribute('data-timestamp', +new Date());
+     (d.head || d.body).appendChild(s);
+ })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+</div>
+
+
+
+
+<div class="related">
+  <h2>related posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2025/06/12/golang-series-chapter-twenty-final-project-rest-api.html">
+            Golang series: Chapter Twenty - Final Project: Building a REST API
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2025/05/22/golang-series-chapter-nineteen-testing.html">
+            Golang series: Chapter Nineteen - Testing in Go
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2025/05/01/golang-series-chapter-eighteen-packages-and-modules.html">
+            Golang series: Chapter Eighteen - Packages & Modules
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+  
+  <h2>all tags</h2>
+  <div class="tag-cloud"><a href="/tag/arrays/" class="set-1">arrays</a> <a href="/tag/channels/" class="set-1">channels</a> <a href="/tag/concurrency/" class="set-1">concurrency</a> <a href="/tag/control-flow/" class="set-1">control-flow</a> <a href="/tag/defer/" class="set-1">defer</a> <a href="/tag/errors/" class="set-1">errors</a> <a href="/tag/functions/" class="set-1">functions</a> <a href="/tag/globo/" class="set-1">globo</a> <a href="/tag/golang/" class="set-5">golang</a> <a href="/tag/goroutines/" class="set-1">goroutines</a> <a href="/tag/hacktoberfest/" class="set-1">hacktoberfest</a> <a href="/tag/http/" class="set-1">http</a> <a href="/tag/interfaces/" class="set-1">interfaces</a> <a href="/tag/introduction/" class="set-1">introduction</a> <a href="/tag/loops/" class="set-1">loops</a> <a href="/tag/maps/" class="set-1">maps</a> <a href="/tag/methods/" class="set-1">methods</a> <a href="/tag/modules/" class="set-1">modules</a> <a href="/tag/opensource/" class="set-1">opensource</a> <a href="/tag/packages/" class="set-1">packages</a> <a href="/tag/panic/" class="set-1">panic</a> <a href="/tag/podcast/" class="set-1">podcast</a> <a href="/tag/pointers/" class="set-1">pointers</a> <a href="/tag/recover/" class="set-1">recover</a> <a href="/tag/rest-api/" class="set-1">rest-api</a> <a href="/tag/slices/" class="set-1">slices</a> <a href="/tag/structs/" class="set-1">structs</a> <a href="/tag/tech/" class="set-1">tech</a> <a href="/tag/testing/" class="set-1">testing</a> <a href="/tag/tutorial/" class="set-5">tutorial</a></div>
+  
+
+
+
+
+<script>
+  let i = 0;
+  const text = 'Channels are Go's way of communicating between goroutines safely. Learn buffered, unbuffered, and the select statement.';
+  const speed = parseInt('50');
+  
+  function typeWriter() {
+    if (i < text.length) {
+      document.getElementById('animated-post-description').innerHTML += text.charAt(i);
+      i++;
+      setTimeout(typeWriter, speed);
+    }
+  }
+
+  document.getElementById('animated-post-description').style.display = 'initial';
+  typeWriter();
+
+  // Image modal
+  var $imgs = [];
+  $('img').each(function(idx) {
+    var obj = {
+      src: $(this).attr('src')
+    }
+    $imgs.push(obj);
+    var elem = $(this);
+    $(this).click(function() {
+      $('.modal').magnificPopup('open', idx);
+    });
+  });
+
+  $('.modal').magnificPopup({
+    items: $imgs,
+    type: 'image',
+    closeOnContentClick: true,
+    mainClass: 'mfp-img-mobile',
+    image: {
+      verticalFit: true
+    }
+    
+  });
+</script>
+
+      </div>
+    </main><footer class="site-footer">
+  <div class="wrapper">
+    <div class="credits"><a href="https://github.com/bitbrain/jekyll-dash">dash</a> theme for Jekyll by <a href="https://github.com/bitbrain">bitbrain</a> made with <i class="fas fa-heart"></i><!-- <div class="toggleWrapper">
+    <input type="checkbox" class="dn" id="theme-toggle" onclick="modeSwitcher()" checked />
+    <label for="theme-toggle" class="toggle">
+    <span class="toggle__handler">
+      <span class="crater crater--1"></span>
+      <span class="crater crater--2"></span>
+      <span class="crater crater--3"></span>
+    </span>
+        <span class="star star--1"></span>
+        <span class="star star--2"></span>
+        <span class="star star--3"></span>
+        <span class="star star--4"></span>
+        <span class="star star--5"></span>
+        <span class="star star--6"></span>
+    </label>
+</div> -->
+<script type="text/javascript">
+const theme = localStorage.getItem('theme');
+
+// if (theme === "light") {
+    // document.documentElement.setAttribute('data-theme', 'light');
+// } else {
+    document.documentElement.setAttribute('data-theme', 'dark');
+// }
+const userPrefers = getComputedStyle(document.documentElement).getPropertyValue('content');
+
+function activateDarkTheme() {
+    document.getElementById('theme-toggle').checked = true;
+    document.documentElement.setAttribute('data-theme', 'dark');
+    document.documentElement.classList.add('theme--dark');
+    document.documentElement.classList.remove('theme--light');
+	document.getElementById("theme-toggle").className = 'light';
+	window.localStorage.setItem('theme', 'dark');
+}
+
+function activateLightTheme() {
+    document.getElementById('theme-toggle').checked = false;
+    document.documentElement.setAttribute('data-theme', 'light');
+    document.documentElement.classList.add('theme--light');
+    document.documentElement.classList.remove('theme--dark');
+	document.getElementById("theme-toggle").className = 'dark';
+	window.localStorage.setItem('theme', 'light');
+}
+
+// if (theme === "dark") {
+//     activateDarkTheme();
+// } else if (theme === "light") {
+//     activateLightTheme();
+// } else if  (userPrefers === "light") {
+//     activateDarkTheme();
+// } else {
+//     activateLightTheme();
+// }
+
+activateLightTheme()
+
+function modeSwitcher() {
+	let currentMode = document.documentElement.getAttribute('data-theme');
+	if (currentMode === "dark") {
+	    activateLightTheme();
+	} else {
+	    activateDarkTheme();
+	}
+}
+</script></div>
+  </div>
+</footer>
+
+
+<script>
+      window.FontAwesomeConfig = {
+        searchPseudoElements: true
+      }
+    </script>
+  </body>
+
+</html>
+

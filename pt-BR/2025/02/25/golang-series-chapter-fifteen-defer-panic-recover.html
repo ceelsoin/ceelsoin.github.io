@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html class="direction--ltr"lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Golang series: Chapter Fifteen - Defer, Panic &amp; Recover | codewithcelso</title>
+<meta name="generator" content="Jekyll v3.9.3" />
+<meta property="og:title" content="Golang series: Chapter Fifteen - Defer, Panic &amp; Recover" />
+<meta name="author" content="Celso Inácio" />
+<meta property="og:locale" content="en" />
+<meta name="description" content="Learn how Go handles cleanup with defer, and how to handle unexpected crashes with panic and recover." />
+<meta property="og:description" content="Learn how Go handles cleanup with defer, and how to handle unexpected crashes with panic and recover." />
+<link rel="canonical" href="https://celsoinacio.com.br/pt-BR/2025/02/25/golang-series-chapter-fifteen-defer-panic-recover.html" />
+<meta property="og:url" content="https://celsoinacio.com.br/2025/02/25/golang-series-chapter-fifteen-defer-panic-recover.html" />
+<meta property="og:site_name" content="codewithcelso" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2025-02-25T00:00:00+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Golang series: Chapter Fifteen - Defer, Panic &amp; Recover" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Celso Inácio"},"dateModified":"2025-02-25T00:00:00+00:00","datePublished":"2025-02-25T00:00:00+00:00","description":"Learn how Go handles cleanup with defer, and how to handle unexpected crashes with panic and recover.","headline":"Golang series: Chapter Fifteen - Defer, Panic &amp; Recover","mainEntityOfPage":{"@type":"WebPage","@id":"https://celsoinacio.com.br/2025/02/25/golang-series-chapter-fifteen-defer-panic-recover.html"},"url":"https://celsoinacio.com.br/2025/02/25/golang-series-chapter-fifteen-defer-panic-recover.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/pt-BR/assets/css/style.css">
+  <link rel="icon" type="image/png" href="/pt-BR/assets/favicon.png" />
+  <link rel="stylesheet" href="/pt-BR/assets/css/magnific-popup.css">
+
+  
+    
+    <link rel="alternate" hreflang="en" href="/" />
+  
+    
+    <link rel="alternate" hreflang="pt-BR" href="/pt-BR/" />
+  <link type="application/atom+xml" rel="alternate" href="https://celsoinacio.com.br/pt-BR/rss.xml" title="codewithcelso" /><script src="https://code.jquery.com/jquery-3.2.0.min.js"></script> 
+  <script src="/assets/js/jquery.magnific-popup.js"></script>
+  <script src="//cdn.podlove.org/web-player/5.x/embed.js"></script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q3ZXG8RKS9"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-Q3ZXG8RKS9');
+  </script>
+
+</head>
+
+<body><div class="site-header">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/pt-BR/">codewithcelso<b class="command_prompt" style="color: #2271c0;"></b><b class="blinking_cursor">_</b></a>
+      
+    <span class="social_links">
+        <a rel="menu" class="menu-link" href="/pt-BR/">home</a>
+        <a rel="menu" class="menu-link" href="/pt-BR/about">about me</a>
+        <a rel="menu" class="menu-link" href="/pt-BR/books">books</a>
+        <a rel="menu" class="menu-link" href="/pt-BR/podcasts">podcasts</a>
+        
+        
+        <a class="color-cyan-hover" class="social-icon" href="https://twitter.com/ceelsoinacio"><i class="fab fa-twitter-square"></i></a>
+        
+        
+        
+        <a class="color-purple-hover" class="social-icon" href="https://github.com/ceelsoin"><i class="fab fa-github-square"></i></a>
+        
+        
+        
+        <a class="color-blue-hover" class="social-icon" href="https://www.linkedin.com/in/ceelsoinacio/"><i class="fab fa-linkedin"></i></a>
+        
+        
+    </span>
+  </div>
+</div>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        
+  <div class="author-box">
+
+
+<img src="
+    https://github.com/ceelsoin.png
+" class="author-avatar" alt="Avatar" />
+<div class="description">Hi, I'm Celso, a passionate Brazilian software engineer who thrives on creating and exploring innovative solutions. I specialize in web engineering and work at Globo, Brazil's leading television company, where I'm shaping the future of their CMS with a cutting-edge serverless platform. Every challenge is an opportunity to learn and push boundaries, and I’m constantly inspired to build systems that make a real impact.
+</div>
+
+</div>
+
+
+<div class="post">
+  <h1 class="post-title">Golang series: Chapter Fifteen - Defer, Panic & Recover</h1>
+  
+  <div class="post-tags">
+      
+      <a class="tag" href="/pt-BR/tag/golang/">golang</a>
+      
+      <a class="tag" href="/pt-BR/tag/defer/">defer</a>
+      
+      <a class="tag" href="/pt-BR/tag/panic/">panic</a>
+      
+      <a class="tag" href="/pt-BR/tag/recover/">recover</a>
+      
+      <a class="tag" href="/pt-BR/tag/tutorial/">tutorial</a>
+      
+  </div>
+  
+  <div class="post-date">
+    Published on 25 Feb 2025
+    
+      
+    
+  </div>
+  
+  <noscript>
+    <div class="post-description">Learn how Go handles cleanup with defer, and how to handle unexpected crashes with panic and recover.</div>
+  </noscript>
+  <div id="animated-post-description" class="post-description" style="display: none;"></div>
+  
+  <h1 id="defer-panic--recover-in-go">Defer, Panic &amp; Recover in Go</h1>
+
+<p>In the last chapter we covered how Go handles expected errors — the everyday “something went wrong” scenarios. Now let’s look at what happens when things go <em>really</em> wrong, and how Go gives you tools to clean up gracefully.</p>
+
+<p>This chapter covers three keywords that work together: <code class="language-plaintext highlighter-rouge">defer</code>, <code class="language-plaintext highlighter-rouge">panic</code>, and <code class="language-plaintext highlighter-rouge">recover</code>.</p>
+
+<blockquote>
+  <p>🧠 Missed Chapter 14? <a href="/pt-BR/2025/02/05/golang-series-chapter-fourteen-error-handling.html">Check it out here</a> to understand Go’s error handling model before diving into panic and recover.</p>
+</blockquote>
+
+<hr />
+
+<h2 id="defer">defer</h2>
+
+<p><code class="language-plaintext highlighter-rouge">defer</code> schedules a function call to run <strong>after the surrounding function returns</strong> — regardless of how it returns (normally, via <code class="language-plaintext highlighter-rouge">return</code>, or even via <code class="language-plaintext highlighter-rouge">panic</code>).</p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">main</span>
+
+<span class="k">import</span> <span class="s">"fmt"</span>
+
+<span class="k">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"start"</span><span class="p">)</span>
+    <span class="k">defer</span> <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"deferred: runs last"</span><span class="p">)</span>
+    <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"end"</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>Output:</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>start
+end
+deferred: runs last
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="defer-for-cleanup">defer for Cleanup</h2>
+
+<p>The most common real-world use: ensuring a resource is released no matter what happens.</p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">main</span>
+
+<span class="k">import</span> <span class="p">(</span>
+    <span class="s">"fmt"</span>
+    <span class="s">"os"</span>
+<span class="p">)</span>
+
+<span class="k">func</span> <span class="n">readFile</span><span class="p">(</span><span class="n">path</span> <span class="kt">string</span><span class="p">)</span> <span class="kt">error</span> <span class="p">{</span>
+    <span class="n">f</span><span class="p">,</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">os</span><span class="o">.</span><span class="n">Open</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">fmt</span><span class="o">.</span><span class="n">Errorf</span><span class="p">(</span><span class="s">"readFile: %w"</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="k">defer</span> <span class="n">f</span><span class="o">.</span><span class="n">Close</span><span class="p">()</span> <span class="c">// guaranteed to run when function exits</span>
+
+    <span class="c">// read from f...</span>
+    <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"File opened successfully"</span><span class="p">)</span>
+    <span class="k">return</span> <span class="no">nil</span>
+<span class="p">}</span>
+
+<span class="k">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">readFile</span><span class="p">(</span><span class="s">"example.txt"</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>The pattern <code class="language-plaintext highlighter-rouge">open → defer close → work</code> is used throughout Go’s standard library and production code. No matter where the function returns or panics, <code class="language-plaintext highlighter-rouge">f.Close()</code> will be called.</p>
+
+<hr />
+
+<h2 id="multiple-defers-lifo-order">Multiple defers: LIFO Order</h2>
+
+<p>When multiple <code class="language-plaintext highlighter-rouge">defer</code> calls are present, they execute in <strong>Last In, First Out</strong> (LIFO) order — like a stack:</p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">main</span>
+
+<span class="k">import</span> <span class="s">"fmt"</span>
+
+<span class="k">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">defer</span> <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"first deferred"</span><span class="p">)</span>
+    <span class="k">defer</span> <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"second deferred"</span><span class="p">)</span>
+    <span class="k">defer</span> <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"third deferred"</span><span class="p">)</span>
+
+    <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"main body"</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>Output:</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>main body
+third deferred
+second deferred
+first deferred
+</code></pre></div></div>
+
+<p>This is intentional — it mirrors the order you’d want to release resources (last acquired, first released).</p>
+
+<hr />
+
+<h2 id="defer-arguments-are-evaluated-immediately">defer Arguments Are Evaluated Immediately</h2>
+
+<p>The arguments to a deferred call are evaluated <em>when the defer statement runs</em>, not when the deferred function executes:</p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">main</span>
+
+<span class="k">import</span> <span class="s">"fmt"</span>
+
+<span class="k">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">x</span> <span class="o">:=</span> <span class="m">10</span>
+    <span class="k">defer</span> <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"deferred x:"</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span> <span class="c">// captures x=10 now</span>
+
+    <span class="n">x</span> <span class="o">=</span> <span class="m">99</span>
+    <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"current x:"</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>Output:</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>current x: 99
+deferred x: 10
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="panic">panic</h2>
+
+<p><code class="language-plaintext highlighter-rouge">panic</code> stops the normal execution of a goroutine immediately. It unwinds the call stack, running any deferred functions along the way, and if nothing stops it, the program crashes with a stack trace.</p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">main</span>
+
+<span class="k">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nb">panic</span><span class="p">(</span><span class="s">"something went catastrophically wrong"</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>Output:</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>goroutine 1 [running]:
+main.main()
+    /tmp/main.go:4 +0x27
+exit status 2
+</code></pre></div></div>
+
+<h3 id="when-to-use-panic">When to Use panic</h3>
+
+<p>Rarely. <code class="language-plaintext highlighter-rouge">panic</code> is reserved for <strong>truly unrecoverable situations</strong>:</p>
+
+<ul>
+  <li>✅ Programming errors (index out of bounds, nil dereference)</li>
+  <li>✅ Initialization failures that make the program impossible to run</li>
+  <li>❌ Expected errors that callers should handle — use <code class="language-plaintext highlighter-rouge">error</code> for those</li>
+</ul>
+
+<p>At Globo, we never <code class="language-plaintext highlighter-rouge">panic</code> in request handlers. We return errors and let the HTTP layer handle them gracefully.</p>
+
+<hr />
+
+<h2 id="recover">recover</h2>
+
+<p><code class="language-plaintext highlighter-rouge">recover</code> catches a <code class="language-plaintext highlighter-rouge">panic</code> and lets you handle it — but only inside a <strong>deferred function</strong>:</p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">main</span>
+
+<span class="k">import</span> <span class="s">"fmt"</span>
+
+<span class="k">func</span> <span class="n">safeRun</span><span class="p">(</span><span class="n">fn</span> <span class="k">func</span><span class="p">())</span> <span class="p">{</span>
+    <span class="k">defer</span> <span class="k">func</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="n">r</span> <span class="o">:=</span> <span class="nb">recover</span><span class="p">();</span> <span class="n">r</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+            <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"Recovered from panic:"</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}()</span>
+
+    <span class="n">fn</span><span class="p">()</span>
+<span class="p">}</span>
+
+<span class="k">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">safeRun</span><span class="p">(</span><span class="k">func</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nb">panic</span><span class="p">(</span><span class="s">"something broke"</span><span class="p">)</span>
+    <span class="p">})</span>
+
+    <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"Program continues after recovery"</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>Output:</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Recovered from panic: something broke
+Program continues after recovery
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="real-world-pattern-panic-safe-middleware">Real-World Pattern: Panic-Safe Middleware</h2>
+
+<p>In HTTP servers, it’s common to wrap handlers with a recovery middleware to prevent one bad request from crashing the whole server:</p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">main</span>
+
+<span class="k">import</span> <span class="p">(</span>
+    <span class="s">"fmt"</span>
+    <span class="s">"net/http"</span>
+<span class="p">)</span>
+
+<span class="k">func</span> <span class="n">recoveryMiddleware</span><span class="p">(</span><span class="n">next</span> <span class="n">http</span><span class="o">.</span><span class="n">HandlerFunc</span><span class="p">)</span> <span class="n">http</span><span class="o">.</span><span class="n">HandlerFunc</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="k">func</span><span class="p">(</span><span class="n">w</span> <span class="n">http</span><span class="o">.</span><span class="n">ResponseWriter</span><span class="p">,</span> <span class="n">r</span> <span class="o">*</span><span class="n">http</span><span class="o">.</span><span class="n">Request</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">defer</span> <span class="k">func</span><span class="p">()</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="n">rec</span> <span class="o">:=</span> <span class="nb">recover</span><span class="p">();</span> <span class="n">rec</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+                <span class="n">fmt</span><span class="o">.</span><span class="n">Printf</span><span class="p">(</span><span class="s">"panic recovered: %v</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">rec</span><span class="p">)</span>
+                <span class="n">http</span><span class="o">.</span><span class="n">Error</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="s">"Internal Server Error"</span><span class="p">,</span> <span class="n">http</span><span class="o">.</span><span class="n">StatusInternalServerError</span><span class="p">)</span>
+            <span class="p">}</span>
+        <span class="p">}()</span>
+        <span class="n">next</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>This is the <code class="language-plaintext highlighter-rouge">recover</code> pattern in production — isolating panics at boundaries without crashing the process.</p>
+
+<hr />
+
+<h2 id="how-they-work-together">How They Work Together</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>panic() triggered
+    → deferred functions run (LIFO)
+        → recover() in a deferred function catches the panic
+            → execution resumes after the deferred function
+</code></pre></div></div>
+
+<p>If no <code class="language-plaintext highlighter-rouge">recover</code> is called, the panic propagates up the call stack and crashes the program.</p>
+
+<hr />
+
+<h2 id="quick-reference">Quick Reference</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Keyword</th>
+      <th>What it does</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">defer f()</code></td>
+      <td>Schedules <code class="language-plaintext highlighter-rouge">f()</code> to run when the surrounding function returns</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">panic(v)</code></td>
+      <td>Stops execution, unwinds with deferred calls, crashes if unrecovered</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">recover()</code></td>
+      <td>Inside a deferred function, catches and returns the panic value</td>
+    </tr>
+  </tbody>
+</table>
+
+<ul>
+  <li>✅ Use <code class="language-plaintext highlighter-rouge">defer</code> for cleanup (close files, release locks, log timing)</li>
+  <li>✅ Multiple defers run LIFO</li>
+  <li>✅ <code class="language-plaintext highlighter-rouge">panic</code> for truly unrecoverable states only</li>
+  <li>✅ <code class="language-plaintext highlighter-rouge">recover</code> only works inside a <code class="language-plaintext highlighter-rouge">defer</code></li>
+  <li>⚠️ Don’t use <code class="language-plaintext highlighter-rouge">panic</code>/<code class="language-plaintext highlighter-rouge">recover</code> as general flow control — that’s what <code class="language-plaintext highlighter-rouge">error</code> is for</li>
+</ul>
+
+<hr />
+
+<blockquote>
+  <p>🔗 Next up: <strong>Chapter Sixteen — Goroutines: Concurrency Basics</strong> → <a href="/pt-BR/2025/03/20/golang-series-chapter-sixteen-goroutines.html">Read it here</a></p>
+</blockquote>
+
+</div>
+
+
+<div class="comments">
+<div id="disqus_thread"></div>
+<script>
+ var disqus_config = function () {
+     this.page.url = 'https://celsoinacio.com.br/2025/02/25/golang-series-chapter-fifteen-defer-panic-recover.html';
+     this.page.identifier = '/2025/02/25/golang-series-chapter-fifteen-defer-panic-recover';
+     this.page.title = 'Golang series: Chapter Fifteen - Defer, Panic & Recover';
+ };
+
+ (function() {  // REQUIRED CONFIGURATION VARIABLE: EDIT THE SHORTNAME BELOW
+     var d = document, s = d.createElement('script');
+
+     s.src = '//blog-from-celso-inacio.disqus.com/embed.js';
+
+     s.setAttribute('data-timestamp', +new Date());
+     (d.head || d.body).appendChild(s);
+ })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+</div>
+
+
+
+
+<div class="related">
+  <h2>related posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/pt-BR/2025/06/12/golang-series-chapter-twenty-final-project-rest-api.html">
+            Golang series: Chapter Twenty - Final Project: Building a REST API
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/pt-BR/2025/05/22/golang-series-chapter-nineteen-testing.html">
+            Golang series: Chapter Nineteen - Testing in Go
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/pt-BR/2025/05/01/golang-series-chapter-eighteen-packages-and-modules.html">
+            Golang series: Chapter Eighteen - Packages & Modules
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+  
+  <h2>all tags</h2>
+  <div class="tag-cloud"><a href="/pt-BR/tag/arrays/" class="set-1">arrays</a> <a href="/pt-BR/tag/channels/" class="set-1">channels</a> <a href="/pt-BR/tag/concurrency/" class="set-1">concurrency</a> <a href="/pt-BR/tag/control-flow/" class="set-1">control-flow</a> <a href="/pt-BR/tag/defer/" class="set-1">defer</a> <a href="/pt-BR/tag/errors/" class="set-1">errors</a> <a href="/pt-BR/tag/functions/" class="set-1">functions</a> <a href="/pt-BR/tag/globo/" class="set-1">globo</a> <a href="/pt-BR/tag/golang/" class="set-5">golang</a> <a href="/pt-BR/tag/goroutines/" class="set-1">goroutines</a> <a href="/pt-BR/tag/hacktoberfest/" class="set-1">hacktoberfest</a> <a href="/pt-BR/tag/http/" class="set-1">http</a> <a href="/pt-BR/tag/interfaces/" class="set-1">interfaces</a> <a href="/pt-BR/tag/introduction/" class="set-1">introduction</a> <a href="/pt-BR/tag/loops/" class="set-1">loops</a> <a href="/pt-BR/tag/maps/" class="set-1">maps</a> <a href="/pt-BR/tag/methods/" class="set-1">methods</a> <a href="/pt-BR/tag/modules/" class="set-1">modules</a> <a href="/pt-BR/tag/opensource/" class="set-1">opensource</a> <a href="/pt-BR/tag/packages/" class="set-1">packages</a> <a href="/pt-BR/tag/panic/" class="set-1">panic</a> <a href="/pt-BR/tag/podcast/" class="set-1">podcast</a> <a href="/pt-BR/tag/pointers/" class="set-1">pointers</a> <a href="/pt-BR/tag/recover/" class="set-1">recover</a> <a href="/pt-BR/tag/rest-api/" class="set-1">rest-api</a> <a href="/pt-BR/tag/slices/" class="set-1">slices</a> <a href="/pt-BR/tag/structs/" class="set-1">structs</a> <a href="/pt-BR/tag/tech/" class="set-1">tech</a> <a href="/pt-BR/tag/testing/" class="set-1">testing</a> <a href="/pt-BR/tag/tutorial/" class="set-5">tutorial</a></div>
+  
+
+
+
+
+<script>
+  let i = 0;
+  const text = 'Learn how Go handles cleanup with defer, and how to handle unexpected crashes with panic and recover.';
+  const speed = parseInt('50');
+  
+  function typeWriter() {
+    if (i < text.length) {
+      document.getElementById('animated-post-description').innerHTML += text.charAt(i);
+      i++;
+      setTimeout(typeWriter, speed);
+    }
+  }
+
+  document.getElementById('animated-post-description').style.display = 'initial';
+  typeWriter();
+
+  // Image modal
+  var $imgs = [];
+  $('img').each(function(idx) {
+    var obj = {
+      src: $(this).attr('src')
+    }
+    $imgs.push(obj);
+    var elem = $(this);
+    $(this).click(function() {
+      $('.modal').magnificPopup('open', idx);
+    });
+  });
+
+  $('.modal').magnificPopup({
+    items: $imgs,
+    type: 'image',
+    closeOnContentClick: true,
+    mainClass: 'mfp-img-mobile',
+    image: {
+      verticalFit: true
+    }
+    
+  });
+</script>
+
+      </div>
+    </main><footer class="site-footer">
+  <div class="wrapper">
+    <div class="credits"><a href="https://github.com/bitbrain/jekyll-dash">dash</a> theme for Jekyll by <a href="https://github.com/bitbrain">bitbrain</a> made with <i class="fas fa-heart"></i><!-- <div class="toggleWrapper">
+    <input type="checkbox" class="dn" id="theme-toggle" onclick="modeSwitcher()" checked />
+    <label for="theme-toggle" class="toggle">
+    <span class="toggle__handler">
+      <span class="crater crater--1"></span>
+      <span class="crater crater--2"></span>
+      <span class="crater crater--3"></span>
+    </span>
+        <span class="star star--1"></span>
+        <span class="star star--2"></span>
+        <span class="star star--3"></span>
+        <span class="star star--4"></span>
+        <span class="star star--5"></span>
+        <span class="star star--6"></span>
+    </label>
+</div> -->
+<script type="text/javascript">
+const theme = localStorage.getItem('theme');
+
+// if (theme === "light") {
+    // document.documentElement.setAttribute('data-theme', 'light');
+// } else {
+    document.documentElement.setAttribute('data-theme', 'dark');
+// }
+const userPrefers = getComputedStyle(document.documentElement).getPropertyValue('content');
+
+function activateDarkTheme() {
+    document.getElementById('theme-toggle').checked = true;
+    document.documentElement.setAttribute('data-theme', 'dark');
+    document.documentElement.classList.add('theme--dark');
+    document.documentElement.classList.remove('theme--light');
+	document.getElementById("theme-toggle").className = 'light';
+	window.localStorage.setItem('theme', 'dark');
+}
+
+function activateLightTheme() {
+    document.getElementById('theme-toggle').checked = false;
+    document.documentElement.setAttribute('data-theme', 'light');
+    document.documentElement.classList.add('theme--light');
+    document.documentElement.classList.remove('theme--dark');
+	document.getElementById("theme-toggle").className = 'dark';
+	window.localStorage.setItem('theme', 'light');
+}
+
+// if (theme === "dark") {
+//     activateDarkTheme();
+// } else if (theme === "light") {
+//     activateLightTheme();
+// } else if  (userPrefers === "light") {
+//     activateDarkTheme();
+// } else {
+//     activateLightTheme();
+// }
+
+activateLightTheme()
+
+function modeSwitcher() {
+	let currentMode = document.documentElement.getAttribute('data-theme');
+	if (currentMode === "dark") {
+	    activateLightTheme();
+	} else {
+	    activateDarkTheme();
+	}
+}
+</script></div>
+  </div>
+</footer>
+
+
+<script>
+      window.FontAwesomeConfig = {
+        searchPseudoElements: true
+      }
+    </script>
+  </body>
+
+</html>
+

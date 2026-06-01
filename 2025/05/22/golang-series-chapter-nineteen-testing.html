@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html class="direction--ltr"lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Golang series: Chapter Nineteen - Testing in Go | codewithcelso</title>
+<meta name="generator" content="Jekyll v3.9.3" />
+<meta property="og:title" content="Golang series: Chapter Nineteen - Testing in Go" />
+<meta name="author" content="Celso Inácio" />
+<meta property="og:locale" content="en" />
+<meta name="description" content="Go has testing built in. Learn how to write unit tests, table-driven tests, and benchmarks with the standard testing package." />
+<meta property="og:description" content="Go has testing built in. Learn how to write unit tests, table-driven tests, and benchmarks with the standard testing package." />
+<link rel="canonical" href="https://celsoinacio.com.br/2025/05/22/golang-series-chapter-nineteen-testing.html" />
+<meta property="og:url" content="https://celsoinacio.com.br/2025/05/22/golang-series-chapter-nineteen-testing.html" />
+<meta property="og:site_name" content="codewithcelso" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2025-05-22T00:00:00+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Golang series: Chapter Nineteen - Testing in Go" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Celso Inácio"},"dateModified":"2025-05-22T00:00:00+00:00","datePublished":"2025-05-22T00:00:00+00:00","description":"Go has testing built in. Learn how to write unit tests, table-driven tests, and benchmarks with the standard testing package.","headline":"Golang series: Chapter Nineteen - Testing in Go","mainEntityOfPage":{"@type":"WebPage","@id":"https://celsoinacio.com.br/2025/05/22/golang-series-chapter-nineteen-testing.html"},"url":"https://celsoinacio.com.br/2025/05/22/golang-series-chapter-nineteen-testing.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="icon" type="image/png" href="/assets/favicon.png" />
+  <link rel="stylesheet" href="/assets/css/magnific-popup.css">
+
+  
+    
+    <link rel="alternate" hreflang="en" href="/" />
+  
+    
+    <link rel="alternate" hreflang="pt-BR" href="/pt-BR/" />
+  <link type="application/atom+xml" rel="alternate" href="https://celsoinacio.com.br/rss.xml" title="codewithcelso" /><script src="https://code.jquery.com/jquery-3.2.0.min.js"></script> 
+  <script src="/assets/js/jquery.magnific-popup.js"></script>
+  <script src="//cdn.podlove.org/web-player/5.x/embed.js"></script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q3ZXG8RKS9"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-Q3ZXG8RKS9');
+  </script>
+
+</head>
+
+<body><div class="site-header">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/">codewithcelso<b class="command_prompt" style="color: #2271c0;"></b><b class="blinking_cursor">_</b></a>
+      
+    <span class="social_links">
+        <a rel="menu" class="menu-link" href="/">home</a>
+        <a rel="menu" class="menu-link" href="/about">about me</a>
+        <a rel="menu" class="menu-link" href="/books">books</a>
+        <a rel="menu" class="menu-link" href="/podcasts">podcasts</a>
+        
+        
+        <a class="color-cyan-hover" class="social-icon" href="https://twitter.com/ceelsoinacio"><i class="fab fa-twitter-square"></i></a>
+        
+        
+        
+        <a class="color-purple-hover" class="social-icon" href="https://github.com/ceelsoin"><i class="fab fa-github-square"></i></a>
+        
+        
+        
+        <a class="color-blue-hover" class="social-icon" href="https://www.linkedin.com/in/ceelsoinacio/"><i class="fab fa-linkedin"></i></a>
+        
+        
+    </span>
+  </div>
+</div>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        
+  <div class="author-box">
+
+
+<img src="
+    https://github.com/ceelsoin.png
+" class="author-avatar" alt="Avatar" />
+<div class="description">Hi, I'm Celso, a passionate Brazilian software engineer who thrives on creating and exploring innovative solutions. I specialize in web engineering and work at Globo, Brazil's leading television company, where I'm shaping the future of their CMS with a cutting-edge serverless platform. Every challenge is an opportunity to learn and push boundaries, and I’m constantly inspired to build systems that make a real impact.
+</div>
+
+</div>
+
+
+<div class="post">
+  <h1 class="post-title">Golang series: Chapter Nineteen - Testing in Go</h1>
+  
+  <div class="post-tags">
+      
+      <a class="tag" href="/tag/golang/">golang</a>
+      
+      <a class="tag" href="/tag/testing/">testing</a>
+      
+      <a class="tag" href="/tag/tutorial/">tutorial</a>
+      
+  </div>
+  
+  <div class="post-date">
+    Published on 22 May 2025
+    
+      
+    
+  </div>
+  
+  <noscript>
+    <div class="post-description">Go has testing built in. Learn how to write unit tests, table-driven tests, and benchmarks with the standard testing package.</div>
+  </noscript>
+  <div id="animated-post-description" class="post-description" style="display: none;"></div>
+  
+  <h1 id="testing-in-go-built-in-and-battle-tested">Testing in Go: Built In and Battle-Tested</h1>
+
+<p>Testing in Go is not an afterthought — it’s a first-class citizen of the language. There’s no need to install a testing framework. No configuration files. Just write a function that starts with <code class="language-plaintext highlighter-rouge">Test</code>, and run <code class="language-plaintext highlighter-rouge">go test</code>.</p>
+
+<p>At Globo we run tests on every pull request, and Go’s built-in tooling makes it incredibly easy to write fast, reliable tests. Let me show you how.</p>
+
+<blockquote>
+  <p>🧠 Missed Chapter 18? <a href="/2025/05/01/golang-series-chapter-eighteen-packages-and-modules.html">Check it out here</a> to understand packages first — tests live in the same package as the code they test.</p>
+</blockquote>
+
+<hr />
+
+<h2 id="the-testing-package">The testing Package</h2>
+
+<p>The <code class="language-plaintext highlighter-rouge">testing</code> package from the standard library provides everything you need. No <code class="language-plaintext highlighter-rouge">import "github.com/..."</code> required.</p>
+
+<hr />
+
+<h2 id="writing-your-first-test">Writing Your First Test</h2>
+
+<p>Test files must end with <code class="language-plaintext highlighter-rouge">_test.go</code>. Test functions must start with <code class="language-plaintext highlighter-rouge">Test</code> and accept <code class="language-plaintext highlighter-rouge">*testing.T</code>:</p>
+
+<p><strong>math.go:</strong></p>
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">math</span>
+
+<span class="k">func</span> <span class="n">Add</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">int</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+<span class="p">}</span>
+
+<span class="k">func</span> <span class="n">Divide</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="kt">float64</span><span class="p">)</span> <span class="p">(</span><span class="kt">float64</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="n">b</span> <span class="o">==</span> <span class="m">0</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="m">0</span><span class="p">,</span> <span class="n">fmt</span><span class="o">.</span><span class="n">Errorf</span><span class="p">(</span><span class="s">"cannot divide by zero"</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">a</span> <span class="o">/</span> <span class="n">b</span><span class="p">,</span> <span class="no">nil</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>math_test.go:</strong></p>
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">math</span>
+
+<span class="k">import</span> <span class="s">"testing"</span>
+
+<span class="k">func</span> <span class="n">TestAdd</span><span class="p">(</span><span class="n">t</span> <span class="o">*</span><span class="n">testing</span><span class="o">.</span><span class="n">T</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">result</span> <span class="o">:=</span> <span class="n">Add</span><span class="p">(</span><span class="m">2</span><span class="p">,</span> <span class="m">3</span><span class="p">)</span>
+    <span class="n">expected</span> <span class="o">:=</span> <span class="m">5</span>
+
+    <span class="k">if</span> <span class="n">result</span> <span class="o">!=</span> <span class="n">expected</span> <span class="p">{</span>
+        <span class="n">t</span><span class="o">.</span><span class="n">Errorf</span><span class="p">(</span><span class="s">"Add(2, 3) = %d; want %d"</span><span class="p">,</span> <span class="n">result</span><span class="p">,</span> <span class="n">expected</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="running-tests">Running Tests</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>go <span class="nb">test</span> ./...
+</code></pre></div></div>
+
+<p><strong>Output:</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ok      myproject/math    0.003s
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="tfatal-vs-terror">t.Fatal vs t.Error</h2>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">t.Error(msg)</code> — marks the test as failed but continues execution</li>
+  <li><code class="language-plaintext highlighter-rouge">t.Fatal(msg)</code> — marks the test as failed and <strong>stops</strong> the current test immediately</li>
+</ul>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">func</span> <span class="n">TestDivide</span><span class="p">(</span><span class="n">t</span> <span class="o">*</span><span class="n">testing</span><span class="o">.</span><span class="n">T</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">result</span><span class="p">,</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">Divide</span><span class="p">(</span><span class="m">10</span><span class="p">,</span> <span class="m">2</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+        <span class="n">t</span><span class="o">.</span><span class="n">Fatalf</span><span class="p">(</span><span class="s">"unexpected error: %v"</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span> <span class="c">// stop if error</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="n">result</span> <span class="o">!=</span> <span class="m">5.0</span> <span class="p">{</span>
+        <span class="n">t</span><span class="o">.</span><span class="n">Errorf</span><span class="p">(</span><span class="s">"Divide(10, 2) = %f; want 5.0"</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="table-driven-tests">Table-Driven Tests</h2>
+
+<p>This is the most idiomatic Go testing pattern. Define all your test cases as a slice of structs and loop over them:</p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">math</span>
+
+<span class="k">import</span> <span class="s">"testing"</span>
+
+<span class="k">func</span> <span class="n">TestAddTableDriven</span><span class="p">(</span><span class="n">t</span> <span class="o">*</span><span class="n">testing</span><span class="o">.</span><span class="n">T</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">tests</span> <span class="o">:=</span> <span class="p">[]</span><span class="k">struct</span> <span class="p">{</span>
+        <span class="n">name</span>     <span class="kt">string</span>
+        <span class="n">a</span><span class="p">,</span> <span class="n">b</span>     <span class="kt">int</span>
+        <span class="n">expected</span> <span class="kt">int</span>
+    <span class="p">}{</span>
+        <span class="p">{</span><span class="s">"positive numbers"</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">3</span><span class="p">,</span> <span class="m">5</span><span class="p">},</span>
+        <span class="p">{</span><span class="s">"with zero"</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">5</span><span class="p">,</span> <span class="m">5</span><span class="p">},</span>
+        <span class="p">{</span><span class="s">"negative numbers"</span><span class="p">,</span> <span class="o">-</span><span class="m">1</span><span class="p">,</span> <span class="o">-</span><span class="m">2</span><span class="p">,</span> <span class="o">-</span><span class="m">3</span><span class="p">},</span>
+        <span class="p">{</span><span class="s">"mixed signs"</span><span class="p">,</span> <span class="o">-</span><span class="m">5</span><span class="p">,</span> <span class="m">10</span><span class="p">,</span> <span class="m">5</span><span class="p">},</span>
+    <span class="p">}</span>
+
+    <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">tc</span> <span class="o">:=</span> <span class="k">range</span> <span class="n">tests</span> <span class="p">{</span>
+        <span class="n">t</span><span class="o">.</span><span class="n">Run</span><span class="p">(</span><span class="n">tc</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="k">func</span><span class="p">(</span><span class="n">t</span> <span class="o">*</span><span class="n">testing</span><span class="o">.</span><span class="n">T</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">result</span> <span class="o">:=</span> <span class="n">Add</span><span class="p">(</span><span class="n">tc</span><span class="o">.</span><span class="n">a</span><span class="p">,</span> <span class="n">tc</span><span class="o">.</span><span class="n">b</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">result</span> <span class="o">!=</span> <span class="n">tc</span><span class="o">.</span><span class="n">expected</span> <span class="p">{</span>
+                <span class="n">t</span><span class="o">.</span><span class="n">Errorf</span><span class="p">(</span><span class="s">"Add(%d, %d) = %d; want %d"</span><span class="p">,</span> <span class="n">tc</span><span class="o">.</span><span class="n">a</span><span class="p">,</span> <span class="n">tc</span><span class="o">.</span><span class="n">b</span><span class="p">,</span> <span class="n">result</span><span class="p">,</span> <span class="n">tc</span><span class="o">.</span><span class="n">expected</span><span class="p">)</span>
+            <span class="p">}</span>
+        <span class="p">})</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>Output:</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>--- PASS: TestAddTableDriven (0.00s)
+    --- PASS: TestAddTableDriven/positive_numbers (0.00s)
+    --- PASS: TestAddTableDriven/with_zero (0.00s)
+    --- PASS: TestAddTableDriven/negative_numbers (0.00s)
+    --- PASS: TestAddTableDriven/mixed_signs (0.00s)
+PASS
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">t.Run</code> creates subtests — each case gets its own name, making failures easy to identify.</p>
+
+<hr />
+
+<h2 id="testing-errors">Testing Errors</h2>
+
+<p>When your function returns an error, test both the success and failure paths:</p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">func</span> <span class="n">TestDivideErrors</span><span class="p">(</span><span class="n">t</span> <span class="o">*</span><span class="n">testing</span><span class="o">.</span><span class="n">T</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">tests</span> <span class="o">:=</span> <span class="p">[]</span><span class="k">struct</span> <span class="p">{</span>
+        <span class="n">name</span>      <span class="kt">string</span>
+        <span class="n">a</span><span class="p">,</span> <span class="n">b</span>      <span class="kt">float64</span>
+        <span class="n">wantErr</span>   <span class="kt">bool</span>
+        <span class="n">wantResult</span> <span class="kt">float64</span>
+    <span class="p">}{</span>
+        <span class="p">{</span><span class="s">"valid division"</span><span class="p">,</span> <span class="m">10</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="no">false</span><span class="p">,</span> <span class="m">5.0</span><span class="p">},</span>
+        <span class="p">{</span><span class="s">"divide by zero"</span><span class="p">,</span> <span class="m">5</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="no">true</span><span class="p">,</span> <span class="m">0</span><span class="p">},</span>
+    <span class="p">}</span>
+
+    <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">tc</span> <span class="o">:=</span> <span class="k">range</span> <span class="n">tests</span> <span class="p">{</span>
+        <span class="n">t</span><span class="o">.</span><span class="n">Run</span><span class="p">(</span><span class="n">tc</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="k">func</span><span class="p">(</span><span class="n">t</span> <span class="o">*</span><span class="n">testing</span><span class="o">.</span><span class="n">T</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">result</span><span class="p">,</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">Divide</span><span class="p">(</span><span class="n">tc</span><span class="o">.</span><span class="n">a</span><span class="p">,</span> <span class="n">tc</span><span class="o">.</span><span class="n">b</span><span class="p">)</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span><span class="p">)</span> <span class="o">!=</span> <span class="n">tc</span><span class="o">.</span><span class="n">wantErr</span> <span class="p">{</span>
+                <span class="n">t</span><span class="o">.</span><span class="n">Errorf</span><span class="p">(</span><span class="s">"wantErr=%v, got err=%v"</span><span class="p">,</span> <span class="n">tc</span><span class="o">.</span><span class="n">wantErr</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
+                <span class="k">return</span>
+            <span class="p">}</span>
+            <span class="k">if</span> <span class="o">!</span><span class="n">tc</span><span class="o">.</span><span class="n">wantErr</span> <span class="o">&amp;&amp;</span> <span class="n">result</span> <span class="o">!=</span> <span class="n">tc</span><span class="o">.</span><span class="n">wantResult</span> <span class="p">{</span>
+                <span class="n">t</span><span class="o">.</span><span class="n">Errorf</span><span class="p">(</span><span class="s">"got %f; want %f"</span><span class="p">,</span> <span class="n">result</span><span class="p">,</span> <span class="n">tc</span><span class="o">.</span><span class="n">wantResult</span><span class="p">)</span>
+            <span class="p">}</span>
+        <span class="p">})</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="useful-go-test-flags">Useful go test Flags</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>go <span class="nb">test</span> ./...              <span class="c"># run all tests</span>
+go <span class="nb">test</span> <span class="nt">-v</span> ./...           <span class="c"># verbose output (see each test name)</span>
+go <span class="nb">test</span> <span class="nt">-run</span> TestAdd ./... <span class="c"># run only tests matching "TestAdd"</span>
+go <span class="nb">test</span> <span class="nt">-count</span><span class="o">=</span>1 ./...     <span class="c"># disable test caching</span>
+go <span class="nb">test</span> <span class="nt">-race</span> ./...        <span class="c"># enable race detector</span>
+go <span class="nb">test</span> <span class="nt">-cover</span> ./...       <span class="c"># show code coverage percentage</span>
+go <span class="nb">test</span> <span class="nt">-coverprofile</span><span class="o">=</span>coverage.out ./... <span class="o">&amp;&amp;</span> go tool cover <span class="nt">-html</span><span class="o">=</span>coverage.out
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="benchmarks">Benchmarks</h2>
+
+<p>The <code class="language-plaintext highlighter-rouge">testing</code> package also supports benchmarks. Benchmark functions start with <code class="language-plaintext highlighter-rouge">Bench</code> and receive <code class="language-plaintext highlighter-rouge">*testing.B</code>:</p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">func</span> <span class="n">BenchmarkAdd</span><span class="p">(</span><span class="n">b</span> <span class="o">*</span><span class="n">testing</span><span class="o">.</span><span class="n">B</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="o">:=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">b</span><span class="o">.</span><span class="n">N</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span> <span class="p">{</span>
+        <span class="n">Add</span><span class="p">(</span><span class="m">10</span><span class="p">,</span> <span class="m">20</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Run benchmarks:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>go <span class="nb">test</span> <span class="nt">-bench</span><span class="o">=</span><span class="nb">.</span> ./...
+</code></pre></div></div>
+
+<p><strong>Output:</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>BenchmarkAdd-8    1000000000    0.2757 ns/op
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">b.N</code> is automatically adjusted by the framework until the benchmark produces a stable result.</p>
+
+<hr />
+
+<h2 id="test-helpers">Test Helpers</h2>
+
+<p>Extract repeated setup into helper functions and call <code class="language-plaintext highlighter-rouge">t.Helper()</code> so error lines point to the call site, not the helper:</p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">func</span> <span class="n">assertEqual</span><span class="p">(</span><span class="n">t</span> <span class="o">*</span><span class="n">testing</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">got</span><span class="p">,</span> <span class="n">want</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">t</span><span class="o">.</span><span class="n">Helper</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">got</span> <span class="o">!=</span> <span class="n">want</span> <span class="p">{</span>
+        <span class="n">t</span><span class="o">.</span><span class="n">Errorf</span><span class="p">(</span><span class="s">"got %d; want %d"</span><span class="p">,</span> <span class="n">got</span><span class="p">,</span> <span class="n">want</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">func</span> <span class="n">TestAddHelper</span><span class="p">(</span><span class="n">t</span> <span class="o">*</span><span class="n">testing</span><span class="o">.</span><span class="n">T</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">assertEqual</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">Add</span><span class="p">(</span><span class="m">2</span><span class="p">,</span> <span class="m">3</span><span class="p">),</span> <span class="m">5</span><span class="p">)</span>
+    <span class="n">assertEqual</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">Add</span><span class="p">(</span><span class="o">-</span><span class="m">1</span><span class="p">,</span> <span class="m">1</span><span class="p">),</span> <span class="m">0</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="quick-reference">Quick Reference</h2>
+
+<ul>
+  <li>✅ Test files end in <code class="language-plaintext highlighter-rouge">_test.go</code></li>
+  <li>✅ Test functions: <code class="language-plaintext highlighter-rouge">func TestXxx(t *testing.T)</code></li>
+  <li>✅ <code class="language-plaintext highlighter-rouge">t.Error</code> / <code class="language-plaintext highlighter-rouge">t.Errorf</code> — fail, continue</li>
+  <li>✅ <code class="language-plaintext highlighter-rouge">t.Fatal</code> / <code class="language-plaintext highlighter-rouge">t.Fatalf</code> — fail, stop test</li>
+  <li>✅ <code class="language-plaintext highlighter-rouge">t.Run("name", func(t *testing.T) {})</code> — subtests</li>
+  <li>✅ Table-driven tests — the idiomatic Go pattern</li>
+  <li>✅ <code class="language-plaintext highlighter-rouge">go test -v -cover -race ./...</code> — most useful flags</li>
+  <li>✅ <code class="language-plaintext highlighter-rouge">func BenchmarkXxx(b *testing.B)</code> — for performance testing</li>
+</ul>
+
+<hr />
+
+<blockquote>
+  <p>🔗 Final chapter: <strong>Chapter Twenty — Final Project: Building a REST API</strong> → <a href="/2025/06/12/golang-series-chapter-twenty-final-project-rest-api.html">Read it here</a></p>
+</blockquote>
+
+</div>
+
+
+<div class="comments">
+<div id="disqus_thread"></div>
+<script>
+ var disqus_config = function () {
+     this.page.url = 'https://celsoinacio.com.br/2025/05/22/golang-series-chapter-nineteen-testing.html';
+     this.page.identifier = '/2025/05/22/golang-series-chapter-nineteen-testing';
+     this.page.title = 'Golang series: Chapter Nineteen - Testing in Go';
+ };
+
+ (function() {  // REQUIRED CONFIGURATION VARIABLE: EDIT THE SHORTNAME BELOW
+     var d = document, s = d.createElement('script');
+
+     s.src = '//blog-from-celso-inacio.disqus.com/embed.js';
+
+     s.setAttribute('data-timestamp', +new Date());
+     (d.head || d.body).appendChild(s);
+ })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+</div>
+
+
+
+
+<div class="related">
+  <h2>related posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2025/06/12/golang-series-chapter-twenty-final-project-rest-api.html">
+            Golang series: Chapter Twenty - Final Project: Building a REST API
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2025/05/01/golang-series-chapter-eighteen-packages-and-modules.html">
+            Golang series: Chapter Eighteen - Packages & Modules
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2025/04/10/golang-series-chapter-seventeen-channels.html">
+            Golang series: Chapter Seventeen - Channels
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+  
+  <h2>all tags</h2>
+  <div class="tag-cloud"><a href="/tag/arrays/" class="set-1">arrays</a> <a href="/tag/channels/" class="set-1">channels</a> <a href="/tag/concurrency/" class="set-1">concurrency</a> <a href="/tag/control-flow/" class="set-1">control-flow</a> <a href="/tag/defer/" class="set-1">defer</a> <a href="/tag/errors/" class="set-1">errors</a> <a href="/tag/functions/" class="set-1">functions</a> <a href="/tag/globo/" class="set-1">globo</a> <a href="/tag/golang/" class="set-5">golang</a> <a href="/tag/goroutines/" class="set-1">goroutines</a> <a href="/tag/hacktoberfest/" class="set-1">hacktoberfest</a> <a href="/tag/http/" class="set-1">http</a> <a href="/tag/interfaces/" class="set-1">interfaces</a> <a href="/tag/introduction/" class="set-1">introduction</a> <a href="/tag/loops/" class="set-1">loops</a> <a href="/tag/maps/" class="set-1">maps</a> <a href="/tag/methods/" class="set-1">methods</a> <a href="/tag/modules/" class="set-1">modules</a> <a href="/tag/opensource/" class="set-1">opensource</a> <a href="/tag/packages/" class="set-1">packages</a> <a href="/tag/panic/" class="set-1">panic</a> <a href="/tag/podcast/" class="set-1">podcast</a> <a href="/tag/pointers/" class="set-1">pointers</a> <a href="/tag/recover/" class="set-1">recover</a> <a href="/tag/rest-api/" class="set-1">rest-api</a> <a href="/tag/slices/" class="set-1">slices</a> <a href="/tag/structs/" class="set-1">structs</a> <a href="/tag/tech/" class="set-1">tech</a> <a href="/tag/testing/" class="set-1">testing</a> <a href="/tag/tutorial/" class="set-5">tutorial</a></div>
+  
+
+
+
+
+<script>
+  let i = 0;
+  const text = 'Go has testing built in. Learn how to write unit tests, table-driven tests, and benchmarks with the standard testing package.';
+  const speed = parseInt('50');
+  
+  function typeWriter() {
+    if (i < text.length) {
+      document.getElementById('animated-post-description').innerHTML += text.charAt(i);
+      i++;
+      setTimeout(typeWriter, speed);
+    }
+  }
+
+  document.getElementById('animated-post-description').style.display = 'initial';
+  typeWriter();
+
+  // Image modal
+  var $imgs = [];
+  $('img').each(function(idx) {
+    var obj = {
+      src: $(this).attr('src')
+    }
+    $imgs.push(obj);
+    var elem = $(this);
+    $(this).click(function() {
+      $('.modal').magnificPopup('open', idx);
+    });
+  });
+
+  $('.modal').magnificPopup({
+    items: $imgs,
+    type: 'image',
+    closeOnContentClick: true,
+    mainClass: 'mfp-img-mobile',
+    image: {
+      verticalFit: true
+    }
+    
+  });
+</script>
+
+      </div>
+    </main><footer class="site-footer">
+  <div class="wrapper">
+    <div class="credits"><a href="https://github.com/bitbrain/jekyll-dash">dash</a> theme for Jekyll by <a href="https://github.com/bitbrain">bitbrain</a> made with <i class="fas fa-heart"></i><!-- <div class="toggleWrapper">
+    <input type="checkbox" class="dn" id="theme-toggle" onclick="modeSwitcher()" checked />
+    <label for="theme-toggle" class="toggle">
+    <span class="toggle__handler">
+      <span class="crater crater--1"></span>
+      <span class="crater crater--2"></span>
+      <span class="crater crater--3"></span>
+    </span>
+        <span class="star star--1"></span>
+        <span class="star star--2"></span>
+        <span class="star star--3"></span>
+        <span class="star star--4"></span>
+        <span class="star star--5"></span>
+        <span class="star star--6"></span>
+    </label>
+</div> -->
+<script type="text/javascript">
+const theme = localStorage.getItem('theme');
+
+// if (theme === "light") {
+    // document.documentElement.setAttribute('data-theme', 'light');
+// } else {
+    document.documentElement.setAttribute('data-theme', 'dark');
+// }
+const userPrefers = getComputedStyle(document.documentElement).getPropertyValue('content');
+
+function activateDarkTheme() {
+    document.getElementById('theme-toggle').checked = true;
+    document.documentElement.setAttribute('data-theme', 'dark');
+    document.documentElement.classList.add('theme--dark');
+    document.documentElement.classList.remove('theme--light');
+	document.getElementById("theme-toggle").className = 'light';
+	window.localStorage.setItem('theme', 'dark');
+}
+
+function activateLightTheme() {
+    document.getElementById('theme-toggle').checked = false;
+    document.documentElement.setAttribute('data-theme', 'light');
+    document.documentElement.classList.add('theme--light');
+    document.documentElement.classList.remove('theme--dark');
+	document.getElementById("theme-toggle").className = 'dark';
+	window.localStorage.setItem('theme', 'light');
+}
+
+// if (theme === "dark") {
+//     activateDarkTheme();
+// } else if (theme === "light") {
+//     activateLightTheme();
+// } else if  (userPrefers === "light") {
+//     activateDarkTheme();
+// } else {
+//     activateLightTheme();
+// }
+
+activateLightTheme()
+
+function modeSwitcher() {
+	let currentMode = document.documentElement.getAttribute('data-theme');
+	if (currentMode === "dark") {
+	    activateLightTheme();
+	} else {
+	    activateDarkTheme();
+	}
+}
+</script></div>
+  </div>
+</footer>
+
+
+<script>
+      window.FontAwesomeConfig = {
+        searchPseudoElements: true
+      }
+    </script>
+  </body>
+
+</html>
+

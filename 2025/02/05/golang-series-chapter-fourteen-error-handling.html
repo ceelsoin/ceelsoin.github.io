@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html class="direction--ltr"lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Golang series: Chapter Fourteen - Error Handling | codewithcelso</title>
+<meta name="generator" content="Jekyll v3.9.3" />
+<meta property="og:title" content="Golang series: Chapter Fourteen - Error Handling" />
+<meta name="author" content="Celso Inácio" />
+<meta property="og:locale" content="en" />
+<meta name="description" content="Go handles errors explicitly, not with exceptions. Learn the idiomatic way to deal with errors in Go." />
+<meta property="og:description" content="Go handles errors explicitly, not with exceptions. Learn the idiomatic way to deal with errors in Go." />
+<link rel="canonical" href="https://celsoinacio.com.br/2025/02/05/golang-series-chapter-fourteen-error-handling.html" />
+<meta property="og:url" content="https://celsoinacio.com.br/2025/02/05/golang-series-chapter-fourteen-error-handling.html" />
+<meta property="og:site_name" content="codewithcelso" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2025-02-05T00:00:00+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Golang series: Chapter Fourteen - Error Handling" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Celso Inácio"},"dateModified":"2025-02-05T00:00:00+00:00","datePublished":"2025-02-05T00:00:00+00:00","description":"Go handles errors explicitly, not with exceptions. Learn the idiomatic way to deal with errors in Go.","headline":"Golang series: Chapter Fourteen - Error Handling","mainEntityOfPage":{"@type":"WebPage","@id":"https://celsoinacio.com.br/2025/02/05/golang-series-chapter-fourteen-error-handling.html"},"url":"https://celsoinacio.com.br/2025/02/05/golang-series-chapter-fourteen-error-handling.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="icon" type="image/png" href="/assets/favicon.png" />
+  <link rel="stylesheet" href="/assets/css/magnific-popup.css">
+
+  
+    
+    <link rel="alternate" hreflang="en" href="/" />
+  
+    
+    <link rel="alternate" hreflang="pt-BR" href="/pt-BR/" />
+  <link type="application/atom+xml" rel="alternate" href="https://celsoinacio.com.br/rss.xml" title="codewithcelso" /><script src="https://code.jquery.com/jquery-3.2.0.min.js"></script> 
+  <script src="/assets/js/jquery.magnific-popup.js"></script>
+  <script src="//cdn.podlove.org/web-player/5.x/embed.js"></script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q3ZXG8RKS9"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-Q3ZXG8RKS9');
+  </script>
+
+</head>
+
+<body><div class="site-header">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/">codewithcelso<b class="command_prompt" style="color: #2271c0;"></b><b class="blinking_cursor">_</b></a>
+      
+    <span class="social_links">
+        <a rel="menu" class="menu-link" href="/">home</a>
+        <a rel="menu" class="menu-link" href="/about">about me</a>
+        <a rel="menu" class="menu-link" href="/books">books</a>
+        <a rel="menu" class="menu-link" href="/podcasts">podcasts</a>
+        
+        
+        <a class="color-cyan-hover" class="social-icon" href="https://twitter.com/ceelsoinacio"><i class="fab fa-twitter-square"></i></a>
+        
+        
+        
+        <a class="color-purple-hover" class="social-icon" href="https://github.com/ceelsoin"><i class="fab fa-github-square"></i></a>
+        
+        
+        
+        <a class="color-blue-hover" class="social-icon" href="https://www.linkedin.com/in/ceelsoinacio/"><i class="fab fa-linkedin"></i></a>
+        
+        
+    </span>
+  </div>
+</div>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        
+  <div class="author-box">
+
+
+<img src="
+    https://github.com/ceelsoin.png
+" class="author-avatar" alt="Avatar" />
+<div class="description">Hi, I'm Celso, a passionate Brazilian software engineer who thrives on creating and exploring innovative solutions. I specialize in web engineering and work at Globo, Brazil's leading television company, where I'm shaping the future of their CMS with a cutting-edge serverless platform. Every challenge is an opportunity to learn and push boundaries, and I’m constantly inspired to build systems that make a real impact.
+</div>
+
+</div>
+
+
+<div class="post">
+  <h1 class="post-title">Golang series: Chapter Fourteen - Error Handling</h1>
+  
+  <div class="post-tags">
+      
+      <a class="tag" href="/tag/golang/">golang</a>
+      
+      <a class="tag" href="/tag/errors/">errors</a>
+      
+      <a class="tag" href="/tag/tutorial/">tutorial</a>
+      
+  </div>
+  
+  <div class="post-date">
+    Published on 05 Feb 2025
+    
+      
+    
+  </div>
+  
+  <noscript>
+    <div class="post-description">Go handles errors explicitly, not with exceptions. Learn the idiomatic way to deal with errors in Go.</div>
+  </noscript>
+  <div id="animated-post-description" class="post-description" style="display: none;"></div>
+  
+  <h1 id="error-handling-in-go-explicit-clear-and-honest">Error Handling in Go: Explicit, Clear, and Honest</h1>
+
+<p>One thing that stands out immediately when you read Go code is how errors are handled. There are no <code class="language-plaintext highlighter-rouge">try/catch</code> blocks. No exceptions flying up the call stack. Go treats errors as <strong>values</strong> — just like any other value — and you deal with them where they happen.</p>
+
+<p>This feels strange at first. But after a while, you start to appreciate how honest it is. Nothing is hidden.</p>
+
+<blockquote>
+  <p>🧠 Missed Chapter 13? <a href="/2025/01/15/golang-series-chapter-thirteen-interfaces.html">Check it out here</a> to understand interfaces — <code class="language-plaintext highlighter-rouge">error</code> itself is an interface.</p>
+</blockquote>
+
+<hr />
+
+<h2 id="the-error-interface">The error Interface</h2>
+
+<p><code class="language-plaintext highlighter-rouge">error</code> is a built-in interface with a single method:</p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">type</span> <span class="kt">error</span> <span class="k">interface</span> <span class="p">{</span>
+    <span class="n">Error</span><span class="p">()</span> <span class="kt">string</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Any type that has an <code class="language-plaintext highlighter-rouge">Error() string</code> method satisfies the <code class="language-plaintext highlighter-rouge">error</code> interface. That’s it.</p>
+
+<hr />
+
+<h2 id="returning-errors">Returning Errors</h2>
+
+<p>The Go convention is to return an error as the <strong>last return value</strong>:</p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">main</span>
+
+<span class="k">import</span> <span class="p">(</span>
+    <span class="s">"errors"</span>
+    <span class="s">"fmt"</span>
+<span class="p">)</span>
+
+<span class="k">func</span> <span class="n">divide</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="kt">float64</span><span class="p">)</span> <span class="p">(</span><span class="kt">float64</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="n">b</span> <span class="o">==</span> <span class="m">0</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="m">0</span><span class="p">,</span> <span class="n">errors</span><span class="o">.</span><span class="n">New</span><span class="p">(</span><span class="s">"division by zero"</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">a</span> <span class="o">/</span> <span class="n">b</span><span class="p">,</span> <span class="no">nil</span>
+<span class="p">}</span>
+
+<span class="k">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">result</span><span class="p">,</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">divide</span><span class="p">(</span><span class="m">10</span><span class="p">,</span> <span class="m">2</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+        <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"Error:"</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="p">}</span>
+    <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"Result:"</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
+
+    <span class="n">_</span><span class="p">,</span> <span class="n">err</span> <span class="o">=</span> <span class="n">divide</span><span class="p">(</span><span class="m">5</span><span class="p">,</span> <span class="m">0</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+        <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"Error:"</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>Output:</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Result: 5
+Error: division by zero
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">nil</code> means no error. Non-nil means something went wrong.</p>
+
+<hr />
+
+<h2 id="creating-errors">Creating Errors</h2>
+
+<h3 id="errorsnew">errors.New</h3>
+
+<p>For simple, static error messages:</p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="s">"errors"</span>
+
+<span class="k">var</span> <span class="n">ErrNotFound</span> <span class="o">=</span> <span class="n">errors</span><span class="o">.</span><span class="n">New</span><span class="p">(</span><span class="s">"record not found"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="fmterrorf">fmt.Errorf</h3>
+
+<p>For formatted error messages with context:</p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="s">"fmt"</span>
+
+<span class="k">func</span> <span class="n">findUser</span><span class="p">(</span><span class="n">id</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">error</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">fmt</span><span class="o">.</span><span class="n">Errorf</span><span class="p">(</span><span class="s">"user with id %d not found"</span><span class="p">,</span> <span class="n">id</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="wrapping-errors">Wrapping Errors</h2>
+
+<p>Since Go 1.13, you can <strong>wrap</strong> an error to add context while preserving the original:</p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">main</span>
+
+<span class="k">import</span> <span class="p">(</span>
+    <span class="s">"errors"</span>
+    <span class="s">"fmt"</span>
+<span class="p">)</span>
+
+<span class="k">var</span> <span class="n">ErrDatabase</span> <span class="o">=</span> <span class="n">errors</span><span class="o">.</span><span class="n">New</span><span class="p">(</span><span class="s">"database error"</span><span class="p">)</span>
+
+<span class="k">func</span> <span class="n">queryUser</span><span class="p">(</span><span class="n">id</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">error</span> <span class="p">{</span>
+    <span class="c">// Simulating a db failure</span>
+    <span class="k">return</span> <span class="n">fmt</span><span class="o">.</span><span class="n">Errorf</span><span class="p">(</span><span class="s">"queryUser(%d): %w"</span><span class="p">,</span> <span class="n">id</span><span class="p">,</span> <span class="n">ErrDatabase</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="k">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">err</span> <span class="o">:=</span> <span class="n">queryUser</span><span class="p">(</span><span class="m">42</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+        <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+
+        <span class="c">// Unwrap: check if the root cause is ErrDatabase</span>
+        <span class="k">if</span> <span class="n">errors</span><span class="o">.</span><span class="n">Is</span><span class="p">(</span><span class="n">err</span><span class="p">,</span> <span class="n">ErrDatabase</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"→ Root cause: database error"</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>Output:</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>queryUser(42): database error
+→ Root cause: database error
+</code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">%w</code> verb in <code class="language-plaintext highlighter-rouge">fmt.Errorf</code> wraps the error. <code class="language-plaintext highlighter-rouge">errors.Is</code> unwraps the chain to find a match.</p>
+
+<hr />
+
+<h2 id="custom-error-types">Custom Error Types</h2>
+
+<p>For richer errors (with extra fields), implement the <code class="language-plaintext highlighter-rouge">error</code> interface:</p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">main</span>
+
+<span class="k">import</span> <span class="s">"fmt"</span>
+
+<span class="k">type</span> <span class="n">ValidationError</span> <span class="k">struct</span> <span class="p">{</span>
+    <span class="n">Field</span>   <span class="kt">string</span>
+    <span class="n">Message</span> <span class="kt">string</span>
+<span class="p">}</span>
+
+<span class="k">func</span> <span class="p">(</span><span class="n">e</span> <span class="o">*</span><span class="n">ValidationError</span><span class="p">)</span> <span class="n">Error</span><span class="p">()</span> <span class="kt">string</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">fmt</span><span class="o">.</span><span class="n">Sprintf</span><span class="p">(</span><span class="s">"validation error on field %q: %s"</span><span class="p">,</span> <span class="n">e</span><span class="o">.</span><span class="n">Field</span><span class="p">,</span> <span class="n">e</span><span class="o">.</span><span class="n">Message</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="k">func</span> <span class="n">validateAge</span><span class="p">(</span><span class="n">age</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">error</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="n">age</span> <span class="o">&lt;</span> <span class="m">0</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="o">&amp;</span><span class="n">ValidationError</span><span class="p">{</span><span class="n">Field</span><span class="o">:</span> <span class="s">"age"</span><span class="p">,</span> <span class="n">Message</span><span class="o">:</span> <span class="s">"must be non-negative"</span><span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="n">age</span> <span class="o">&gt;</span> <span class="m">150</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="o">&amp;</span><span class="n">ValidationError</span><span class="p">{</span><span class="n">Field</span><span class="o">:</span> <span class="s">"age"</span><span class="p">,</span> <span class="n">Message</span><span class="o">:</span> <span class="s">"unrealistic value"</span><span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="no">nil</span>
+<span class="p">}</span>
+
+<span class="k">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">err</span> <span class="o">:=</span> <span class="n">validateAge</span><span class="p">(</span><span class="o">-</span><span class="m">5</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+        <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+
+        <span class="c">// Extract the concrete type</span>
+        <span class="k">var</span> <span class="n">ve</span> <span class="o">*</span><span class="n">ValidationError</span>
+        <span class="k">if</span> <span class="n">errors</span><span class="o">.</span><span class="n">As</span><span class="p">(</span><span class="n">err</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">ve</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"Field:"</span><span class="p">,</span> <span class="n">ve</span><span class="o">.</span><span class="n">Field</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>Output:</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>validation error on field "age": must be non-negative
+Field: age
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">errors.As</code> unwraps the error chain to find a value of the target type — the counterpart of <code class="language-plaintext highlighter-rouge">errors.Is</code>.</p>
+
+<hr />
+
+<h2 id="errorsis-vs-errorsas">errors.Is vs errors.As</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Function</th>
+      <th>Use When</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">errors.Is(err, target)</code></td>
+      <td>Checking for a specific error <em>value</em></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">errors.As(err, &amp;target)</code></td>
+      <td>Extracting a specific error <em>type</em></td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+
+<h2 id="sentinel-errors">Sentinel Errors</h2>
+
+<p>Sentinel errors are package-level error variables used as well-known error codes:</p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">var</span> <span class="p">(</span>
+    <span class="n">ErrNotFound</span>     <span class="o">=</span> <span class="n">errors</span><span class="o">.</span><span class="n">New</span><span class="p">(</span><span class="s">"not found"</span><span class="p">)</span>
+    <span class="n">ErrUnauthorized</span> <span class="o">=</span> <span class="n">errors</span><span class="o">.</span><span class="n">New</span><span class="p">(</span><span class="s">"unauthorized"</span><span class="p">)</span>
+    <span class="n">ErrTimeout</span>      <span class="o">=</span> <span class="n">errors</span><span class="o">.</span><span class="n">New</span><span class="p">(</span><span class="s">"request timed out"</span><span class="p">)</span>
+<span class="p">)</span>
+</code></pre></div></div>
+
+<p>Callers check them with <code class="language-plaintext highlighter-rouge">errors.Is</code>:</p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="n">errors</span><span class="o">.</span><span class="n">Is</span><span class="p">(</span><span class="n">err</span><span class="p">,</span> <span class="n">ErrNotFound</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c">// handle 404-like case</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="dont-ignore-errors">Don’t Ignore Errors</h2>
+
+<p>A common mistake in Go is discarding errors with <code class="language-plaintext highlighter-rouge">_</code>:</p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">result</span><span class="p">,</span> <span class="n">_</span> <span class="o">:=</span> <span class="n">riskyOperation</span><span class="p">()</span> <span class="c">// ❌ don't do this unless you're 100% sure</span>
+</code></pre></div></div>
+
+<p>If you genuinely don’t care (rare), document why. Otherwise, handle it.</p>
+
+<hr />
+
+<h2 id="quick-reference">Quick Reference</h2>
+
+<ul>
+  <li>✅ <code class="language-plaintext highlighter-rouge">errors.New("message")</code> — simple error</li>
+  <li>✅ <code class="language-plaintext highlighter-rouge">fmt.Errorf("context: %w", err)</code> — wrapped error with context</li>
+  <li>✅ <code class="language-plaintext highlighter-rouge">errors.Is(err, target)</code> — sentinel value check</li>
+  <li>✅ <code class="language-plaintext highlighter-rouge">errors.As(err, &amp;target)</code> — concrete type extraction</li>
+  <li>✅ Custom error types: implement <code class="language-plaintext highlighter-rouge">Error() string</code></li>
+  <li>⚠️ Don’t ignore errors with <code class="language-plaintext highlighter-rouge">_</code> unless justified</li>
+</ul>
+
+<hr />
+
+<blockquote>
+  <p>🔗 Next up: <strong>Chapter Fifteen — Defer, Panic &amp; Recover</strong> → <a href="/2025/02/25/golang-series-chapter-fifteen-defer-panic-recover.html">Read it here</a></p>
+</blockquote>
+
+</div>
+
+
+<div class="comments">
+<div id="disqus_thread"></div>
+<script>
+ var disqus_config = function () {
+     this.page.url = 'https://celsoinacio.com.br/2025/02/05/golang-series-chapter-fourteen-error-handling.html';
+     this.page.identifier = '/2025/02/05/golang-series-chapter-fourteen-error-handling';
+     this.page.title = 'Golang series: Chapter Fourteen - Error Handling';
+ };
+
+ (function() {  // REQUIRED CONFIGURATION VARIABLE: EDIT THE SHORTNAME BELOW
+     var d = document, s = d.createElement('script');
+
+     s.src = '//blog-from-celso-inacio.disqus.com/embed.js';
+
+     s.setAttribute('data-timestamp', +new Date());
+     (d.head || d.body).appendChild(s);
+ })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+</div>
+
+
+
+
+<div class="related">
+  <h2>related posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2025/06/12/golang-series-chapter-twenty-final-project-rest-api.html">
+            Golang series: Chapter Twenty - Final Project: Building a REST API
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2025/05/22/golang-series-chapter-nineteen-testing.html">
+            Golang series: Chapter Nineteen - Testing in Go
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2025/05/01/golang-series-chapter-eighteen-packages-and-modules.html">
+            Golang series: Chapter Eighteen - Packages & Modules
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+  
+  <h2>all tags</h2>
+  <div class="tag-cloud"><a href="/tag/arrays/" class="set-1">arrays</a> <a href="/tag/channels/" class="set-1">channels</a> <a href="/tag/concurrency/" class="set-1">concurrency</a> <a href="/tag/control-flow/" class="set-1">control-flow</a> <a href="/tag/defer/" class="set-1">defer</a> <a href="/tag/errors/" class="set-1">errors</a> <a href="/tag/functions/" class="set-1">functions</a> <a href="/tag/globo/" class="set-1">globo</a> <a href="/tag/golang/" class="set-5">golang</a> <a href="/tag/goroutines/" class="set-1">goroutines</a> <a href="/tag/hacktoberfest/" class="set-1">hacktoberfest</a> <a href="/tag/http/" class="set-1">http</a> <a href="/tag/interfaces/" class="set-1">interfaces</a> <a href="/tag/introduction/" class="set-1">introduction</a> <a href="/tag/loops/" class="set-1">loops</a> <a href="/tag/maps/" class="set-1">maps</a> <a href="/tag/methods/" class="set-1">methods</a> <a href="/tag/modules/" class="set-1">modules</a> <a href="/tag/opensource/" class="set-1">opensource</a> <a href="/tag/packages/" class="set-1">packages</a> <a href="/tag/panic/" class="set-1">panic</a> <a href="/tag/podcast/" class="set-1">podcast</a> <a href="/tag/pointers/" class="set-1">pointers</a> <a href="/tag/recover/" class="set-1">recover</a> <a href="/tag/rest-api/" class="set-1">rest-api</a> <a href="/tag/slices/" class="set-1">slices</a> <a href="/tag/structs/" class="set-1">structs</a> <a href="/tag/tech/" class="set-1">tech</a> <a href="/tag/testing/" class="set-1">testing</a> <a href="/tag/tutorial/" class="set-5">tutorial</a></div>
+  
+
+
+
+
+<script>
+  let i = 0;
+  const text = 'Go handles errors explicitly, not with exceptions. Learn the idiomatic way to deal with errors in Go.';
+  const speed = parseInt('50');
+  
+  function typeWriter() {
+    if (i < text.length) {
+      document.getElementById('animated-post-description').innerHTML += text.charAt(i);
+      i++;
+      setTimeout(typeWriter, speed);
+    }
+  }
+
+  document.getElementById('animated-post-description').style.display = 'initial';
+  typeWriter();
+
+  // Image modal
+  var $imgs = [];
+  $('img').each(function(idx) {
+    var obj = {
+      src: $(this).attr('src')
+    }
+    $imgs.push(obj);
+    var elem = $(this);
+    $(this).click(function() {
+      $('.modal').magnificPopup('open', idx);
+    });
+  });
+
+  $('.modal').magnificPopup({
+    items: $imgs,
+    type: 'image',
+    closeOnContentClick: true,
+    mainClass: 'mfp-img-mobile',
+    image: {
+      verticalFit: true
+    }
+    
+  });
+</script>
+
+      </div>
+    </main><footer class="site-footer">
+  <div class="wrapper">
+    <div class="credits"><a href="https://github.com/bitbrain/jekyll-dash">dash</a> theme for Jekyll by <a href="https://github.com/bitbrain">bitbrain</a> made with <i class="fas fa-heart"></i><!-- <div class="toggleWrapper">
+    <input type="checkbox" class="dn" id="theme-toggle" onclick="modeSwitcher()" checked />
+    <label for="theme-toggle" class="toggle">
+    <span class="toggle__handler">
+      <span class="crater crater--1"></span>
+      <span class="crater crater--2"></span>
+      <span class="crater crater--3"></span>
+    </span>
+        <span class="star star--1"></span>
+        <span class="star star--2"></span>
+        <span class="star star--3"></span>
+        <span class="star star--4"></span>
+        <span class="star star--5"></span>
+        <span class="star star--6"></span>
+    </label>
+</div> -->
+<script type="text/javascript">
+const theme = localStorage.getItem('theme');
+
+// if (theme === "light") {
+    // document.documentElement.setAttribute('data-theme', 'light');
+// } else {
+    document.documentElement.setAttribute('data-theme', 'dark');
+// }
+const userPrefers = getComputedStyle(document.documentElement).getPropertyValue('content');
+
+function activateDarkTheme() {
+    document.getElementById('theme-toggle').checked = true;
+    document.documentElement.setAttribute('data-theme', 'dark');
+    document.documentElement.classList.add('theme--dark');
+    document.documentElement.classList.remove('theme--light');
+	document.getElementById("theme-toggle").className = 'light';
+	window.localStorage.setItem('theme', 'dark');
+}
+
+function activateLightTheme() {
+    document.getElementById('theme-toggle').checked = false;
+    document.documentElement.setAttribute('data-theme', 'light');
+    document.documentElement.classList.add('theme--light');
+    document.documentElement.classList.remove('theme--dark');
+	document.getElementById("theme-toggle").className = 'dark';
+	window.localStorage.setItem('theme', 'light');
+}
+
+// if (theme === "dark") {
+//     activateDarkTheme();
+// } else if (theme === "light") {
+//     activateLightTheme();
+// } else if  (userPrefers === "light") {
+//     activateDarkTheme();
+// } else {
+//     activateLightTheme();
+// }
+
+activateLightTheme()
+
+function modeSwitcher() {
+	let currentMode = document.documentElement.getAttribute('data-theme');
+	if (currentMode === "dark") {
+	    activateLightTheme();
+	} else {
+	    activateDarkTheme();
+	}
+}
+</script></div>
+  </div>
+</footer>
+
+
+<script>
+      window.FontAwesomeConfig = {
+        searchPseudoElements: true
+      }
+    </script>
+  </body>
+
+</html>
+
